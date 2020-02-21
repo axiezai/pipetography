@@ -2,13 +2,17 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"bfiles2tuple": "pipetography.ipynb",
+index = {"get_subs": "pipetography.ipynb",
+         "bfiles2tuple": "pipetography.ipynb",
          "dwidenoiseInputSpec": "pipetography.ipynb",
          "dwidenoiseOutputSpec": "pipetography.ipynb",
          "dwidenoise": "pipetography.ipynb",
          "N4BiasFieldCorrectionInputSpec": "pipetography.ipynb",
          "N4BiasFieldCorrectionOutputSpec": "pipetography.ipynb",
          "N4BiasFieldCorrection": "pipetography.ipynb",
+         "dwipreprocInputSpec": "pipetography.ipynb",
+         "dwipreprocOutputSpec": "pipetography.ipynb",
+         "dwipreproc": "pipetography.ipynb",
          "mask2seedtuple": "pipetography.ipynb"}
 
 modules = ["pipetography.py"]
