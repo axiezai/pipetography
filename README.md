@@ -6,6 +6,7 @@ This file will become your README and also the index of your documentation.
 
 ## Install
 
+This pip install function doesn't work yet! Don't do it! It will work with the first release!
 `pip install pipetography`
 
 Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, you have to follow their installation instructions:    
