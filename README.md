@@ -30,18 +30,6 @@ print(sub_list)
 # we only have 1 subject for the sample dataset
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-06f45283d9b0> in <module>
-          3 
-          4 data_dir = 'data'
-    ----> 5 sub_list = get_subs(data_dir) # this gets all subjects in BIDS directory. For each subject, we need to iterate over all available sessions.
-          6 print(sub_list)
-          7 # we only have 1 subject for the sample dataset
-
-
-    NameError: name 'get_subs' is not defined
+    Creating layout of data directory, might take a while if there are a lot of subjects
+    ['11048']
 
