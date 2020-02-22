@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Pipetography
+      title: Module core
       url: /pipetography
     output: web
     title: pipetography

@@ -15,7 +15,7 @@ index = {"get_subs": "pipetography.ipynb",
          "dwipreproc": "pipetography.ipynb",
          "mask2seedtuple": "pipetography.ipynb"}
 
-modules = ["pipetography.py"]
+modules = ["core.py"]
 
 doc_url = "https://axiezai.github.io/pipetography/"
 

@@ -75,11 +75,34 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 
 <span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
 <span class="n">sub_list</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span> <span class="c1"># this gets all subjects in BIDS directory. For each subject, we need to iterate over all available sessions.</span>
-
+<span class="nb">print</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
 <span class="c1"># we only have 1 subject for the sample dataset</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-1-06f45283d9b0&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> 
+<span class="ansi-green-intense-fg ansi-bold">      4</span> data_dir <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#39;data&#39;</span>
+<span class="ansi-green-fg">----&gt; 5</span><span class="ansi-red-fg"> </span>sub_list <span class="ansi-blue-fg">=</span> get_subs<span class="ansi-blue-fg">(</span>data_dir<span class="ansi-blue-fg">)</span> <span class="ansi-red-fg"># this gets all subjects in BIDS directory. For each subject, we need to iterate over all available sessions.</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span> print<span class="ansi-blue-fg">(</span>sub_list<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      7</span> <span class="ansi-red-fg"># we only have 1 subject for the sample dataset</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;get_subs&#39; is not defined</pre>
+</div>
+</div>
+
 </div>
 </div>
 
