@@ -28,7 +28,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200221-16:02:00,680 nipype.utils INFO:
+<pre>200221-17:28:42,371 nipype.utils INFO:
 	 No new version available.
 </pre>
 </div>
@@ -39,21 +39,6 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>200221-14:58:23,563 nipype.utils INFO:
-	 No new version available.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
@@ -241,7 +226,7 @@ Input str of path to BIDS dir otherwise</p>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
 
-<span class="n">bvs</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subs</span><span class="p">,</span> <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;dwi&#39;</span><span class="p">,</span> <span class="n">session</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bvec&#39;</span><span class="p">,</span> <span class="s1">&#39;bval&#39;</span><span class="p">],</span> <span class="n">return_type</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span><span class="p">)</span>
+<span class="n">bvs</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span> <span class="o">=</span> <span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;dwi&#39;</span><span class="p">,</span> <span class="n">session</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bvec&#39;</span><span class="p">,</span> <span class="s1">&#39;bval&#39;</span><span class="p">],</span> <span class="n">return_type</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bvs</span><span class="p">))</span>
 <span class="n">bfiles_fsl</span> <span class="o">=</span> <span class="n">bfiles2tuple</span><span class="p">(</span><span class="n">bvs</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">bfiles_fsl</span><span class="p">)</span>
@@ -294,7 +279,7 @@ Input str of path to BIDS dir otherwise</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage</span>
-<span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span> <span class="o">=</span> <span class="n">subs</span><span class="p">,</span> <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;dwi&#39;</span><span class="p">,</span> <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.nii&#39;</span><span class="p">,</span> <span class="s1">&#39;.nii.gz&#39;</span><span class="p">],</span> <span class="n">return_type</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span><span class="p">)</span>
+<span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span> <span class="o">=</span> <span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;dwi&#39;</span><span class="p">,</span> <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.nii&#39;</span><span class="p">,</span> <span class="s1">&#39;.nii.gz&#39;</span><span class="p">],</span> <span class="n">return_type</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -451,25 +436,6 @@ cli.inputs.get_hashval()[1]
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>200221-14:58:50,124 nipype.interface INFO:
-	 stderr 2020-02-21T14:58:50.124029:dwidenoise: <span class="ansi-red-fg">[WARNING] existing output files will be overwritten</span>
-200221-14:58:50,587 nipype.interface INFO:
-dwidenoise: [100%] uncompressing image &#34;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.nii.gz&#34;
-200221-14:58:51,101 nipype.interface INFO:
-dwidenoise: [100%] preloading data for &#34;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.nii.gz&#34;
-200221-14:59:09,853 nipype.interface INFO:
-dwidenoise: [100%] running MP-PCA denoising
-200221-14:59:10,118 nipype.interface INFO:
-dwidenoise: [100%] compressing image &#34;outputs/noise.nii.gz&#34;
-200221-14:59:18,95 nipype.interface INFO:
-dwidenoise: [100%] compressing image &#34;outputs/denoised.nii.gz&#34;
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 
 <div class="output_png output_subarea ">
@@ -623,6 +589,22 @@ Returns:
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;nipype.interfaces.base.support.InterfaceResult at 0x7fdfd88db4a8&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -634,6 +616,26 @@ Returns:
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-18-96dde934dc0b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg">#test if file output is correct</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>test_eq<span class="ansi-blue-fg">(</span>os<span class="ansi-blue-fg">.</span>path<span class="ansi-blue-fg">.</span>exists<span class="ansi-blue-fg">(</span>ants_bfc<span class="ansi-blue-fg">.</span>inputs<span class="ansi-blue-fg">.</span>out_file<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;test_eq&#39; is not defined</pre>
+</div>
+</div>
+
 </div>
 </div>
 
