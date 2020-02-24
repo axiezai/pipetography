@@ -2,20 +2,26 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"get_subs": "pipetography.ipynb",
-         "bfiles2tuple": "pipetography.ipynb",
-         "dwidenoiseInputSpec": "pipetography.ipynb",
-         "dwidenoiseOutputSpec": "pipetography.ipynb",
-         "dwidenoise": "pipetography.ipynb",
-         "N4BiasFieldCorrectionInputSpec": "pipetography.ipynb",
-         "N4BiasFieldCorrectionOutputSpec": "pipetography.ipynb",
-         "N4BiasFieldCorrection": "pipetography.ipynb",
-         "dwipreprocInputSpec": "pipetography.ipynb",
-         "dwipreprocOutputSpec": "pipetography.ipynb",
-         "dwipreproc": "pipetography.ipynb",
-         "mask2seedtuple": "pipetography.ipynb"}
+index = {"get_subs": "00_core.ipynb",
+         "get_bfiles": "00_core.ipynb",
+         "dwidenoiseInputSpec": "00_core.ipynb",
+         "dwidenoiseOutputSpec": "00_core.ipynb",
+         "dwidenoise": "00_core.ipynb",
+         "N4BiasFieldCorrectionInputSpec": "00_core.ipynb",
+         "N4BiasFieldCorrectionOutputSpec": "00_core.ipynb",
+         "N4BiasFieldCorrection": "00_core.ipynb",
+         "dwipreprocInputSpec": "00_core.ipynb",
+         "dwipreprocOutputSpec": "00_core.ipynb",
+         "dwipreproc": "00_core.ipynb",
+         "mask2seedtuple": "00_core.ipynb",
+         "BIDS_input": "01_knots.ipynb",
+         "bfiles_input": "01_knots.ipynb",
+         "atlas_input": "01_knots.ipynb",
+         "mask_input": "01_knots.ipynb",
+         "pipeline": "01_knots.ipynb"}
 
-modules = ["core.py"]
+modules = ["core.py",
+           "knots.py"]
 
 doc_url = "https://axiezai.github.io/pipetography/"
 
