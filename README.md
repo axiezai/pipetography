@@ -2,6 +2,12 @@
 > Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain.
 
 
+```
+%%capture
+#hide
+from pipetography.core import *
+```
+
 This file will become your README and also the index of your documentation.
 
 ## Install
@@ -21,70 +27,238 @@ Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, 
 #### Use as connected Nipype nodes for DWI preprocessing
 We will wrap all of our tasks in `Nipype`'s `Nodes`
 
-Nipype wraps the tasks into Nodes and connects them into an automated workflow that can run parallel tasks, the preprocessing workflow includes several functions, some of which require user inputs. We will go over them here, first we need to provide where our subject files are, we recommend using BIDS format subject directories, from which we can create a `layout` with `PyBIDS`:
+Nipype wraps the tasks into Nodes and connects them into an automated workflow that can run parallel tasks, the preprocessing workflow includes several functions, some of which require user inputs. We will go over them here.
 
 ```
-import os, sys
-
-data_dir = 'data'
-sub_list = get_subs(data_dir) # this gets all subjects in BIDS directory. For each subject, we need to iterate over all available sessions.
-print(sub_list)
-# we only have 1 subject for the sample dataset
+#example usage, create pipeline:
+preproc_dwi = pipeline()
 ```
 
     Creating layout of data directory, might take a while if there are a lot of subjects
-    ['11048']
 
-
-#### Subject data I/O:
-
-We need to use `Nipype`'s `IdentityInterface` and `SelectFiles` functionalities to iterable over subjects. The `iterables` function in `Nipype` can expand your workflow to each subject:
 
 ```
-from nipype import IdentityInterface
-from nipype.pipeline import Node
-from nipype.interfaces.io import SelectFiles
-
-# IdentityInterface allows us to work with strings as input parameters
-sub_source = Node(IdentityInterface(fields = ['subject_id']), name = 'infosource')
-sub_source.iterables = [('subject_id', sub_list)]
-
-# Node for selecting files, we need to create a template to tell it what the file paths look like:
-dwi_file = os.path.join('sub-{subject_id}', 'ses-*', 'dwi', 'sub-{subject_id}_ses-*_dwi.nii.gz')
-bv_files = os.path.join('sub-{subject_id}', 'ses-1', 'dwi', 'sub-{subject_id}_ses-1_dwi.bv*')
-templates = {'dwi': dwi_file, 'bvs': bv_files}
-# then create Node:
-selectfiles = Node(SelectFiles(templates, base_directory = data_dir), name ='selectfiles')
+# set output destination:
+preproc_dwi.set_datasink()
 ```
 
-We need to also build `Nodes` that grabs `bvec` and `bval` files for our inputs:
+    Please indicate an output directory:  'output'
+
+
+Take a look at what's in the `pipeline`:
 
 ```
-from nipype import Function
-
-bvspath_getter = Node(Function(input_names=['in_List'],output_names=['out_path'], function = bfiles2tuple), name = 'BV_Getter')
+preproc_dwi.__dict__
 ```
 
-Lastly, we need to create an input `Node` for atlases! We use atlases to identify regions of interests (ROIs) after co-registering them onto our DWI images. For this example, we will use the Desikan-Killiany and Brainnectome atlases:
+
+
+
+    {'data_dir': 'data',
+     'sub_list': ['11048'],
+     'layout': BIDS Layout: ...ers/xxie/lab/pipetography/data | Subjects: 1 | Sessions: 1 | Runs: 0,
+     'dwi_file': 'sub-{subject_id}/ses-*/dwi/sub-{subject_id}_ses-*_dwi.nii.gz',
+     'b_files': 'sub-{subject_id}/ses-1/dwi/sub-{subject_id}_ses-1_dwi.bv*',
+     'sub_template': {'dwi': 'sub-{subject_id}/ses-*/dwi/sub-{subject_id}_ses-*_dwi.nii.gz',
+      'b_files': 'sub-{subject_id}/ses-1/dwi/sub-{subject_id}_ses-1_dwi.bv*'},
+     'sub_source': data_source,
+     'select_files': select_files,
+     'bfiles_input': select_bfiles,
+     'denoise': denoise,
+     'ringing': ringing_removal,
+     'ants_bfc': ants_bias_correct,
+     'mrt_preproc': mrtrix3_preproc,
+     'atlas_dir': None,
+     'atlas_names': None,
+     'atlas_source': None,
+     'select_atlas': None,
+     'b0extract': dwiextract,
+     'b0mean': mrmath,
+     'fsl_bet': brain_extraction,
+     'linear_coreg': linear_registration,
+     'nonlinear_coreg': nonlinear_registration,
+     'datasink': datasink,
+     'workflow': None}
+
+
+
+We can fill this in one by one:
+
+First, let's tell the pipeline where we have atlas volumes and which ones to use:
 
 ```
-atlas_dir = 'atlases'
-
-atlas_template = {'atlas': atlas_dir + '{file_name}'}
-atlas_list = ['BN_Atlas_246_2mm.nii','DK_atlas86_1mm.nii'] # list of atlases you want to use
-atlas_file = Node(SelectFiles(atlas_template), name = 'select_atlas')
-atlas_file.base_directory = atlas_dir
+preproc_dwi.atlas_inputs(atlas_dir = '/Users/xxie/lab/atlases', atlas_names = ['BN_Atlas_246_2mm.nii','DK_atlas86_1mm.nii'])
 ```
 
-#### Preprocessing of DWI:
-
-Now we can finally start our first step: denoise!
-
-We will do this with `mrtrix3`'s `dwidenoise` function after wrapping it in a `MapNode`, these are Nodes that can handle several inputs/outputs with iterables:
+Next, we give inputs to the `denoise` Node:
 
 ```
-denoise = MapNode(dwidenoise(), name = "denoise", iterfield = 'in_file')
-denoise.inputs.out_file = "denoised.nii.gz"
-denoise.inputs.noise = "noise.nii.gz"
-denoise.inputs.force = "-force" # in case there's previous outputs, we want to overwrite
+preproc_dwi.denoise_inputs(force = True, quiet = True)
+# we kept everything else default, like output names and number of threads.
 ```
+
+Gibbs ringing removal:
+
+```
+preproc_dwi.DeGibbs_inputs() # keep it default
+print('Output file name is ' + preproc_dwi.ringing.inputs.out_file)
+```
+
+    Output file name is ringing_removed.nii.gz
+
+
+ANTs Bias Field Correction:
+
+```
+preproc_dwi.ants_bfc_inputs() # keep it default:
+preproc_dwi.ants_bfc.inputs.print_traits
+```
+
+
+
+
+    <bound method HasTraits.print_traits of 
+    args = <undefined>
+    dims = 4
+    environ = {}
+    in_file = <undefined>
+    out_file = biasfieldcorrected.nii.gz
+    >
+
+
+
+`in_file` is undefined because we will feed it this information once we connect our individual functions.
+
+Next let's set up eddy current/motion correction, we need to tell the pipeline the phase encoding settings and inputs to eddy algorithm:
+
+```
+preproc_dwi.mrt_preproc_inputs(
+    rpe_options="-rpe_none",
+    pe_dir="j-",
+    eddy_options='"--slm=linear --verbose"',
+    nthreads=4,
+)
+preproc_dwi.mrt_preproc.inputs.print_traits
+```
+
+
+
+
+    <bound method HasTraits.print_traits of 
+    args = <undefined>
+    eddy_options = "--slm=linear --verbose"
+    environ = {}
+    grad_fsl = <undefined>
+    in_file = <undefined>
+    nthreads = 4
+    out_file = preproc.nii.gz
+    pe_dir = j-
+    rpe_options = -rpe_none
+    >
+
+
+
+`grad_fsl` and `in_file` will be input via connected workflow later
+
+Next, we set-up brain extraction from B0 volumes:
+
+```
+# Extract b0 volumes:
+preproc_dwi.b0extract_inputs() #default
+# Create average B0 volume:
+preproc_dwi.b0mean_inputs() #default
+# Extract brain from B0 average volume:
+preproc_dwi.bet_inputs() #defaults again, using FSL's BET
+```
+
+ANTs registration set up:
+
+```
+preproc_dwi.linear_coreg_inputs() #defaults
+preproc_dwi.nonlinear_coreg_inputs() #defaults
+preproc_dwi.nonlinear_coreg.inputs.print_traits
+```
+
+
+
+
+    <bound method HasTraits.print_traits of 
+    args = <undefined>
+    collapse_output_transforms = True
+    convergence_threshold = [1e-06]
+    convergence_window_size = [10]
+    dimension = 3
+    environ = {'NSLOTS': '1'}
+    fixed_image = <undefined>
+    fixed_image_mask = <undefined>
+    fixed_image_masks = <undefined>
+    float = <undefined>
+    initial_moving_transform = <undefined>
+    initial_moving_transform_com = <undefined>
+    initialize_transforms_per_stage = False
+    interpolation = Linear
+    interpolation_parameters = <undefined>
+    invert_initial_moving_transform = <undefined>
+    metric = ['MI']
+    metric_item_trait = <undefined>
+    metric_stage_trait = <undefined>
+    metric_weight = [1.0]
+    metric_weight_item_trait = 1.0
+    metric_weight_stage_trait = <undefined>
+    moving_image = <undefined>
+    moving_image_mask = <undefined>
+    moving_image_masks = <undefined>
+    num_threads = 1
+    number_of_iterations = [[500, 200, 200, 100]]
+    output_inverse_warped_image = <undefined>
+    output_transform_prefix = atlas_in_dwi_syn
+    output_warped_image = atlas_in_dwi_syn.nii.gz
+    radius_bins_item_trait = 5
+    radius_bins_stage_trait = <undefined>
+    radius_or_number_of_bins = [64]
+    restore_state = <undefined>
+    restrict_deformation = <undefined>
+    sampling_percentage = <undefined>
+    sampling_percentage_item_trait = <undefined>
+    sampling_percentage_stage_trait = <undefined>
+    sampling_strategy = <undefined>
+    sampling_strategy_item_trait = <undefined>
+    sampling_strategy_stage_trait = <undefined>
+    save_state = <undefined>
+    shrink_factors = [[8, 4, 2, 1]]
+    sigma_units = ['vox']
+    smoothing_sigmas = [[4.0, 2.0, 1.0, 0.0]]
+    transform_parameters = [(0.1,)]
+    transforms = ['SyN']
+    use_estimate_learning_rate_once = <undefined>
+    use_histogram_matching = True
+    verbose = False
+    winsorize_lower_quantile = 0.0
+    winsorize_upper_quantile = 1.0
+    write_composite_transform = False
+    >
+
+
+
+All the default settings may not be optimal for your dataset, run the processing for a test image and see the intermediate results and then tweak the available inputs to improve the output image quality.
+
+Now that our pre-processing Nodes are properly setup, we can connect and create a workflow:
+
+```
+preproc_dwi.connect_nodes(wf_name = 'test_run')
+preproc_dwi.draw_pipeline()
+```
+
+Let's take a look at the final workflow we created:
+
+```
+from IPython.display import Image
+Image('data/derivatives/test_run/pipetography_detailed.png')
+```
+
+
+
+
+![png](docs/images/output_28_0.png)
+
+

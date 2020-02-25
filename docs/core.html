@@ -28,7 +28,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200224-14:01:41,430 nipype.utils INFO:
+<pre>200224-17:56:03,67 nipype.utils INFO:
 	 No new version available.
 </pre>
 </div>
@@ -53,20 +53,20 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test if our sample data can create BIDS layouts</span>
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test if our sample data can create BIDS layouts</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
 
 <span class="c1">## test datasets first:</span>
 <span class="n">data1</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
-<span class="c1">#data2 = os.path.join(data_dir, &#39;healthy_control/&#39;)</span>
+<span class="c1"># data2 = os.path.join(data_dir, &#39;healthy_control/&#39;)</span>
 
 <span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">data1</span><span class="p">)</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">0</span>
 <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">)</span>
 
-<span class="c1">#layout = BIDSLayout(data2)</span>
-<span class="c1">#assert len(layout.get_subjects()) != 0</span>
-<span class="c1">#assert type(layout.get_subjects() is list)</span>
+<span class="c1"># layout = BIDSLayout(data2)</span>
+<span class="c1"># assert len(layout.get_subjects()) != 0</span>
+<span class="c1"># assert type(layout.get_subjects() is list)</span>
 </pre></div>
 
     </div>
@@ -79,18 +79,18 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test if FSL is set up properly</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test if FSL is set up properly</span>
 <span class="k">assert</span> <span class="s2">&quot;FSLOUTPUTTYPE&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
 <span class="k">assert</span> <span class="s2">&quot;FSLDIR&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
 <span class="k">if</span> <span class="s2">&quot;FSLOUTPUTTYPE&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="k">pass</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;FSLOUTPUTTYPE is not defined, make sure FSL is configured!&#39;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;FSLOUTPUTTYPE is not defined, make sure FSL is configured!&quot;</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="s2">&quot;FSLDIR&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="k">pass</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s1">&#39;FSLOUTPUTTYPE is not defined, make sure FSL is configured!&#39;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s2">&quot;FSLOUTPUTTYPE is not defined, make sure FSL is configured!&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -141,7 +141,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage:</span>
 <span class="n">sub_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
 </pre></div>
@@ -171,7 +171,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test if subjects were all grabbed</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test if subjects were all grabbed</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">data_dir</span><span class="p">))[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 
@@ -213,7 +213,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_bfiles" class="doc_header"><code>get_bfiles</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L27" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_bfiles</code>(<strong><code>BIDS_layout</code></strong>)</p>
+<h4 id="get_bfiles_tuple" class="doc_header"><code>get_bfiles_tuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L29" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_bfiles_tuple</code>(<strong><code>in_List</code></strong>)</p>
 </blockquote>
 <p>read .bvec and .bval files in as a list and spit out tuple for nipype input</p>
 
@@ -230,8 +230,16 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
-<span class="n">bfiles_fsl</span> <span class="o">=</span> <span class="n">get_bfiles</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage:</span>
+<span class="n">bfiles</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
+    <span class="n">session</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bvec&quot;</span><span class="p">,</span> <span class="s2">&quot;bval&quot;</span><span class="p">],</span>
+    <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bfiles</span><span class="p">)</span>
+<span class="n">bfiles_fsl</span> <span class="o">=</span> <span class="n">get_bfiles_tuple</span><span class="p">(</span><span class="n">bfiles</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">bfiles_fsl</span><span class="p">)</span>
 </pre></div>
 
@@ -245,7 +253,8 @@ Input str of path to BIDS dir otherwise</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bvec&#39;, &#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bval&#39;)
+<pre>[&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bval&#39;, &#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bvec&#39;]
+(&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bvec&#39;, &#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bval&#39;)
 </pre>
 </div>
 </div>
@@ -259,8 +268,8 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test if bfiles are grabbed</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">bfiles2tuple</span><span class="p">(</span><span class="n">layout</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test if bfiles are grabbed</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_bfiles_tuple</span><span class="p">(</span><span class="n">bfiles</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
 </pre></div>
 
     </div>
@@ -280,8 +289,13 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage</span>
-<span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subject</span> <span class="o">=</span> <span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;dwi&#39;</span><span class="p">,</span> <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.nii&#39;</span><span class="p">,</span> <span class="s1">&#39;.nii.gz&#39;</span><span class="p">],</span> <span class="n">return_type</span> <span class="o">=</span> <span class="s1">&#39;file&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage</span>
+<span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+    <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
+    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">,</span> <span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
+    <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -294,7 +308,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test if all sessions are grabbed</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test if all sessions are grabbed</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dwi</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_sessions</span><span class="p">())</span>
 </pre></div>
 
@@ -322,7 +336,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="dwidenoiseInputSpec" class="doc_header"><code>class</code> <code>dwidenoiseInputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L36" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwidenoiseInputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>CommandLineInputSpec</code></p>
+<h2 id="dwidenoiseInputSpec" class="doc_header"><code>class</code> <code>dwidenoiseInputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L38" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwidenoiseInputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>CommandLineInputSpec</code></p>
 </blockquote>
 <p>Specifying inputs to dwidenoise</p>
 
@@ -343,7 +357,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="dwidenoiseOutputSpec" class="doc_header"><code>class</code> <code>dwidenoiseOutputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L47" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwidenoiseOutputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>TraitedSpec</code></p>
+<h2 id="dwidenoiseOutputSpec" class="doc_header"><code>class</code> <code>dwidenoiseOutputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L61" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwidenoiseOutputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>TraitedSpec</code></p>
 </blockquote>
 <p>Specifying outputs of dwidenoise</p>
 
@@ -364,7 +378,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="dwidenoise" class="doc_header"><code>class</code> <code>dwidenoise</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L54" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwidenoise</code>(<strong><code>command</code></strong>=<em><code>None</code></em>, <strong><code>terminal_output</code></strong>=<em><code>None</code></em>, <strong>**<code>inputs</code></strong>) :: <code>CommandLine</code></p>
+<h2 id="dwidenoise" class="doc_header"><code>class</code> <code>dwidenoise</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L70" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwidenoise</code>(<strong><code>command</code></strong>=<em><code>None</code></em>, <strong><code>terminal_output</code></strong>=<em><code>None</code></em>, <strong>**<code>inputs</code></strong>) :: <code>CommandLine</code></p>
 </blockquote>
 <p>Denoise DWI data with mrtrix3's dwidenoise.
 This should be performed as the first step of the preprocessing pipeline!
@@ -389,28 +403,58 @@ Arguments:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage:</span>
 <span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nb</span>
 <span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">plotting</span>
 <span class="kn">from</span> <span class="nn">nilearn.image</span> <span class="kn">import</span> <span class="n">new_img_like</span>
 
 <span class="n">denoise</span> <span class="o">=</span> <span class="n">dwidenoise</span><span class="p">()</span>
-<span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/denoised.nii.gz&#39;</span>
-<span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">noise</span> <span class="o">=</span> <span class="s1">&#39;outputs/noise.nii.gz&#39;</span>
-<span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># the first session&#39;s image</span>
-<span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">force</span> <span class="o">=</span> <span class="s1">&#39;-force&#39;</span>
-<span class="n">denoise</span><span class="o">.</span><span class="n">run</span><span class="p">();</span>
+<span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s2">&quot;outputs/denoised.nii.gz&quot;</span>
+<span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">noise</span> <span class="o">=</span> <span class="s2">&quot;outputs/noise.nii.gz&quot;</span>
+<span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># the first session&#39;s image</span>
+<span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">force</span> <span class="o">=</span> <span class="s2">&quot;-force&quot;</span>
+<span class="n">denoise</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
 
-<span class="n">orig_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># display dwi</span>
-<span class="n">orig_data</span> <span class="o">=</span> <span class="n">orig_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,:,:,</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">orig_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span><span class="n">orig_dwi</span><span class="p">,</span> <span class="n">orig_data</span><span class="p">,</span> <span class="n">affine</span> <span class="o">=</span> <span class="n">orig_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;nipype.interfaces.base.support.InterfaceResult at 0x7fd910e4eeb8&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># visualize:</span>
+<span class="n">orig_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># display dwi</span>
+<span class="n">orig_data</span> <span class="o">=</span> <span class="n">orig_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">orig_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span><span class="n">orig_dwi</span><span class="p">,</span> <span class="n">orig_data</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">orig_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plotting</span><span class="o">.</span><span class="n">plot_img</span><span class="p">(</span><span class="n">orig_img</span><span class="p">)</span>
 
 <span class="n">_</span> <span class="o">=</span> <span class="n">plotting</span><span class="o">.</span><span class="n">plot_img</span><span class="p">(</span><span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">noise</span><span class="p">)</span>
 
 <span class="n">denoised_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span><span class="p">)</span>
-<span class="n">denoised_data</span> <span class="o">=</span> <span class="n">denoised_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,:,:,</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">denoised_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span><span class="n">denoised_dwi</span><span class="p">,</span> <span class="n">denoised_data</span><span class="p">,</span> <span class="n">affine</span> <span class="o">=</span> <span class="n">denoised_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">denoised_data</span> <span class="o">=</span> <span class="n">denoised_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">denoised_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span>
+    <span class="n">denoised_dwi</span><span class="p">,</span> <span class="n">denoised_data</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">denoised_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plotting</span><span class="o">.</span><span class="n">plot_img</span><span class="p">(</span><span class="n">denoised_img</span><span class="p">)</span>
 </pre></div>
 
@@ -466,7 +510,7 @@ Arguments:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test if denoised file exists</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test if denoised file exists</span>
 <span class="kn">from</span> <span class="nn">fastcore.test</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">test_eq</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">denoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">noise</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
@@ -497,7 +541,7 @@ Arguments:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="N4BiasFieldCorrectionInputSpec" class="doc_header"><code>class</code> <code>N4BiasFieldCorrectionInputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L77" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>N4BiasFieldCorrectionInputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>CommandLineInputSpec</code></p>
+<h2 id="N4BiasFieldCorrectionInputSpec" class="doc_header"><code>class</code> <code>N4BiasFieldCorrectionInputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L94" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>N4BiasFieldCorrectionInputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>CommandLineInputSpec</code></p>
 </blockquote>
 <p>Input specifications</p>
 
@@ -518,7 +562,7 @@ Arguments:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="N4BiasFieldCorrectionOutputSpec" class="doc_header"><code>class</code> <code>N4BiasFieldCorrectionOutputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L88" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>N4BiasFieldCorrectionOutputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>TraitedSpec</code></p>
+<h2 id="N4BiasFieldCorrectionOutputSpec" class="doc_header"><code>class</code> <code>N4BiasFieldCorrectionOutputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L112" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>N4BiasFieldCorrectionOutputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>TraitedSpec</code></p>
 </blockquote>
 <p>Output specifications</p>
 
@@ -539,7 +583,7 @@ Arguments:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="N4BiasFieldCorrection" class="doc_header"><code>class</code> <code>N4BiasFieldCorrection</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L94" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>N4BiasFieldCorrection</code>(<strong><code>command</code></strong>=<em><code>None</code></em>, <strong><code>terminal_output</code></strong>=<em><code>None</code></em>, <strong>**<code>inputs</code></strong>) :: <code>CommandLine</code></p>
+<h2 id="N4BiasFieldCorrection" class="doc_header"><code>class</code> <code>N4BiasFieldCorrection</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L120" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>N4BiasFieldCorrection</code>(<strong><code>command</code></strong>=<em><code>None</code></em>, <strong><code>terminal_output</code></strong>=<em><code>None</code></em>, <strong>**<code>inputs</code></strong>) :: <code>CommandLine</code></p>
 </blockquote>
 <p>ANTs Bias field correction.
 Arguments:
@@ -581,9 +625,11 @@ Returns:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## visualize</span>
-<span class="n">corrected_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ants_bfc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span><span class="p">)</span>
-<span class="n">corrected_data</span> <span class="o">=</span> <span class="n">corrected_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#first b0 volume</span>
-<span class="n">correctedb0_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span><span class="n">corrected_dwi</span><span class="p">,</span> <span class="n">corrected_data</span><span class="p">,</span> <span class="n">affine</span> <span class="o">=</span> <span class="n">corrected_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">corrected_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;outputs/biasfieldcorrected.nii.gz&#39;</span><span class="p">)</span>
+<span class="n">corrected_data</span> <span class="o">=</span> <span class="n">corrected_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># first b0 volume</span>
+<span class="n">correctedb0_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span>
+    <span class="n">corrected_dwi</span><span class="p">,</span> <span class="n">corrected_data</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">corrected_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plotting</span><span class="o">.</span><span class="n">plot_img</span><span class="p">(</span><span class="n">correctedb0_img</span><span class="p">)</span>
 </pre></div>
 
@@ -615,8 +661,8 @@ Returns:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test if file output is correct</span>
-<span class="n">test_eq</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ants_bfc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test if file output is correct</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;outputs/biasfieldcorrected.nii.gz&#39;</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -643,7 +689,7 @@ Returns:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="dwipreprocInputSpec" class="doc_header"><code>class</code> <code>dwipreprocInputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L115" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwipreprocInputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>CommandLineInputSpec</code></p>
+<h2 id="dwipreprocInputSpec" class="doc_header"><code>class</code> <code>dwipreprocInputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L142" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwipreprocInputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>CommandLineInputSpec</code></p>
 </blockquote>
 <p>Create a subclass with strict traits.</p>
 <p>This is used in 90% of the cases.</p>
@@ -665,7 +711,7 @@ Returns:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="dwipreprocOutputSpec" class="doc_header"><code>class</code> <code>dwipreprocOutputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L131" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwipreprocOutputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>TraitedSpec</code></p>
+<h2 id="dwipreprocOutputSpec" class="doc_header"><code>class</code> <code>dwipreprocOutputSpec</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L186" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwipreprocOutputSpec</code>(<strong>**<code>kwargs</code></strong>) :: <code>TraitedSpec</code></p>
 </blockquote>
 <p>Create a subclass with strict traits.</p>
 <p>This is used in 90% of the cases.</p>
@@ -687,7 +733,7 @@ Returns:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="dwipreproc" class="doc_header"><code>class</code> <code>dwipreproc</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L134" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwipreproc</code>(<strong><code>command</code></strong>=<em><code>None</code></em>, <strong><code>terminal_output</code></strong>=<em><code>None</code></em>, <strong>**<code>inputs</code></strong>) :: <code>CommandLine</code></p>
+<h2 id="dwipreproc" class="doc_header"><code>class</code> <code>dwipreproc</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L190" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>dwipreproc</code>(<strong><code>command</code></strong>=<em><code>None</code></em>, <strong><code>terminal_output</code></strong>=<em><code>None</code></em>, <strong>**<code>inputs</code></strong>) :: <code>CommandLine</code></p>
 </blockquote>
 <p>mrtrix3 dwipreproc for motion/eddy current correction
 Arguments:
@@ -714,21 +760,34 @@ Returns:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage:</span>
 <span class="n">preproc</span> <span class="o">=</span> <span class="n">dwipreproc</span><span class="p">()</span>
 <span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="n">ants_bfc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span>
-<span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">rpe_options</span> <span class="o">=</span> <span class="s1">&#39;-rpe_none&#39;</span>
-<span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">pe_dir</span> <span class="o">=</span> <span class="s1">&#39;j-&#39;</span> <span class="c1">#AP direction</span>
+<span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">rpe_options</span> <span class="o">=</span> <span class="s2">&quot;-rpe_none&quot;</span>
+<span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">pe_dir</span> <span class="o">=</span> <span class="s2">&quot;j-&quot;</span>  <span class="c1"># AP direction</span>
 <span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">eddy_options</span> <span class="o">=</span> <span class="s1">&#39;&quot;--slm=linear &quot;&#39;</span>
 <span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">nthreads</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">grad_fsl</span> <span class="o">=</span> <span class="n">bfiles_fsl</span>
-<span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/preproc.nii.gz&#39;</span>
+<span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s2">&quot;outputs/preproc.nii.gz&quot;</span>
 <span class="n">preproc</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
 
-<span class="c1">## visualize</span>
-<span class="n">preproc_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span><span class="p">)</span>
-<span class="n">preproc_data</span> <span class="o">=</span> <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,:,:,</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#first b0 volume</span>
-<span class="n">preproc_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span><span class="n">preproc_dwi</span><span class="p">,</span> <span class="n">preproc_data</span><span class="p">,</span> <span class="n">affine</span> <span class="o">=</span> <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## visualize</span>
+<span class="n">preproc_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;outputs/preproc.nii.gz&quot;</span><span class="p">)</span>
+<span class="n">preproc_data</span> <span class="o">=</span> <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># first b0 volume</span>
+<span class="n">preproc_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span>
+    <span class="n">preproc_dwi</span><span class="p">,</span> <span class="n">preproc_data</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">plotting</span><span class="o">.</span><span class="n">plot_img</span><span class="p">(</span><span class="n">preproc_img</span><span class="p">)</span>
 </pre></div>
 
@@ -761,7 +820,7 @@ Returns:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test if image has been produced</span>
-<span class="n">test_eq</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;outputs/preproc.nii.gz&quot;</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -788,7 +847,7 @@ Returns:
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mask2seedtuple" class="doc_header"><code>mask2seedtuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L158" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mask2seedtuple</code>(<strong><code>mask_file</code></strong>, <strong><code>grid_size</code></strong>)</p>
+<h4 id="mask2seedtuple" class="doc_header"><code>mask2seedtuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L215" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mask2seedtuple</code>(<strong><code>mask_file</code></strong>, <strong><code>grid_size</code></strong>)</p>
 </blockquote>
 
 </div>

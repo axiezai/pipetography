@@ -11,7 +11,10 @@ entries:
       url: /
     - output: web,pdf
       title: Module core
-      url: /pipetography
+      url: /core
+    - output: web,pdf
+      title: Module pipeline
+      url: /pipeline
     output: web
     title: pipetography
   output: web

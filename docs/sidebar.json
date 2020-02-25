@@ -1,6 +1,7 @@
 {
   "pipetography": {
     "Overview": "/",
-    "Module core": "/pipetography"
+    "Module core": "/core",
+    "Module pipeline": "/pipeline"
   }
 }
