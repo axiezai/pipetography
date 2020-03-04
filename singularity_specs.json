@@ -1,0 +1,32 @@
+{
+  "pkg_manager": "apt",
+  "instructions": [
+    ["base", "neurodebian"],
+    [
+      "ants",
+      {
+        "version": "latest",
+        "method": "source"
+      }
+    ],
+    [
+      "fsl",
+      {
+        "version": "6.0.1"
+      }
+    ],
+    [
+      "mrtrix3",
+      {
+        "version": "3.0_RC3"
+      }
+    ],
+    [
+      "miniconda",
+      {
+        "create_env": "tracts",
+        "conda_install": ["python=3.7.3", "dipy", "nibabel", "pybids", "nipype", "matplotlib", "fastcore==0.1.11"]
+      }
+    ]
+  ]
+}
