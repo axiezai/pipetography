@@ -2,13 +2,8 @@
 > Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain.
 
 
-```
-%%capture
-#hide
-from pipetography.core import *
-```
-
 ![CI](https://github.com/axiezai/pipetography/workflows/CI/badge.svg)
+![docker](https://img.shields.io/docker/v/axiezai/pipetography)
 
 This repo currently only has pre-processing capabilities! More will be added in the near future.
 
@@ -299,7 +294,7 @@ Image('data/derivatives/test_run/pipetography_detailed.png')
 
 
 
-![png](docs/images/output_32_0.png)
+![png](docs/images/output_31_0.png)
 
 
 
