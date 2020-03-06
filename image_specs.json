@@ -5,8 +5,7 @@
     [
       "ants",
       {
-        "version": "latest",
-        "method": "source"
+        "version": "2.3.1"
       }
     ],
     [
@@ -21,11 +20,13 @@
         "version": "3.0_RC3"
       }
     ],
+    ["install", ["git", "ssh", "tar", "gzip", "ca-certificates"]],
     [
       "miniconda",
       {
         "create_env": "tracts",
-        "conda_install": ["python=3.7.3", "dipy", "nibabel", "pybids", "nipype", "matplotlib", "fastcore==0.1.11"]
+        "conda_install": ["python=3.7.3", "dipy", "nibabel", "nipype", "matplotlib", "pytest"],
+        "pip_install": ["pybids", "fastcore==0.1.11"]
       }
     ]
   ]
