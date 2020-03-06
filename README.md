@@ -12,7 +12,7 @@ This repo currently only has pre-processing capabilities! More will be added in 
 
 ## Install
 
-This pip install function doesn't work yet! Don't do it yet! It will work with the first release!
+Install version `0.1.0`:
 
 `pip install pipetography`
 
