@@ -5,6 +5,8 @@ __all__ = ['pipeline']
 # Cell
 #export
 import os, sys
+from shutil import which
+
 import pipetography.core as ppt
 
 from nipype import IdentityInterface, Function
@@ -79,6 +81,33 @@ class pipeline:
         self.datasink = Node(DataSink(), name="datasink")
         # workflow for nipype
         self.workflow = None
+        #
+
+    def check_environment(self):
+        """
+        Check your computing environment for FSL environment variables `FSLOUTPUTTYPE` and `FSLDIR`
+        Check if ANTs PATH is included in your environment
+        Check if mrtrix3 is in your PATH
+        """
+        assert "FSLOUTPUTTYPE" in os.environ
+        assert "FSLDIR" in os.environ
+        if "FSLOUTPUTTYPE" in os.environ:
+            print("FSLOUTPUTTYPE is valid")
+        else:
+            sys.exit("FSLOUTPUTTYPE is not defined, make sure FSL is configured!")
+
+        if "FSLDIR" in os.environ:
+            print("FSLDIR is valid")
+        else:
+            sys.exit("FSLOUTPUTTYPE is not defined, make sure FSL is configured!")
+
+        #ANTS:
+        assert "ANTSPATH" in os.environ
+        print("ANTS is valid")
+        #mrtrix:
+        assert which('mrview') is not None
+        print("mrtrix3 is valid")
+        return None
         #
 
     def set_datasink(self):
@@ -361,6 +390,34 @@ class pipeline:
         self.workflow.connect(
             self.nonlinear_coreg, 'warped_image', self.datasink, 'coreg.@syn_atlas'
         )
+        #
+
+    def default_setup(self, phase_encoding_design = "-rpe_none", phase_encoding_dir = "j-"):
+        """
+        Set up pipeline parameters with all default settings blindly
+        You want to use this for a quick test run. Then tweak parameters after examining all output images
+        Note that this assumes input options for eddy current correction as "--slm=linear"
+        Arguments:
+            phase_encoding_design (str): defaults to "-rpe_none", or no reverse phase encoding volume, eddy current and motion correction only, other options include "rpe_pair, rpe_all, rpe_header"
+            phase_encoding_dir (str): defaults to "j-", or anterior to posterior. (Options: i,j,k or RL, PA, IS)
+        """
+        self.denoise_inputs(force = True, quiet = True)
+        self.DeGibbs_inputs()
+        self.ants_bfc_inputs()
+        self.mrt_preproc_inputs(
+            rpe_options=phase_encoding_design,
+            pe_dir=phase_encoding_dir,
+            eddy_options='"--slm=linear --verbose"',
+            nthreads=4,
+            )
+        self.b0extract_inputs()
+        self.b0mean_inputs()
+        self.bet_inputs()
+        self.atlas_inputs(atlas_dir=str(input('Please indicate directory with atlas volumes: ')), atlas_names=list(input('Please indicate list of selected atlas names: ')))
+        self.linear_coreg_inputs() #defaults
+        self.nonlinear_coreg_inputs() #defaults
+        self.connect_nodes(wf_name = 'default_workflow')
+        return print(self.__dict__)
 
     def draw_pipeline(self):
         self.workflow.write_graph(graph2use='orig', dotfilename = 'pipetography.dot')

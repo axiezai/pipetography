@@ -2,20 +2,15 @@
 > Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain.
 
 
-```
-%%capture
-#hide
-from pipetography.core import *
-```
-
-This file will become your README and also the index of your documentation.
+This repo currently only has pre-processing capabilities! More will be added in the near future.
 
 ## Install
 
-This pip install function doesn't work yet! Don't do it! It will work with the first release!
+This pip install function doesn't work yet! Don't do it yet! It will work with the first release!
+
 `pip install pipetography`
 
-Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, you have to follow their installation instructions:    
+Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, you have to follow their installation instructions and set them up appropriately on your machine as well:    
  - [mrtrix3](https://mrtrix.readthedocs.io/en/latest/installation/before_install.html)
  
  - [ANTs](https://github.com/ANTsX/ANTs/wiki/Compiling-ANTs-on-Linux-and-Mac-OS)
@@ -35,6 +30,16 @@ preproc_dwi = pipeline()
 ```
 
     Creating layout of data directory, might take a while if there are a lot of subjects
+
+
+```
+preproc_dwi.check_environment()
+```
+
+    FSLOUTPUTTYPE is valid
+    FSLDIR is valid
+    ANTS is valid
+    mrtrix3 is valid
 
 
 ```
@@ -82,7 +87,20 @@ preproc_dwi.__dict__
 
 
 
-We can fill this in one by one:
+We can set up preprocessing pipeline with default parameters:
+
+```
+preproc_dwi.default_setup()
+```
+
+    Please indicate directory with atlas volumes:  '/Users/xxie/lab/atlases'
+    Please indicate list of selected atlas names:  ['BN_Atlas_246_2mm.nii','DK_atlas86_1mm.nii']
+
+
+    {'data_dir': 'data', 'sub_list': ['11048'], 'layout': BIDS Layout: ...ers/xxie/lab/pipetography/data | Subjects: 1 | Sessions: 1 | Runs: 0, 'dwi_file': 'sub-{subject_id}/ses-*/dwi/sub-{subject_id}_ses-*_dwi.nii.gz', 'b_files': 'sub-{subject_id}/ses-1/dwi/sub-{subject_id}_ses-1_dwi.bv*', 'sub_template': {'dwi': 'sub-{subject_id}/ses-*/dwi/sub-{subject_id}_ses-*_dwi.nii.gz', 'b_files': 'sub-{subject_id}/ses-1/dwi/sub-{subject_id}_ses-1_dwi.bv*'}, 'sub_source': default_workflow.data_source, 'select_files': default_workflow.select_files, 'bfiles_input': default_workflow.select_bfiles, 'denoise': default_workflow.denoise, 'ringing': default_workflow.ringing_removal, 'ants_bfc': default_workflow.ants_bias_correct, 'mrt_preproc': default_workflow.mrtrix3_preproc, 'atlas_dir': "'/Users/xxie/lab/atlases'", 'atlas_names': ['[', "'", 'B', 'N', '_', 'A', 't', 'l', 'a', 's', '_', '2', '4', '6', '_', '2', 'm', 'm', '.', 'n', 'i', 'i', "'", ',', "'", 'D', 'K', '_', 'a', 't', 'l', 'a', 's', '8', '6', '_', '1', 'm', 'm', '.', 'n', 'i', 'i', "'", ']'], 'atlas_source': default_workflow.atlas_source, 'select_atlas': default_workflow.select_atlases, 'b0extract': default_workflow.dwiextract, 'b0mean': default_workflow.mrmath, 'fsl_bet': default_workflow.brain_extraction, 'linear_coreg': default_workflow.linear_registration, 'nonlinear_coreg': default_workflow.nonlinear_registration, 'datasink': default_workflow.datasink, 'workflow': default_workflow}
+
+
+Then you can simply call `preproc_dwi.draw_pipeline()` to visualize the workflow as a PNG image, or `preproc_dwi.run_pipeline()` to run the default pipeline. OR we can fill this in one by one in detail:
 
 First, let's tell the pipeline where we have atlas volumes and which ones to use:
 
@@ -245,7 +263,7 @@ All the default settings may not be optimal for your dataset, run the processing
 Now that our pre-processing Nodes are properly setup, we can connect and create a workflow:
 
 ```
-preproc_dwi.connect_nodes(wf_name = 'test_run')
+preproc_dwi.connect_nodes(wf_name = 'pipetography_workflow')
 preproc_dwi.draw_pipeline()
 ```
 
@@ -259,6 +277,12 @@ Image('data/derivatives/test_run/pipetography_detailed.png')
 
 
 
-![png](docs/images/output_28_0.png)
+![png](docs/images/output_30_0.png)
 
 
+
+Finally, to run the entire pipeline with our inputs. When we declare `parallel = True`, we are telling Nipype to run parallel pipelines for each iterable input, the pipeline will prompt an input for the number of processes. If you enter `4`, there will be 4 processes taking up your available computing resources:
+
+```
+preproc_dwi.run_pipeline(parallel = True)
+```
