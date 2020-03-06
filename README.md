@@ -8,6 +8,8 @@
 from pipetography.core import *
 ```
 
+![CI](https://github.com/axiezai/pipetography/workflows/CI/badge.svg)
+
 This repo currently only has pre-processing capabilities! More will be added in the near future.
 
 ## Install
@@ -297,7 +299,7 @@ Image('data/derivatives/test_run/pipetography_detailed.png')
 
 
 
-![png](docs/images/output_31_0.png)
+![png](docs/images/output_32_0.png)
 
 
 
