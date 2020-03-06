@@ -4,7 +4,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: docker://axiezai/pipetography
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
       with:
         python-version: '3.6'
         architecture: 'x64'
@@ -12,13 +13,6 @@ jobs:
       run: |
         pip install nbdev jupyter
         pip install -e .
-    - name: Setup libraries
-      run: |
-        . ${FSLDIR}/etc/fslconf/fsl.sh
-        PATH=${FSLDIR}/bin:${PATH}
-        export FSLDIR PATH
-        export ANTSPATH=/opt/ANTs/bin/
-        export PATH=${ANTSPATH}:$PATH
     - name: Read all notebooks
       run: |
         nbdev_read_nbs
