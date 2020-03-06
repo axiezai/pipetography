@@ -28,7 +28,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200306-12:15:15,302 nipype.utils INFO:
+<pre>200306-14:26:03,230 nipype.utils INFO:
 	 No new version available.
 </pre>
 </div>
@@ -53,7 +53,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
 <span class="c1"># if our sample data can create BIDS layouts</span>
 <span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
 
@@ -118,7 +118,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
 <span class="n">sub_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
 </pre></div>
@@ -149,8 +149,9 @@ Input str of path to BIDS dir otherwise</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
+<span class="kn">import</span> <span class="nn">glob</span>
 <span class="c1">#if subjects were all grabbed</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">data_dir</span><span class="p">))[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span><span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -208,7 +209,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
 <span class="n">bfiles</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
@@ -268,7 +269,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage</span>
 <span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
@@ -383,7 +384,8 @@ Arguments:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">#usage:</span>
 <span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nb</span>
 <span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">plotting</span>
 <span class="kn">from</span> <span class="nn">nilearn.image</span> <span class="kn">import</span> <span class="n">new_img_like</span>
@@ -422,7 +424,8 @@ Arguments:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># visualize:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">#visualize:</span>
 <span class="n">orig_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># display dwi</span>
 <span class="n">orig_data</span> <span class="o">=</span> <span class="n">orig_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">orig_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span><span class="n">orig_dwi</span><span class="p">,</span> <span class="n">orig_data</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">orig_dwi</span><span class="o">.</span><span class="n">affine</span><span class="p">,</span> <span class="n">copy_header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -586,7 +589,8 @@ Returns:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">#usage</span>
 <span class="n">ants_bfc</span> <span class="o">=</span> <span class="n">N4BiasFieldCorrection</span><span class="p">()</span>
 <span class="n">ants_bfc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/biasfieldcorrected.nii.gz&#39;</span>
 <span class="n">ants_bfc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="mi">4</span>
@@ -604,7 +608,8 @@ Returns:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## visualize</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">#visualize</span>
 <span class="n">corrected_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;outputs/biasfieldcorrected.nii.gz&#39;</span><span class="p">)</span>
 <span class="n">corrected_data</span> <span class="o">=</span> <span class="n">corrected_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># first b0 volume</span>
 <span class="n">correctedb0_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span>
@@ -740,7 +745,8 @@ Returns:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">#usage:</span>
 <span class="n">preproc</span> <span class="o">=</span> <span class="n">dwipreproc</span><span class="p">()</span>
 <span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="n">ants_bfc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span>
 <span class="n">preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">rpe_options</span> <span class="o">=</span> <span class="s2">&quot;-rpe_none&quot;</span>
@@ -762,7 +768,8 @@ Returns:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## visualize</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">## visualize</span>
 <span class="n">preproc_dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;outputs/preproc.nii.gz&quot;</span><span class="p">)</span>
 <span class="n">preproc_data</span> <span class="o">=</span> <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># first b0 volume</span>
 <span class="n">preproc_img</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span>

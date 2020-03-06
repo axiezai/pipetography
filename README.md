@@ -2,6 +2,12 @@
 > Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain.
 
 
+```
+%%capture
+#hide
+from pipetography.core import *
+```
+
 This repo currently only has pre-processing capabilities! More will be added in the near future.
 
 ## Install
@@ -25,7 +31,8 @@ We will wrap all of our tasks in `Nipype`'s `Nodes`
 Nipype wraps the tasks into Nodes and connects them into an automated workflow that can run parallel tasks, the preprocessing workflow includes several functions, some of which require user inputs. We will go over them here.
 
 ```
-#example usage, create pipeline:
+from pipetography.pipeline import pipeline
+
 preproc_dwi = pipeline()
 ```
 
@@ -33,6 +40,7 @@ preproc_dwi = pipeline()
 
 
 ```
+#example
 preproc_dwi.check_environment()
 ```
 
@@ -43,7 +51,8 @@ preproc_dwi.check_environment()
 
 
 ```
-# set output destination:
+#example
+#set output destination:
 preproc_dwi.set_datasink()
 ```
 
@@ -53,6 +62,7 @@ preproc_dwi.set_datasink()
 Take a look at what's in the `pipeline`:
 
 ```
+#example
 preproc_dwi.__dict__
 ```
 
@@ -90,6 +100,7 @@ preproc_dwi.__dict__
 We can set up preprocessing pipeline with default parameters:
 
 ```
+#example
 preproc_dwi.default_setup()
 ```
 
@@ -105,12 +116,14 @@ Then you can simply call `preproc_dwi.draw_pipeline()` to visualize the workflow
 First, let's tell the pipeline where we have atlas volumes and which ones to use:
 
 ```
+#example
 preproc_dwi.atlas_inputs(atlas_dir = '/Users/xxie/lab/atlases', atlas_names = ['BN_Atlas_246_2mm.nii','DK_atlas86_1mm.nii'])
 ```
 
 Next, we give inputs to the `denoise` Node:
 
 ```
+#example
 preproc_dwi.denoise_inputs(force = True, quiet = True)
 # we kept everything else default, like output names and number of threads.
 ```
@@ -118,6 +131,7 @@ preproc_dwi.denoise_inputs(force = True, quiet = True)
 Gibbs ringing removal:
 
 ```
+#example
 preproc_dwi.DeGibbs_inputs() # keep it default
 print('Output file name is ' + preproc_dwi.ringing.inputs.out_file)
 ```
@@ -128,6 +142,7 @@ print('Output file name is ' + preproc_dwi.ringing.inputs.out_file)
 ANTs Bias Field Correction:
 
 ```
+#example
 preproc_dwi.ants_bfc_inputs() # keep it default:
 preproc_dwi.ants_bfc.inputs.print_traits
 ```
@@ -150,6 +165,7 @@ preproc_dwi.ants_bfc.inputs.print_traits
 Next let's set up eddy current/motion correction, we need to tell the pipeline the phase encoding settings and inputs to eddy algorithm:
 
 ```
+#example
 preproc_dwi.mrt_preproc_inputs(
     rpe_options="-rpe_none",
     pe_dir="j-",
@@ -181,6 +197,7 @@ preproc_dwi.mrt_preproc.inputs.print_traits
 Next, we set-up brain extraction from B0 volumes:
 
 ```
+#example
 # Extract b0 volumes:
 preproc_dwi.b0extract_inputs() #default
 # Create average B0 volume:
@@ -192,6 +209,7 @@ preproc_dwi.bet_inputs() #defaults again, using FSL's BET
 ANTs registration set up:
 
 ```
+#example
 preproc_dwi.linear_coreg_inputs() #defaults
 preproc_dwi.nonlinear_coreg_inputs() #defaults
 preproc_dwi.nonlinear_coreg.inputs.print_traits
@@ -263,6 +281,7 @@ All the default settings may not be optimal for your dataset, run the processing
 Now that our pre-processing Nodes are properly setup, we can connect and create a workflow:
 
 ```
+#example
 preproc_dwi.connect_nodes(wf_name = 'pipetography_workflow')
 preproc_dwi.draw_pipeline()
 ```
@@ -270,6 +289,7 @@ preproc_dwi.draw_pipeline()
 Let's take a look at the final workflow we created:
 
 ```
+#example
 from IPython.display import Image
 Image('data/derivatives/test_run/pipetography_detailed.png')
 ```
@@ -277,12 +297,13 @@ Image('data/derivatives/test_run/pipetography_detailed.png')
 
 
 
-![png](docs/images/output_30_0.png)
+![png](docs/images/output_31_0.png)
 
 
 
 Finally, to run the entire pipeline with our inputs. When we declare `parallel = True`, we are telling Nipype to run parallel pipelines for each iterable input, the pipeline will prompt an input for the number of processes. If you enter `4`, there will be 4 processes taking up your available computing resources:
 
 ```
+#example
 preproc_dwi.run_pipeline(parallel = True)
 ```

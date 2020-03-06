@@ -28,7 +28,7 @@ summary: "Here we have the Nodes wrapping around our core functions, which can b
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200306-12:15:15,819 nipype.utils INFO:
+<pre>200306-14:25:01,613 nipype.utils INFO:
 	 No new version available.
 </pre>
 </div>
@@ -91,7 +91,7 @@ Attributes:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage, create pipeline:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#create pipeline:</span>
 <span class="n">preproc_dwi</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">()</span>
 </pre></div>
 
@@ -126,7 +126,8 @@ Attributes:
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">check_environment</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">check_environment</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -156,7 +157,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set output destination:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">#set output destination:</span>
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">set_datasink</span><span class="p">()</span>
 </pre></div>
 
@@ -248,7 +250,9 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">default_setup</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">#usage</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">default_setup</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -294,7 +298,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">atlas_inputs</span><span class="p">(</span><span class="n">atlas_dir</span> <span class="o">=</span> <span class="s1">&#39;/Users/xxie/lab/atlases&#39;</span><span class="p">,</span> <span class="n">atlas_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BN_Atlas_246_2mm.nii&#39;</span><span class="p">,</span><span class="s1">&#39;DK_atlas86_1mm.nii&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">atlas_inputs</span><span class="p">(</span><span class="n">atlas_dir</span> <span class="o">=</span> <span class="s1">&#39;/Users/xxie/lab/atlases&#39;</span><span class="p">,</span> <span class="n">atlas_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BN_Atlas_246_2mm.nii&#39;</span><span class="p">,</span><span class="s1">&#39;DK_atlas86_1mm.nii&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -314,7 +319,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">denoise_inputs</span><span class="p">(</span><span class="n">force</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">quiet</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">denoise_inputs</span><span class="p">(</span><span class="n">force</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">quiet</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="c1"># we kept everything else default, like output names and number of threads.</span>
 </pre></div>
 
@@ -335,7 +341,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">DeGibbs_inputs</span><span class="p">()</span> <span class="c1"># keep it default</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">DeGibbs_inputs</span><span class="p">()</span> <span class="c1"># keep it default</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Output file name is &#39;</span> <span class="o">+</span> <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">ringing</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span><span class="p">)</span>
 </pre></div>
 
@@ -356,7 +363,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">ants_bfc_inputs</span><span class="p">()</span> <span class="c1"># keep it default:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">ants_bfc_inputs</span><span class="p">()</span> <span class="c1"># keep it default:</span>
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">ants_bfc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">print_traits</span>
 </pre></div>
 
@@ -378,7 +386,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">mrt_preproc_inputs</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">mrt_preproc_inputs</span><span class="p">(</span>
     <span class="n">rpe_options</span><span class="o">=</span><span class="s2">&quot;-rpe_none&quot;</span><span class="p">,</span>
     <span class="n">pe_dir</span><span class="o">=</span><span class="s2">&quot;j-&quot;</span><span class="p">,</span>
     <span class="n">eddy_options</span><span class="o">=</span><span class="s1">&#39;&quot;--slm=linear --verbose&quot;&#39;</span><span class="p">,</span>
@@ -405,7 +414,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Extract b0 volumes:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1"># Extract b0 volumes:</span>
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">b0extract_inputs</span><span class="p">()</span> <span class="c1">#default</span>
 <span class="c1"># Create average B0 volume:</span>
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">b0mean_inputs</span><span class="p">()</span> <span class="c1">#default</span>
@@ -430,7 +440,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">linear_coreg_inputs</span><span class="p">()</span> <span class="c1">#defaults</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">linear_coreg_inputs</span><span class="p">()</span> <span class="c1">#defaults</span>
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">nonlinear_coreg_inputs</span><span class="p">()</span> <span class="c1">#defaults</span>
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">nonlinear_coreg</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">print_traits</span>
 </pre></div>
@@ -453,7 +464,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span><span class="o">.</span><span class="n">connect_nodes</span><span class="p">(</span><span class="n">wf_name</span> <span class="o">=</span> <span class="s1">&#39;pipetography_workflow&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">connect_nodes</span><span class="p">(</span><span class="n">wf_name</span> <span class="o">=</span> <span class="s1">&#39;pipetography_workflow&#39;</span><span class="p">)</span>
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">draw_pipeline</span><span class="p">()</span>
 </pre></div>
 
@@ -474,7 +486,8 @@ mrtrix3 is valid
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="n">Image</span><span class="p">(</span><span class="s1">&#39;data/derivatives/test_run/pipetography_detailed.png&#39;</span><span class="p">)</span>
 </pre></div>
 
