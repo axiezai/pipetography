@@ -28,13 +28,12 @@ We will wrap all of our tasks in `Nipype`'s `Nodes`
 Nipype wraps the tasks into Nodes and connects them into an automated workflow that can run parallel tasks, the preprocessing workflow includes several functions, some of which require user inputs. We will go over them here.
 
 ```
+%%capture
 from pipetography.pipeline import pipeline
+from pipetography.core import *
 
 preproc_dwi = pipeline()
 ```
-
-    Creating layout of data directory, might take a while if there are a lot of subjects
-
 
 ```
 #example
