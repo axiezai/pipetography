@@ -51,7 +51,8 @@ index = {"get_subs": "00_core.ipynb",
          "MRTransform": "00_core.ipynb",
          "MRRegridInputSpec": "00_core.ipynb",
          "MRRegridOutputSpec": "00_core.ipynb",
-         "MRRegrid": "00_core.ipynb"}
+         "MRRegrid": "00_core.ipynb",
+         "get_sub_gradfiles": "00_core.ipynb"}
 
 modules = ["core.py",
            "pipeline.py"]
