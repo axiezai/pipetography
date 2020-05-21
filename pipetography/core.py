@@ -73,10 +73,8 @@ def anat2id(anat_files):
     The format of the output is [sub_id]_[session_id]
     """
     import os, re
-    fs_subid = []
-    for file in anat_files:
-        tmp_split = re.split('_', os.path.basename(file))
-        fs_subid.append(tmp_split[0] + '_' + tmp_split[1])
+    tmp_split = re.split('_', os.path.basename(anat_files))
+    fs_subid = tmp_split[0] + '_' + tmp_split[1]
 
     return fs_subid
 
