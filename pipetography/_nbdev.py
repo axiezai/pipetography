@@ -54,7 +54,13 @@ index = {"get_subs": "00_core.ipynb",
          "MRRegrid": "00_core.ipynb",
          "get_sub_gradfiles": "00_core.ipynb",
          "BIDS_metadata": "00_core.ipynb",
-         "anat2id": "00_core.ipynb"}
+         "anat2id": "00_core.ipynb",
+         "CheckFiniteInputSpec": "00_core.ipynb",
+         "CheckFiniteOutputSpec": "00_core.ipynb",
+         "CheckFinite": "00_core.ipynb",
+         "CompareIfInputSpec": "00_core.ipynb",
+         "CompareIfOutputSpec": "00_core.ipynb",
+         "CompareIf": "00_core.ipynb"}
 
 modules = ["core.py",
            "pipeline.py"]

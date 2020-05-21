@@ -100,7 +100,7 @@ class pipeline:
         )
 
         self.get_fs_id = MapNode(
-            Function(input_names = ["anat_files"], output_names ["fs_id_list"],
+            Function(input_names = ["anat_files"], output_names = ["fs_id_list"],
                      function = ppt.anat2id),
             name = 'freesurfer_sub_id', iterfield = "anat_files"
         )
@@ -126,7 +126,7 @@ class pipeline:
         # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
         # FreeSurfer recon-all mainly for WM segmentation
         # we are greedy so we just let it segment and produce everything
-        self.reconall = MapNode(ReconAll(), name='FSrecon', iterfield="T1_files")
+        self.reconall = MapNode(ReconAll(), name='FSrecon', iterfield=["T1_files","subject_id"])
 
         # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
         # Preparation nodes (mask, check gradient, convert):
@@ -151,8 +151,14 @@ class pipeline:
         # Rician background noise removal requires multiple nodes:
         # create new gradient file because we have changed the data extensively now:
         self.grad_info = MapNode(ppt.MRInfo(), name = 'NewGradient', iterfield = ["in_file", "grad_file"])
+
+
         # get background low noise map:
         self.low_noise_map = MapNode(ppt.CheckNIZ(), name = 'LowNoiseMap', iterfield=["isfinite", "cond_if"])
+        #self.check_finite = MapNode(ppt.CheckFinite(), name = 'finite', iterfield = "isfinite")
+        #self.compare_if = MapNode(ppt.CompareIf(), name='compareif', iterfield = "cond_if")
+
+
         # Compute Rician noise:
         self.rician_noise = MapNode(ppt.RicianNoise(), name = 'RicianNoise', iterfield = ["in_file","lownoisemap"])
         self.check_rician = MapNode(ppt.CheckNIZ(), name = 'NoiseComparison', iterfield = ["isfinite", "cond_if"])
@@ -472,16 +478,19 @@ class pipeline:
 
 
     def rician_noise_inputs(self, power = 2, denoise = 2):
+        #self.check_finite.inputs.out_file = 'finite.mif'
+        #self.compare_if.inputs.out_file = 'mr_compareif.mif'
+        self.low_noise_map.inputs.out_file = 'lownoisemap.mif'
+        self.low_noise_map.inputs.force = True
+        self.low_noise_map.inputs.quiet = True
+        self.low_noise_map.inputs.nthreads = self.mrtrix_nthreads
         self.rician_noise.inputs.power = power
         self.rician_noise.inputs.denoise = denoise
         self.rician_noise.inputs.out_file = 'rician_removed_dwi.mif'
         self.rician_noise.inputs.force=True
         self.rician_noise.inputs.quiet=True
         self.rician_noise.inputs.nthreads = self.mrtrix_nthreads
-        self.low_noise_map.inputs.out_file = 'lownoisemap.mif'
-        self.low_noise_map.inputs.force = True
-        self.low_noise_map.inputs.quiet = True
-        self.low_noise_map.inputs.nthreads = self.mrtrix_nthreads
+
         self.check_rician.inputs.out_file = 'RCN_tmp.mif'
         self.check_rician.inputs.force = True
         self.check_rician.inputs.nthreads = self.mrtrix_nthreads
@@ -524,9 +533,11 @@ class pipeline:
         self.sub_apply_mask.inputs.out_file = 'b0_dwi_brain.nii.gz'
 
     # +++++++++++++++++++++++++++ Align DWI to MNI inputs +++++++++++++++++++++ #
-    def dwi_align_inputs(self, bet_args = '-R -B -m', flirt = True):
-        self.t1_bet.inputs.args = bet_args
-        self.t1_bet.inputs.out_file = 'acpc_t1_brain'
+    def dwi_align_inputs(self, flirt = True):
+        self.t1_bet.inputs.mask = True
+        #self.t1_bet.inputs.reduce_bias = True
+        self.t1_bet.inputs.robust = True
+        self.t1_bet.inputs.out_file = 'acpc_t1_brain.nii.gz'
         self.epi_reg.inputs.out_base = 'dwi2acpc'
         self.acpc_xfm.inputs.flirt = flirt
         self.acpc_xfm.inputs.out_file = 'dwi2acpc_xfm.mat'
@@ -689,7 +700,7 @@ class pipeline:
                 (self.concatxfm, self.alignxfm, [("out_file", "in_file")]),
                 (self.select_files, self.ACPC_warp, [("anat", "in_file")]),
                 (self.alignxfm, self.ACPC_warp, [("out_file", "premat")]),
-                (self.ACPC_warp, self.datasink, [("out_file", "acpc_aligned.@t1_acpc")])
+                (self.ACPC_warp, self.datasink, [("out_file", "t1_acpc_aligned")])
             ]
         )
         # outputs of these nodes to datasink:
@@ -712,9 +723,9 @@ class pipeline:
                 (self.ACPC_warp, self.reconall, [("out_file", "T1_files")]),
                 (self.select_files, self.get_fs_id, [("anat", "anat_files")]),
                 (self.get_fs_id, self.reconall, [("fs_id_list", "subject_id")]),
-                (self.reconall, self.datasink, [("T1", "reconall.@T1"),
-                                               ("wm", "reconall.@wm"),
-                                               ("wmparc", "reconall.@wmparc")])
+#                 (self.reconall, self.datasink, [("T1", "reconall.@T1"),
+#                                                ("wm", "reconall.@wm"),
+#                                                ("wmparc", "reconall.@wmparc")])
             ]
         )
 
@@ -747,35 +758,42 @@ class pipeline:
         self.workflow.connect(
             [
                 (self.NewGradMR, self.denoise, [("out_file", "in_file")]),
-                (self.denoise, self.datasink, [("noise", "preproc.@noise")]),
+                #(self.denoise, self.datasink, [("noise", "preproc.@noise")]),
                 (self.denoise, self.degibbs, [("out_file", "in_file")]),
                 (self.degibbs, self.fslpreproc, [("out_file", "in_file")]),
                 (self.GradCheck, self.fslpreproc, [("out_bfile", "grad_file")]),
-                (self.fslpreproc, self.datasink, [("out_file", "preproc.@fslpreproc")]),
+                #(self.fslpreproc, self.datasink, [("out_file", "preproc.@fslpreproc")]),
                 (self.fslpreproc, self.biascorrect, [("out_file", "in_file")]),
                 (self.GradCheck, self.biascorrect, [("out_bfile", "grad_file")]),
-                (self.biascorrect, self.datasink, [("bias", "preproc.@biasfield")]),
+                #(self.biascorrect, self.datasink, [("bias", "preproc.@biasfield")]),
                 (self.biascorrect, self.grad_info, [("out_file", "in_file")]),
+                # rician portion
                 (self.GradCheck, self.grad_info, [("out_bfile", "grad_file")]),
                 (self.denoise, self.low_noise_map, [("noise", "isfinite")]),
                 (self.denoise, self.low_noise_map, [("noise", "cond_if")]),
                 (self.low_noise_map, self.rician_noise, [("out_file", "lownoisemap")]),
+
+                #(self.denoise, self.check_finite, [("noise", "isfinite")]),
+                #(self.check_finite, self.compare_if, [("out_file", "cond_if")]),
+                #(self.compare_if, self.rician_noise, [("out_file", "lownoisemap")]),
+                #(self.denoise, self.rician_noise, [("noise", "lownoisemap")]),
                 (self.biascorrect, self.rician_noise, [("out_file", "in_file")]),
                 (self.rician_noise, self.check_rician, [("out_file", "isfinite")]),
                 (self.rician_noise, self.check_rician, [("out_file", "cond_if")]),
                 (self.check_rician, self.convert_rician, [("out_file", "in_file")]),
                 (self.grad_info, self.convert_rician, [("out_bfile", "grad_file")]),
-                (self.convert_rician, self.datasink, [("out_file", "preproc.@RCN_corrected")]),
+                #(self.convert_rician, self.datasink, [("out_file", "preproc.@RCN_corrected")]),
                 (self.convert_rician, self.dwi_mask, [("out_file", "in_file")]),
+                # rician ends
                 (self.dwi_mask, self.fit_tensor, [("out_file", "in_mask")]),
                 (self.convert_rician, self.fit_tensor, [("out_file", "in_file")]),
                 (self.fit_tensor, self.tensor_FA, [("out_file", "in_file")]),
                 (self.tensor_FA, self.wm_mask, [("out_fa", "in_file")]),
                 (self.wm_mask, self.norm_intensity, [("out_file", "mask_file")]),
                 (self.convert_rician, self.norm_intensity, [("out_file", "in_file")]),
-                (self.tensor_FA, self.datasink, [("out_fa", "preproc.@FA")]),
-                (self.wm_mask, self.datasink, [("out_file", "preproc.@wm_mask")]),
-                (self.norm_intensity, self.datasink, [("out_file", "preproc.@dwi_norm")])
+                #(self.tensor_FA, self.datasink, [("out_fa", "preproc.@FA")]),
+                #(self.wm_mask, self.datasink, [("out_file", "preproc.@wm_mask")]),
+                #(self.norm_intensity, self.datasink, [("out_file", "dwi_preproc")])
             ]
         )
 
@@ -804,17 +822,18 @@ class pipeline:
                 (self.t1_bet, self.acpc_xfm, [("out_file", "flirt_ref")]),
                 (self.acpc_xfm, self.apply_xfm, [("out_file", "linear_xfm")]),
                 (self.norm_intensity, self.apply_xfm, [("out_file", "in_file")]),
-                (self.apply_xfm, self.datasink, [("out_file", "preproc.@dwi_acpc_aligned")])
+                #(self.apply_xfm, self.datasink, [("out_file", "dwi_acpc_aligned")])
             ]
         )
 
         # +++++++++++++++ If we do regrid, connect the following, if not, skip ++++++++++++++ #
         if self.Regrid == True:
             self.regrid.inputs.out_file = 'dwi_acpc_1mm.mif'
+            self.regrid.inputs.regrid = self.MNI_template
             self.workflow.connect(
                 [
                     (self.apply_xfm, self.regrid, [("out_file", "in_file")]),
-                    (self.regrid, self.datasink, [("out_file", "preproc.@dwi_acpc_aligned_1mm")]),
+                    (self.regrid, self.datasink, [("out_file", "dwi_acpc_aligned_1mm")]),
                     (self.regrid, self.mni_b0extract, [("out_file", "in_file")]),
                     (self.regrid, self.mni_b0mask, [("out_file", "in_file")]),
                     (self.regrid, self.mni_dwi, [("out_file", "in_file")])
@@ -837,9 +856,12 @@ class pipeline:
                 (self.mni_convert_mask, self.mni_apply_mask, [("out_file", "mask_file")]),
                 (self.mni_convert_dwi, self.mni_apply_mask, [("out_file", "in_file")]),
                 (self.mni_apply_mask, self.datasink, [("out_file", "preproc_mni.@dwi_brain")]),
+                (self.mni_convert_mask, self.datasink, [("out_file", "preproc_mni.@dwi_b0_brainmask")]),
+                (self.mni_convert_dwi, self.datasink, [("out_file", "preproc_mni.@dwi_b0_meanvolume")]),
                 (self.mni_dwi, self.datasink, [("out_file", "preproc_mni.@dwi")]),
                 (self.mni_dwi, self.datasink, [("out_bfile", "preproc_mni.@b")]),
-                (self.mni_dwi, self.datasink, [("out_fslgrad", "preproc_mni.@fsl_b")]),
+                (self.mni_dwi, self.datasink, [("out_fslbvec", "preproc_mni.@fsl_bvec")]),
+                (self.mni_dwi, self.datasink, [("out_fslbval", "preproc_mni.@fsl_bval")]),
                 (self.mni_dwi, self.datasink, [("out_json", "preproc_mni.@json")])
             ]
         )

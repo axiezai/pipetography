@@ -5,11 +5,13 @@ __all__ = ['get_subs', 'get_bfiles_tuple', 'get_sub_gradfiles', 'anat2id', 'BIDS
            'Convert', 'GradCheckInputSpec', 'GradCheckOutputSpec', 'GradCheck', 'dwidenoiseInputSpec',
            'dwidenoiseOutputSpec', 'dwidenoise', 'dwipreprocInputSpec', 'dwipreprocOutputSpec', 'dwipreproc',
            'BiasCorrectInputSpec', 'BiasCorrectOutputSpec', 'BiasCorrect', 'MRInfoInputSpec', 'MRInfoOutputSpec',
-           'MRInfo', 'CheckNIZInputSpec', 'CheckNIZOutputSpec', 'CheckNIZ', 'RicianNoiseInputSpec',
-           'RicianNoiseOutputSpec', 'RicianNoise', 'MRThresholdInputSpec', 'MRThresholdOutputSpec', 'MRThreshold',
-           'DWINormalizeInputSpec', 'DWINormalizeOutputSpec', 'DWINormalize', 'TransConvertInputSpec',
-           'TransConvertOutputSpec', 'TransConvert', 'MRTransformInputSpec', 'MRTransformOutputSpec', 'MRTransform',
-           'MRRegridInputSpec', 'MRRegridOutputSpec', 'MRRegrid', 'mask2seedtuple']
+           'MRInfo', 'CheckFiniteInputSpec', 'CheckFiniteOutputSpec', 'CheckFinite', 'CompareIfInputSpec',
+           'CompareIfOutputSpec', 'CompareIf', 'CheckNIZInputSpec', 'CheckNIZOutputSpec', 'CheckNIZ',
+           'RicianNoiseInputSpec', 'RicianNoiseOutputSpec', 'RicianNoise', 'MRThresholdInputSpec',
+           'MRThresholdOutputSpec', 'MRThreshold', 'DWINormalizeInputSpec', 'DWINormalizeOutputSpec', 'DWINormalize',
+           'TransConvertInputSpec', 'TransConvertOutputSpec', 'TransConvert', 'MRTransformInputSpec',
+           'MRTransformOutputSpec', 'MRTransform', 'MRRegridInputSpec', 'MRRegridOutputSpec', 'MRRegrid',
+           'mask2seedtuple']
 
 # Cell
 #export
@@ -226,7 +228,8 @@ class ConvertInputSpec(PipetographyBaseInputSpec):
 class ConvertOutputSpec(TraitedSpec):
     out_file = File(exists=True, desc="output image")
     out_bfile = File(desc="exported gradient file")
-    out_fslgrad=File(desc="exported fsl gradient files")
+    out_fslbvec=File(desc="exported fsl gradient bvecs")
+    out_fslbval=File(desc="exported fsl gradient bvals")
     out_json = File(desc="JSON with image header info")
 
 
@@ -239,11 +242,12 @@ class Convert(CommandLine):
         outputs = self.output_spec().get()
         inputs = self.input_spec().get()
         outputs["out_file"] = os.path.abspath(self.inputs.out_file)
-        if inputs["export_grad"] == True:
+        if self.inputs.export_grad == True:
             outputs["out_bfile"] = os.path.abspath(self.inputs.out_bfile)
-        elif inputs["export_fslgrad"] == True:
-            outputs["out_fslgrad"] = os.path.abspath(self.inputs.out_fslgrad)
-        elif inputs["export_json"] == True:
+        if self.inputs.export_fslgrad == True:
+            outputs["out_fslbvec"] = os.path.abspath(self.inputs.out_fslgrad[0])
+            outputs["out_fslbval"] = os.path.abspath(self.inputs.out_fslgrad[1])
+        if self.inputs.export_json == True:
             outputs["out_json"] = os.path.abspath(self.inputs.out_json)
 
         return outputs
@@ -493,12 +497,55 @@ class MRInfo(CommandLine):
         return outputs
 
 # Cell
+class CheckFiniteInputSpec(PipetographyBaseInputSpec):
+    out_file = File(
+        mandatory=True, argstr="%s", position=4, desc="output file name"
+    )
+    isfinite = traits.Str(
+        argstr = "%s -finite",
+        desc = "Not NaN or Inf per voxel",
+        position = 1
+    )
+
+class CheckFiniteOutputSpec(TraitedSpec):
+    out_file = File(desc = "output file", exists=True)
+
+class CheckFinite(CommandLine):
+    _cmd = "mrcalc"
+    input_spec = CheckFiniteInputSpec
+    output_spec = CheckFiniteOutputSpec
+    def _list_outputs(self):
+        outputs = self.output_spec().get()
+        return outputs
+
+class CompareIfInputSpec(PipetographyBaseInputSpec):
+    out_file = File(
+        mandatory=True, argstr="%s", position=4, desc="output file name"
+    )
+    cond_if = traits.Str(
+        argstr = "%s 0 -if",
+        desc = "If first one is true, return second, if not return third",
+        position = 1
+    )
+
+class CompareIfOutputSpec(TraitedSpec):
+    out_file = File(desc = "output file",  exists=True)
+
+class CompareIf(CommandLine):
+    _cmd = "mrcalc"
+    input_spec = CompareIfInputSpec
+    output_spec = CompareIfOutputSpec
+    def _list_outputs(self):
+        outputs = self.output_spec().get()
+        return outputs
+
+# Cell
 class CheckNIZInputSpec(PipetographyBaseInputSpec):
     in_file = File(
         exists=True, argstr="%s", position=0, desc="input image"
     )
     out_file = File(
-        mandatory=True, argstr="%s", position=4, desc="output file name"
+        mandatory=True, argstr="%s", position=4, desc="output file name", genfile=True
     )
     isfinite = traits.Str(
         argstr="%s -finite",
@@ -517,17 +564,15 @@ class CheckNIZInputSpec(PipetographyBaseInputSpec):
     )
 
 class CheckNIZOutputSpec(TraitedSpec):
-    out_file = File(
-        argstr='%s', desc = "Output file"
-    )
+    out_file = File(desc = "Output file", exists=True)
 
 class CheckNIZ(CommandLine):
     _cmd = "mrcalc"
     input_spec = CheckNIZInputSpec
     output_spec = CheckNIZOutputSpec
-
     def _list_outputs(self):
         outputs = self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
         return outputs
 
 # Cell
@@ -549,21 +594,22 @@ class RicianNoiseInputSpec(PipetographyBaseInputSpec):
         desc="denoise math operation"
     )
     out_file = File(
-        argstr="%s", position=4, mandatory=True, desc="output DWI denoised image"
+        argstr="%s", position=4, mandatory=True, desc="output DWI denoised image",
+        genfile=True,
     )
 
 
 class RicianNoiseOutputSpec(TraitedSpec):
-    out_file = File(desc = "output DWI image")
+    out_file = File(desc = "output DWI image", exists=True)
 
 
 class RicianNoise(CommandLine):
     _cmd = "mrcalc"
     input_spec = RicianNoiseInputSpec
     output_spec = RicianNoiseOutputSpec
-
     def _list_outputs(self):
         outputs = self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
         return outputs
 
 # Cell
@@ -613,9 +659,9 @@ class MRThreshold(CommandLine):
     _cmd = "mrthreshold"
     input_spec = MRThresholdInputSpec
     output_spec = MRThresholdOutputSpec
-
     def _list_outputs(self):
         outputs = self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
         return outputs
 
 # Cell
@@ -657,6 +703,7 @@ class DWINormalize(CommandLine):
     output_spec=DWINormalizeOutputSpec
     def _list_outputs(self):
         outputs = self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
         return outputs
 
 # Cell
@@ -718,6 +765,7 @@ class TransConvert(CommandLine):
     output_spec=TransConvertOutputSpec
     def _list_outputs(self):
         outputs = self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
         return outputs
 
 
@@ -750,6 +798,7 @@ class MRTransform(CommandLine):
     output_spec=MRTransformOutputSpec
     def _list_outputs(self):
         outputs=self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
         return outputs
 
 # Cell
@@ -792,6 +841,7 @@ class MRRegrid(CommandLine):
     output_spec = MRRegridOutputSpec
     def _list_outputs(self):
         outputs=self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
         return outputs
 
 # Cell
