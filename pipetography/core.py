@@ -498,7 +498,7 @@ class CheckNIZInputSpec(PipetographyBaseInputSpec):
         exists=True, argstr="%s", position=0, desc="input image"
     )
     out_file = File(
-        mandatory=True, argstr="%s", position=-1, desc="output file name"
+        mandatory=True, argstr="%s", position=-3, desc="output file name"
     )
     isfinite = traits.Str(
         argstr="%s -finite",
@@ -603,7 +603,7 @@ class MRThresholdInputSpec(PipetographyBaseInputSpec):
     out_file = File(
         argstr="%s",
         desc="output file path/name",
-        position=-1
+        position=-3
     )
 
 class MRThresholdOutputSpec(TraitedSpec):
@@ -645,7 +645,7 @@ class DWINormalizeInputSpec(PipetographyBaseInputSpec):
     out_file = File(
         argstr="%s",
         desc="output file path/name",
-        position=-1
+        position=-3
     )
 
 class DWINormalizeOutputSpec(TraitedSpec):
