@@ -11,9 +11,6 @@
 Bootstrap: docker
 From: debian:stretch
 
-%files
-$FREESURFER_HOME/license.txt /license.txt
-
 %post
 su - root
 
@@ -285,6 +282,9 @@ export PATH="/opt/miniconda-latest/bin:$PATH"
 export FS_LICENSE="/license.txt"
 
 bash -c 'cd $FREESURFER_HOME && ln -s /opt/matlabmcr-2012b MCRv80'
+
+%files
+license.txt /license.txt
 
 %runscript
 /neurodocker/startup.sh "$@"

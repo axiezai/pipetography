@@ -11,7 +11,7 @@
       {"create_env": "tracts",
         "conda_install": ["python=3.7.3", "dipy", "nipype", "nibabel", "pytest", "matplotlib"],
         "pip_install": ["pybids", "fastcore==0.1.11", "nilearn"]}],
-    ["copy", ["$FREESURFER_HOME/license.txt", "/license.txt"]],
+    ["copy", ["license.txt", "/license.txt"]],
     ["install", ["git", "ssh", "tar", "gzip", "ca-certificates"]],
     ["run_bash", "cd $FREESURFER_HOME && ln -s /opt/matlabmcr-2012b MCRv80"],
     ["env", {"FS_LICENSE": "/license.txt"}]
