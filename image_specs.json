@@ -9,7 +9,7 @@
     ["freesurfer", {"version": "6.0.0-min"}],
     ["miniconda",
       {"create_env": "tracts",
-        "conda_install": ["python=3.7.3", "dipy", "nipype", "nibabel", "pytest", "matplotlib"],
+        "conda_install": ["python=3.7.3", "pip=20.0.2", "dipy", "nipype", "nibabel", "pytest", "matplotlib"],
         "pip_install": ["pybids", "fastcore==0.1.11", "nilearn"]}],
     ["copy", ["license.txt", "/license.txt"]],
     ["install", ["git", "ssh", "tar", "gzip", "ca-certificates"]],

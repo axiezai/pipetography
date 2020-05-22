@@ -134,6 +134,7 @@ sync && conda clean -y --all && sync
 conda create -y -q --name tracts
 conda install -y -q --name tracts \
     "python=3.7.3" \
+    "pip=20.0.2"
     "dipy" \
     "nipype" \
     "nibabel" \
