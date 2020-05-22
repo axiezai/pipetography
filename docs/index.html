@@ -34,6 +34,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This repo currently only has pre-processing capabilities! More will be added in the near future.</p>
+<p>The pre-processing workflow has been updated to reflect what's seen in the optimal <a href="http://www.sciencedirect.com/science/article/pii/S1053811918306827">DESIGNER pipeline</a> and on <a href="https://brainlife.io">mrtrix3 cloud apps on brainlife.io</a>.</p>
 
 </div>
 </div>
@@ -46,15 +47,20 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Install version <code>0.1.0</code>:</p>
+<p>Since most usages will be on HPC resources, I highly recommend that you use the <code>Singularity</code> or <code>Docker</code> recipe in the repository instead of installing the Python module.</p>
+<p>Install version <code>0.2.0</code> as a Python module:</p>
 <p><code>pip install pipetography</code></p>
 <p>Since <code>pipetography</code> is a <code>Nipype</code> wrapper around <code>mrtrix3</code>, <code>ANTs</code>, and <code>FSL</code>, you have to follow their installation instructions and set them up appropriately on your machine as well:</p>
 <ul>
-<li><p><a href="https://mrtrix.readthedocs.io/en/latest/installation/before_install.html">mrtrix3</a></p>
+<li><p><a href="https://mrtrix.readthedocs.io/en/latest/installation/before_install.html">mrtrix3 v3.0.0</a></p>
 </li>
 <li><p><a href="https://github.com/ANTsX/ANTs/wiki/Compiling-ANTs-on-Linux-and-Mac-OS">ANTs</a></p>
 </li>
 <li><p><a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation">FSL</a></p>
+</li>
+<li><p><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">Freesurfer v6.0</a></p>
+</li>
+<li><p><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime">Matlab Run Time Compiler for freesurfer</a></p>
 </li>
 </ul>
 
@@ -252,307 +258,10 @@ mrtrix3 is valid
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Then you can simply call <code>preproc_dwi.draw_pipeline()</code> to visualize the workflow as a PNG image, or <code>preproc_dwi.run_pipeline()</code> to run the default pipeline. OR we can fill this in one by one in detail:</p>
+<p>Then you can simply connect the pipeline and call <code>preproc_dwi.draw_pipeline()</code> to visualize the workflow as a PNG image, or <code>preproc_dwi.run_pipeline()</code> to run the default pipeline.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>First, let's tell the pipeline where we have atlas volumes and which ones to use:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">atlas_inputs</span><span class="p">(</span><span class="n">atlas_dir</span> <span class="o">=</span> <span class="s1">&#39;/Users/xxie/lab/atlases&#39;</span><span class="p">,</span> <span class="n">atlas_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;BN_Atlas_246_2mm.nii&#39;</span><span class="p">,</span><span class="s1">&#39;DK_atlas86_1mm.nii&#39;</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Next, we give inputs to the <code>denoise</code> Node:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">denoise_inputs</span><span class="p">(</span><span class="n">force</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">quiet</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-<span class="c1"># we kept everything else default, like output names and number of threads.</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Gibbs ringing removal:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">DeGibbs_inputs</span><span class="p">()</span> <span class="c1"># keep it default</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Output file name is &#39;</span> <span class="o">+</span> <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">ringing</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Output file name is ringing_removed.nii.gz
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>ANTs Bias Field Correction:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">ants_bfc_inputs</span><span class="p">()</span> <span class="c1"># keep it default:</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">ants_bfc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">print_traits</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;bound method HasTraits.print_traits of 
-args = &lt;undefined&gt;
-dims = 4
-environ = {}
-in_file = &lt;undefined&gt;
-out_file = biasfieldcorrected.nii.gz
-&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><code>in_file</code> is undefined because we will feed it this information once we connect our individual functions.</p>
-<p>Next let's set up eddy current/motion correction, we need to tell the pipeline the phase encoding settings and inputs to eddy algorithm:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">mrt_preproc_inputs</span><span class="p">(</span>
-    <span class="n">rpe_options</span><span class="o">=</span><span class="s2">&quot;-rpe_none&quot;</span><span class="p">,</span>
-    <span class="n">pe_dir</span><span class="o">=</span><span class="s2">&quot;j-&quot;</span><span class="p">,</span>
-    <span class="n">eddy_options</span><span class="o">=</span><span class="s1">&#39;&quot;--slm=linear --verbose&quot;&#39;</span><span class="p">,</span>
-    <span class="n">nthreads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">mrt_preproc</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">print_traits</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;bound method HasTraits.print_traits of 
-args = &lt;undefined&gt;
-eddy_options = &#34;--slm=linear --verbose&#34;
-environ = {}
-grad_fsl = &lt;undefined&gt;
-in_file = &lt;undefined&gt;
-nthreads = 4
-out_file = preproc.nii.gz
-pe_dir = j-
-rpe_options = -rpe_none
-&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><code>grad_fsl</code> and <code>in_file</code> will be input via connected workflow later</p>
-<p>Next, we set-up brain extraction from B0 volumes:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1"># Extract b0 volumes:</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">b0extract_inputs</span><span class="p">()</span> <span class="c1">#default</span>
-<span class="c1"># Create average B0 volume:</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">b0mean_inputs</span><span class="p">()</span> <span class="c1">#default</span>
-<span class="c1"># Extract brain from B0 average volume:</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">bet_inputs</span><span class="p">()</span> <span class="c1">#defaults again, using FSL&#39;s BET</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>ANTs registration set up:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">linear_coreg_inputs</span><span class="p">()</span> <span class="c1">#defaults</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">nonlinear_coreg_inputs</span><span class="p">()</span> <span class="c1">#defaults</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">nonlinear_coreg</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">print_traits</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;bound method HasTraits.print_traits of 
-args = &lt;undefined&gt;
-collapse_output_transforms = True
-convergence_threshold = [1e-06]
-convergence_window_size = [10]
-dimension = 3
-environ = {&#39;NSLOTS&#39;: &#39;1&#39;}
-fixed_image = &lt;undefined&gt;
-fixed_image_mask = &lt;undefined&gt;
-fixed_image_masks = &lt;undefined&gt;
-float = &lt;undefined&gt;
-initial_moving_transform = &lt;undefined&gt;
-initial_moving_transform_com = &lt;undefined&gt;
-initialize_transforms_per_stage = False
-interpolation = Linear
-interpolation_parameters = &lt;undefined&gt;
-invert_initial_moving_transform = &lt;undefined&gt;
-metric = [&#39;MI&#39;]
-metric_item_trait = &lt;undefined&gt;
-metric_stage_trait = &lt;undefined&gt;
-metric_weight = [1.0]
-metric_weight_item_trait = 1.0
-metric_weight_stage_trait = &lt;undefined&gt;
-moving_image = &lt;undefined&gt;
-moving_image_mask = &lt;undefined&gt;
-moving_image_masks = &lt;undefined&gt;
-num_threads = 1
-number_of_iterations = [[500, 200, 200, 100]]
-output_inverse_warped_image = &lt;undefined&gt;
-output_transform_prefix = atlas_in_dwi_syn
-output_warped_image = atlas_in_dwi_syn.nii.gz
-radius_bins_item_trait = 5
-radius_bins_stage_trait = &lt;undefined&gt;
-radius_or_number_of_bins = [64]
-restore_state = &lt;undefined&gt;
-restrict_deformation = &lt;undefined&gt;
-sampling_percentage = &lt;undefined&gt;
-sampling_percentage_item_trait = &lt;undefined&gt;
-sampling_percentage_stage_trait = &lt;undefined&gt;
-sampling_strategy = &lt;undefined&gt;
-sampling_strategy_item_trait = &lt;undefined&gt;
-sampling_strategy_stage_trait = &lt;undefined&gt;
-save_state = &lt;undefined&gt;
-shrink_factors = [[8, 4, 2, 1]]
-sigma_units = [&#39;vox&#39;]
-smoothing_sigmas = [[4.0, 2.0, 1.0, 0.0]]
-transform_parameters = [(0.1,)]
-transforms = [&#39;SyN&#39;]
-use_estimate_learning_rate_once = &lt;undefined&gt;
-use_histogram_matching = True
-verbose = False
-winsorize_lower_quantile = 0.0
-winsorize_upper_quantile = 1.0
-write_composite_transform = False
-&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
