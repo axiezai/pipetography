@@ -6,6 +6,7 @@ keywords: fastai
 sidebar: home_sidebar
 
 summary: "Here we have the Nodes wrapping around our core functions, which can be added to a Nipype workflow to process your input images. These definitions here are our custom functions and Nipype Nodes knotted together, which creates a working pipeline."
+description: "Here we have the Nodes wrapping around our core functions, which can be added to a Nipype workflow to process your input images. These definitions here are our custom functions and Nipype Nodes knotted together, which creates a working pipeline."
 ---
 <!--
 
@@ -18,8 +19,9 @@ summary: "Here we have the Nodes wrapping around our core functions, which can b
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -28,7 +30,7 @@ summary: "Here we have the Nodes wrapping around our core functions, which can b
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200522-18:01:32,777 nipype.utils INFO:
+<pre>200522-18:31:16,135 nipype.utils INFO:
 	 Running nipype version 1.5.0-rc1 (latest: 1.4.2)
 </pre>
 </div>
@@ -38,18 +40,30 @@ summary: "Here we have the Nodes wrapping around our core functions, which can b
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="A-pipeline-class-that-puts-everything-together.">A <a href="/pipetography/pipeline"><code>pipeline</code></a> class that puts everything together.<a class="anchor-link" href="#A-pipeline-class-that-puts-everything-together.">&#182;</a></h4>
+<h4 id="A-pipeline-class-that-puts-everything-together.">A <a href="/pipetography/pipeline"><code>pipeline</code></a> class that puts everything together.<a class="anchor-link" href="#A-pipeline-class-that-puts-everything-together."> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -88,6 +102,8 @@ Attributes:
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Example:</p>
@@ -95,6 +111,8 @@ Attributes:
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -126,6 +144,8 @@ Data sink (output folder) is set to /Users/xxie/sample_data/derivatives
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Check if our environment is properly set-up:</p>
@@ -133,6 +153,8 @@ Data sink (output folder) is set to /Users/xxie/sample_data/derivatives
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -166,6 +188,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Take a look at what's in the <a href="/pipetography/pipeline"><code>pipeline</code></a>:</p>
@@ -173,6 +197,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -265,6 +291,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can set up preprocessing pipeline with default parameters:</p>
@@ -272,6 +300,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -302,6 +332,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>All the default settings may not be optimal for your dataset, run the processing for a test image and see the intermediate results and then tweak the available inputs to improve the output image quality.</p>
@@ -310,6 +342,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -325,6 +359,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Let's take a look at the final workflow we created:</p>
@@ -332,6 +368,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -365,6 +403,10 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -389,6 +431,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>derivatives</code> directory will contain the follwoing after running the pipeline:</p>
@@ -396,6 +440,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -445,6 +491,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
@@ -458,7 +506,6 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
 </div>
 </div>
-    {% endraw %}
 </div>
  
 

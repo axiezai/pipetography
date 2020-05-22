@@ -6,6 +6,7 @@ keywords: fastai
 sidebar: home_sidebar
 
 summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain. This module contains customized and up-to-date command line interfaces that are not found from Nipype's interfaces module. Additionally, steps in the preprocessing pipeline are listed as standalone I/O modules as examples and simplified version of the pipeline"
+description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain. This module contains customized and up-to-date command line interfaces that are not found from Nipype's interfaces module. Additionally, steps in the preprocessing pipeline are listed as standalone I/O modules as examples and simplified version of the pipeline"
 ---
 <!--
 
@@ -18,8 +19,9 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -28,7 +30,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200522-18:01:30,137 nipype.utils INFO:
+<pre>200522-18:31:15,438 nipype.utils INFO:
 	 Running nipype version 1.5.0-rc1 (latest: 1.4.2)
 </pre>
 </div>
@@ -38,9 +40,15 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Data input:</p>
@@ -48,6 +56,8 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -75,9 +85,11 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="BIDS-Data-Input">BIDS Data Input<a class="anchor-link" href="#BIDS-Data-Input">&#182;</a></h3>
+<h3 id="BIDS-Data-Input">BIDS Data Input<a class="anchor-link" href="#BIDS-Data-Input"> </a></h3>
 </div>
 </div>
 </div>
@@ -88,9 +100,15 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -113,6 +131,10 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -143,6 +165,10 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -173,6 +199,8 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Find FSL <code>.bval/.bvec</code> gradient file paths:</p>
@@ -180,9 +208,15 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -204,6 +238,10 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -242,6 +280,10 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -257,6 +299,8 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Get dwi images:</p>
@@ -264,6 +308,8 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -298,6 +344,10 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -313,6 +363,8 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Get specific subject and session's gradient files:</p>
@@ -320,9 +372,15 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -343,6 +401,10 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -376,6 +438,8 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Get anatomical images:</p>
@@ -383,6 +447,8 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -419,15 +485,23 @@ Input str of path to BIDS dir otherwise</p>
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Convert-anatomical-images-into-freesurfer-subject-IDs-with-session-specificity.">Convert anatomical images into freesurfer subject IDs with session specificity.<a class="anchor-link" href="#Convert-anatomical-images-into-freesurfer-subject-IDs-with-session-specificity.">&#182;</a></h4>
+<h4 id="Convert-anatomical-images-into-freesurfer-subject-IDs-with-session-specificity.">Convert anatomical images into freesurfer subject IDs with session specificity.<a class="anchor-link" href="#Convert-anatomical-images-into-freesurfer-subject-IDs-with-session-specificity."> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -450,6 +524,10 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -483,15 +561,23 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Get-BIDS-JSON-Metadata:">Get BIDS JSON Metadata:<a class="anchor-link" href="#Get-BIDS-JSON-Metadata:">&#182;</a></h4>
+<h4 id="Get-BIDS-JSON-Metadata:">Get BIDS JSON Metadata:<a class="anchor-link" href="#Get-BIDS-JSON-Metadata:"> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -512,6 +598,10 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -545,16 +635,24 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Common-inputs-to-pipetography's-command">Common inputs to <code>pipetography</code>'s command<a class="anchor-link" href="#Common-inputs-to-pipetography's-command">&#182;</a></h3><p>This is mostly based off of the newly updated mrtrix3 commands, the new capabilities do not appear in the nipype interfaces so we need to add them:</p>
+<h3 id="Common-inputs-to-pipetography's-command">Common inputs to <code>pipetography</code>'s command<a class="anchor-link" href="#Common-inputs-to-pipetography's-command"> </a></h3><p>This is mostly based off of the newly updated mrtrix3 commands, the new capabilities do not appear in the nipype interfaces so we need to add them:</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -577,16 +675,24 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="ACPC-MNI-alignment-(HCP-Based),-as-seen-on-brainlife.io:">ACPC MNI alignment (HCP Based), as seen on brainlife.io:<a class="anchor-link" href="#ACPC-MNI-alignment-(HCP-Based),-as-seen-on-brainlife.io:">&#182;</a></h4><p>This realigns our cropped anatomical image inputs to the MNI template using HCP pipeline procedure with FSL's <code>aff2rigid</code>. We want to do everything in MNI space.</p>
+<h4 id="ACPC-MNI-alignment-(HCP-Based),-as-seen-on-brainlife.io:">ACPC MNI alignment (HCP Based), as seen on brainlife.io:<a class="anchor-link" href="#ACPC-MNI-alignment-(HCP-Based),-as-seen-on-brainlife.io:"> </a></h4><p>This realigns our cropped anatomical image inputs to the MNI template using HCP pipeline procedure with FSL's <code>aff2rigid</code>. We want to do everything in MNI space.</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -608,6 +714,10 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -629,6 +739,10 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -650,6 +764,10 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -747,12 +865,16 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Freesurfer-recon-all-for-the-ACPC-aligned-image:">Freesurfer <code>recon-all</code> for the ACPC-aligned image:<a class="anchor-link" href="#Freesurfer-recon-all-for-the-ACPC-aligned-image:">&#182;</a></h3>
+<h3 id="Freesurfer-recon-all-for-the-ACPC-aligned-image:">Freesurfer <code>recon-all</code> for the ACPC-aligned image:<a class="anchor-link" href="#Freesurfer-recon-all-for-the-ACPC-aligned-image:"> </a></h3>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -806,15 +928,23 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Convert-to-mrtrix3-image-file-format:">Convert to mrtrix3 image file format:<a class="anchor-link" href="#Convert-to-mrtrix3-image-file-format:">&#182;</a></h4>
+<h4 id="Convert-to-mrtrix3-image-file-format:">Convert to mrtrix3 image file format:<a class="anchor-link" href="#Convert-to-mrtrix3-image-file-format:"> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -837,6 +967,10 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -859,6 +993,10 @@ Phase encoding direction is j
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -872,17 +1010,17 @@ Phase encoding direction is j
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -901,6 +1039,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -956,12 +1098,16 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Create-DWI-processing-mask:">Create DWI processing mask:<a class="anchor-link" href="#Create-DWI-processing-mask:">&#182;</a></h4>
+<h4 id="Create-DWI-processing-mask:">Create DWI processing mask:<a class="anchor-link" href="#Create-DWI-processing-mask:"> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1017,16 +1163,24 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Check-gradient-orientations-and-create-corrected-image:">Check gradient orientations and create corrected image:<a class="anchor-link" href="#Check-gradient-orientations-and-create-corrected-image:">&#182;</a></h4><p>The <code>dwigradcheck</code> functionality hasn't appeared in Nipype interfaces yet so we add it here</p>
+<h4 id="Check-gradient-orientations-and-create-corrected-image:">Check gradient orientations and create corrected image:<a class="anchor-link" href="#Check-gradient-orientations-and-create-corrected-image:"> </a></h4><p>The <code>dwigradcheck</code> functionality hasn't appeared in Nipype interfaces yet so we add it here</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1049,6 +1203,10 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1071,6 +1229,10 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1092,6 +1254,10 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1144,16 +1310,24 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Denoise-DWI:">Denoise DWI:<a class="anchor-link" href="#Denoise-DWI:">&#182;</a></h4><p>This command exists in <code>nipype.interface</code>, but is missing some flags, so we customize it here:</p>
+<h4 id="Denoise-DWI:">Denoise DWI:<a class="anchor-link" href="#Denoise-DWI:"> </a></h4><p>This command exists in <code>nipype.interface</code>, but is missing some flags, so we customize it here:</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1175,6 +1349,10 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1196,6 +1374,10 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1223,6 +1405,10 @@ Arguments:
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1315,6 +1501,10 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1332,13 +1522,17 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Gibb's-ringing-artifact-removal:">Gibb's ringing artifact removal:<a class="anchor-link" href="#Gibb's-ringing-artifact-removal:">&#182;</a></h3><p>You should run this step after denoise so you don't change the noise patterns before denoising. And this should also be done before <code>dwifslpreproc</code>.</p>
+<h3 id="Gibb's-ringing-artifact-removal:">Gibb's ringing artifact removal:<a class="anchor-link" href="#Gibb's-ringing-artifact-removal:"> </a></h3><p>You should run this step after denoise so you don't change the noise patterns before denoising. And this should also be done before <code>dwifslpreproc</code>.</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1384,16 +1578,24 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="DWI-Distortion-correction">DWI Distortion correction<a class="anchor-link" href="#DWI-Distortion-correction">&#182;</a></h3><p><a href="/pipetography/core#dwipreproc"><code>dwipreproc</code></a> Was recently updated to <code>dwifslpreproc</code>, so we create the following commandline inputs, also <a href="/pipetography/core#dwipreproc"><code>dwipreproc</code></a> doesn't exist in <code>Nipype</code>'s mrtrix3 interface:</p>
+<h3 id="DWI-Distortion-correction">DWI Distortion correction<a class="anchor-link" href="#DWI-Distortion-correction"> </a></h3><p><a href="/pipetography/core#dwipreproc"><code>dwipreproc</code></a> Was recently updated to <code>dwifslpreproc</code>, so we create the following commandline inputs, also <a href="/pipetography/core#dwipreproc"><code>dwipreproc</code></a> doesn't exist in <code>Nipype</code>'s mrtrix3 interface:</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1416,6 +1618,10 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1438,6 +1644,10 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1469,6 +1679,10 @@ Returns:
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1532,9 +1746,11 @@ Returns:
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Bias-field-correction-with-ANTS:">Bias field correction with ANTS:<a class="anchor-link" href="#Bias-field-correction-with-ANTS:">&#182;</a></h3><p>There are 3 important parameters:</p>
+<h3 id="Bias-field-correction-with-ANTS:">Bias field correction with ANTS:<a class="anchor-link" href="#Bias-field-correction-with-ANTS:"> </a></h3><p>There are 3 important parameters:</p>
 <p><code>ants.b</code>: default is [100,3], the values stand for [Initial mesh resolution in mm, spline order]. ANTS' N4BiasFieldCorrection option -b. This value is optimised for human adult data and needs to be adjusted for rodent data.</p>
 <p><code>ants.c</code>: default is [1000,0.0] or [numberOfIterations,convergenceThreshold], Equivalent to ANTS' N4BiasFieldCorrection option -c.</p>
 <p><code>ants.s</code>: default is 4 N4BiasFieldCorrection option -s. shrink-factor applied to spatial dimensions</p>
@@ -1543,9 +1759,15 @@ Returns:
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1568,6 +1790,10 @@ Returns:
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1590,6 +1816,10 @@ Returns:
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1603,17 +1833,17 @@ Returns:
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -1632,6 +1862,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1691,16 +1925,24 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Rician-Noise-Removal:">Rician Noise Removal:<a class="anchor-link" href="#Rician-Noise-Removal:">&#182;</a></h3><p>Functions we will use: <code>mrinfo</code>, <code>mrcalc</code>, and the already interfaced <code>mrconvert</code></p>
+<h3 id="Rician-Noise-Removal:">Rician Noise Removal:<a class="anchor-link" href="#Rician-Noise-Removal:"> </a></h3><p>Functions we will use: <code>mrinfo</code>, <code>mrcalc</code>, and the already interfaced <code>mrconvert</code></p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1723,6 +1965,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1745,6 +1991,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1758,17 +2008,17 @@ cli.inputs.get_hashval()[1]
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -1787,6 +2037,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -1833,9 +2087,17 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1858,6 +2120,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1880,6 +2146,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1893,17 +2163,17 @@ cli.inputs.get_hashval()[1]
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -1922,6 +2192,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1944,6 +2218,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1966,6 +2244,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -1979,17 +2261,17 @@ cli.inputs.get_hashval()[1]
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -2008,9 +2290,17 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2033,6 +2323,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2055,6 +2349,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2068,17 +2366,17 @@ cli.inputs.get_hashval()[1]
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -2097,6 +2395,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -2154,9 +2456,17 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2179,6 +2489,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2201,6 +2515,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2214,17 +2532,17 @@ cli.inputs.get_hashval()[1]
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -2243,6 +2561,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -2327,13 +2649,17 @@ mrconvert: [100%] compressing image &#34;outputs/rician_corrected_dwi.nii.gz&#34
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Image-Intensity-Normalization:">Image Intensity Normalization:<a class="anchor-link" href="#Image-Intensity-Normalization:">&#182;</a></h3><p>First we recreate brain mask for DWI:</p>
+<h3 id="Image-Intensity-Normalization:">Image Intensity Normalization:<a class="anchor-link" href="#Image-Intensity-Normalization:"> </a></h3><p>First we recreate brain mask for DWI:</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -2389,6 +2715,8 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Then createt FA WM mask, we first use <code>Nipype</code> provided <code>dwi2tensor</code> and <code>tensor2metric</code> interfaces, then create a threshold interface that's unavailable from <code>Nipype</code>:</p>
@@ -2396,9 +2724,15 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_mask.nii.gz&#34;
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2421,6 +2755,10 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2443,6 +2781,10 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_mask.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2456,17 +2798,17 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_mask.nii.gz&#34;
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -2485,6 +2827,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -2557,6 +2903,8 @@ mrconvert: [100%] compressing image &#34;outputs/wm.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now we can normalize the white matter signal:</p>
@@ -2564,9 +2912,15 @@ mrconvert: [100%] compressing image &#34;outputs/wm.nii.gz&#34;
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2589,6 +2943,10 @@ mrconvert: [100%] compressing image &#34;outputs/wm.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2611,6 +2969,10 @@ mrconvert: [100%] compressing image &#34;outputs/wm.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2624,17 +2986,17 @@ mrconvert: [100%] compressing image &#34;outputs/wm.nii.gz&#34;
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -2653,6 +3015,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -2711,12 +3077,16 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_norm.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Create-B0-Volume-and-Mask-for-preprocessing:">Create B0 Volume and Mask for preprocessing:<a class="anchor-link" href="#Create-B0-Volume-and-Mask-for-preprocessing:">&#182;</a></h3>
+<h3 id="Create-B0-Volume-and-Mask-for-preprocessing:">Create B0 Volume and Mask for preprocessing:<a class="anchor-link" href="#Create-B0-Volume-and-Mask-for-preprocessing:"> </a></h3>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -2769,15 +3139,23 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_norm.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Align-DWI-to-ACPC-MNI-Space:">Align DWI to ACPC MNI Space:<a class="anchor-link" href="#Align-DWI-to-ACPC-MNI-Space:">&#182;</a></h3>
+<h3 id="Align-DWI-to-ACPC-MNI-Space:">Align DWI to ACPC MNI Space:<a class="anchor-link" href="#Align-DWI-to-ACPC-MNI-Space:"> </a></h3>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2800,6 +3178,10 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_norm.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2822,6 +3204,10 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_norm.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2835,17 +3221,17 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_norm.nii.gz&#34;
 </blockquote>
 <p>Implements functionality to interact with command line programs
 class must be instantiated with a command argument</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>command : str
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>command : str
     define base immutable <code>command</code> you wish to run
 args : str, optional
     optional arguments passed to base <code>command</code></p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><blockquote><blockquote><blockquote><p>import pprint
+<h2 id="Examples">Examples<a class="anchor-link" href="#Examples"> </a></h2><blockquote><blockquote><blockquote><p>import pprint
 from nipype.interfaces.base import CommandLine
 cli = CommandLine(command='ls', environ={'DISPLAY': ':1'})
 cli.inputs.args = '-al'
 cli.cmdline
 'ls -al'</p>
-<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set">&#182;</a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
+<h1 id="Use-get_traitsfree()-to-check-all-inputs-set">Use get_traitsfree() to check all inputs set<a class="anchor-link" href="#Use-get_traitsfree()-to-check-all-inputs-set"> </a></h1><p>pprint.pprint(cli.inputs.get_traitsfree())  # doctest:
 {'args': '-al',
  'environ': {'DISPLAY': ':1'}}</p>
 <p>cli.inputs.get_hashval()[0][0]
@@ -2864,6 +3250,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2886,6 +3276,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2908,6 +3302,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -2929,6 +3327,10 @@ cli.inputs.get_hashval()[1]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -3035,16 +3437,24 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_acpc.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Reslice-to-ACPC-MNI152-space-voxel-resolution-with-mrregrid:">Reslice to ACPC MNI152 space voxel resolution with <code>mrregrid</code>:<a class="anchor-link" href="#Reslice-to-ACPC-MNI152-space-voxel-resolution-with-mrregrid:">&#182;</a></h3><p>This is mainly done to isotropically upsample your DWI data to a higher resolution, like the MNI template or your T1/T2 image voxel grid. Partial upsampling is not recommended (resolution that's not MNI template).</p>
+<h3 id="Reslice-to-ACPC-MNI152-space-voxel-resolution-with-mrregrid:">Reslice to ACPC MNI152 space voxel resolution with <code>mrregrid</code>:<a class="anchor-link" href="#Reslice-to-ACPC-MNI152-space-voxel-resolution-with-mrregrid:"> </a></h3><p>This is mainly done to isotropically upsample your DWI data to a higher resolution, like the MNI template or your T1/T2 image voxel grid. Partial upsampling is not recommended (resolution that's not MNI template).</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -3067,6 +3477,10 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_acpc.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -3089,6 +3503,10 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_acpc.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -3110,6 +3528,10 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_acpc.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -3156,13 +3578,17 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_acpc.nii.gz&#34;
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Recreate-final-DWI/Gradients/Reference-images:">Recreate final DWI/Gradients/Reference images:<a class="anchor-link" href="#Recreate-final-DWI/Gradients/Reference-images:">&#182;</a></h3><p>First we create output space (MNI) B0 volumes and masks:</p>
+<h3 id="Recreate-final-DWI/Gradients/Reference-images:">Recreate final DWI/Gradients/Reference images:<a class="anchor-link" href="#Recreate-final-DWI/Gradients/Reference-images:"> </a></h3><p>First we create output space (MNI) B0 volumes and masks:</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -3255,9 +3681,11 @@ mrconvert outputs/dwi_acpc_1mm.mif outputs/dwi_acpc_1mm.nii.gz -force -export_gr
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Now-we-have-all-the-preprocessing-done!-Time-for-tracts!">Now we have all the preprocessing done! Time for tracts!<a class="anchor-link" href="#Now-we-have-all-the-preprocessing-done!-Time-for-tracts!">&#182;</a></h3>
+<h3 id="Now-we-have-all-the-preprocessing-done!-Time-for-tracts!">Now we have all the preprocessing done! Time for tracts!<a class="anchor-link" href="#Now-we-have-all-the-preprocessing-done!-Time-for-tracts!"> </a></h3>
 </div>
 </div>
 </div>
@@ -3268,9 +3696,15 @@ mrconvert outputs/dwi_acpc_1mm.mif outputs/dwi_acpc_1mm.nii.gz -force -export_gr
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -3292,6 +3726,7 @@ mrconvert outputs/dwi_acpc_1mm.mif outputs/dwi_acpc_1mm.nii.gz -force -export_gr
 
 </div>
     {% endraw %}
+
 </div>
  
 

@@ -6,6 +6,7 @@ keywords: fastai
 sidebar: home_sidebar
 
 summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain."
+description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain."
 ---
 <!--
 
@@ -18,11 +19,14 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="https://github.com/axiezai/pipetography/workflows/CI/badge.svg" alt="CI">
@@ -41,7 +45,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Install">Install<a class="anchor-link" href="#Install">&#182;</a></h2>
+<h2 id="Install">Install<a class="anchor-link" href="#Install"> </a></h2>
 </div>
 </div>
 </div>
@@ -54,7 +58,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 <li><p>Run singularity image with: <code>singularity run pipetography.simg</code> (You will have to bind your data directories in addition to just <code>singularity run</code>)</p>
 </li>
 </ul>
-<h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">&#182;</a></h4><p><code>pip install pipetography</code></p>
+<h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>
 <p>Since <code>pipetography</code> is a <code>Nipype</code> wrapper around <code>mrtrix3</code>, <code>ANTs</code>, and <code>FSL</code>, you have to follow their installation instructions and set them up appropriately on your machine as well:</p>
 <ul>
 <li><p><a href="https://mrtrix.readthedocs.io/en/latest/installation/before_install.html">mrtrix3 v3.0.0</a></p>
@@ -74,11 +78,13 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-pipeline-visualized:">The pipeline visualized:<a class="anchor-link" href="#The-pipeline-visualized:">&#182;</a></h2><p>The following pipeline is produced by running the default set up in <a href="https://axiezai.github.io/pipetography/pipeline/">pipeline</a>. And each individual node in the workflow is shown in <a href="https://axiezai.github.io/pipetography/core/">core</a>.</p>
+<h2 id="The-pipeline-visualized:">The pipeline visualized:<a class="anchor-link" href="#The-pipeline-visualized:"> </a></h2><p>The following pipeline is produced by running the default set up in <a href="https://axiezai.github.io/pipetography/pipeline/">pipeline</a>. And each individual node in the workflow is shown in <a href="https://axiezai.github.io/pipetography/core/">core</a>.</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -113,6 +119,7 @@ summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diff
 
 </div>
     {% endraw %}
+
 </div>
  
 
