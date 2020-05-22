@@ -159,8 +159,6 @@ apt-get install -y -q --no-install-recommends \
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
-bash -c 'cd $FREESURFER_HOME && ln -s /opt/matlabmcr-2012b MCRv80'
-
 echo '{
 \n  "pkg_manager": "apt",
 \n  "instructions": [
@@ -283,8 +281,10 @@ export CONDA_DIR="/opt/miniconda-latest"
 export PATH="/opt/miniconda-latest/bin:$PATH"
 export FS_LICENSE="/license.txt"
 
+bash -c 'cd $FREESURFER_HOME && ln -s /opt/matlabmcr-2012b MCRv80'
+
 %files
-/Applications/freesurfer/license.txt /license.txt
+$FREESURFER_HOME/license.txt /license.txt
 
 %runscript
 /neurodocker/startup.sh "$@"
