@@ -30,7 +30,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200522-18:31:15,438 nipype.utils INFO:
+<pre>200522-20:39:09,979 nipype.utils INFO:
 	 Running nipype version 1.5.0-rc1 (latest: 1.4.2)
 </pre>
 </div>
@@ -247,7 +247,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
 <span class="n">bfiles</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
@@ -315,7 +315,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
 <span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
@@ -774,7 +774,7 @@ Phase encoding direction is j
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage:</span>
+<span class="c1">#usage</span>
 
 <span class="n">rfov</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">RobustFOV</span><span class="p">()</span> <span class="c1"># first reduce FOV of T1 image</span>
 <span class="n">rfov</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="n">anat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1689,7 +1689,7 @@ Returns:
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage:</span>
+<span class="c1">#usage</span>
 
 <span class="c1"># this example is for basic DWI acquisition</span>
 <span class="c1"># all image volumes are acquired in a single protocol with fixed phase encoding:</span>
