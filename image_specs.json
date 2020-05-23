@@ -2,7 +2,7 @@
   "pkg_manager": "apt",
   "instructions": [
     ["base", "debian:stretch"],
-    ["mrtrix3", {"version": "3.0_RC3"}],
+    ["mrtrix3", {"version": "3.0.0"}],
     ["ants", {"version": "2.3.1"}],
     ["fsl", {"version": "6.0.1"}],
     ["matlabmcr", {"version": "2012b"}],
@@ -13,7 +13,7 @@
         "pip_install": ["pybids", "fastcore==0.1.11", "nilearn", "pipetography==0.2.2"]}],
     ["copy", ["license.txt", "/license.txt"]],
     ["install", ["git", "ssh", "tar", "gzip", "ca-certificates"]],
-    ["run_bash", "cd $FREESURFER_HOME && ln -s /opt/matlabmcr-2012b MCRv80"],
+    ["run_bash", "cd /opt/freesurfer-6.0.0-min && ln -s /opt/matlabmcr-2012b/v80 MCRv80"],
     ["env", {"FS_LICENSE": "/license.txt"}]
   ]
 }
