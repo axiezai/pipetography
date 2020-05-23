@@ -38,7 +38,7 @@ The pipeline visualized:
 
 The following pipeline is produced by running the default set up in [pipeline](https://axiezai.github.io/pipetography/pipeline/). And each individual node in the workflow is shown in [core](https://axiezai.github.io/pipetography/core/).
 
-```python
+```
 #example
 from IPython.display import Image
 Image('/Users/xxie/sample_data/derivatives/pipetography/pipetography_detailed.png')
