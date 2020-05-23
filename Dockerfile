@@ -168,7 +168,8 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
     &&   pip install --no-cache-dir  \
              "pybids" \
              "fastcore==0.1.11" \
-             "nilearn"" \
+             "nilearn" \
+	     "pipetography==0.2.0"" \
     && rm -rf ~/.cache/pip/* \
     && sync
 

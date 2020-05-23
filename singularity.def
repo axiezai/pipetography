@@ -144,7 +144,8 @@ bash -c "source activate tracts
   pip install --no-cache-dir  \
       "pybids" \
       "fastcore==0.1.11" \
-      "nilearn""
+      "nilearn" \
+      "pipetography==0.2.2""
 rm -rf ~/.cache/pip/*
 sync
 
