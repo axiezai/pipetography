@@ -2,8 +2,8 @@
 
 __all__ = ['pipeline']
 
-# Cell
-#export
+# Internal Cell
+#exporti
 import os, sys
 from shutil import which
 from pathlib import Path
@@ -31,15 +31,15 @@ class pipeline:
         - Align all anat and dwi images to MNI space via ACPC HCP procedure
 
     Input:
-        BIDS_dir (str): Valid BIDS directory with DWI modality
-        RPE_design (str): Reverse phase encoding design for DWI
-        Regrid (Bool): [False] Whether to resample DWI to a template image's voxel grid
-        mrtrix_nthreads (Int): [0] Number of paralel threads to perform mrtrix tasks, default to 0, which disables multi-threading
-    Attributes:
-        data_dir (str): input BIDS data directory
-        sub_list (List): List of subject IDs read from the BIDS directory
-        layout (PyBIDS Layout): PyBIDS Layout for querying
-        bfiles_fsl (tuple)
+
+        - BIDS_dir (str): Valid BIDS directory with DWI modality
+
+        - RPE_design (str): Reverse phase encoding design for DWI
+
+        - Regrid (Bool): [False] Whether to resample DWI to a template image's voxel grid
+
+        - mrtrix_nthreads (Int): [0] Number of paralel threads to perform mrtrix tasks, default to 0, which disables multi-threading
+
     """
 
     def __init__(self, BIDS_dir="data", RPE_design="-rpe_none", Regrid=False, mrtrix_nthreads=0):
