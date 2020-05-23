@@ -30,7 +30,7 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200522-21:05:02,82 nipype.utils INFO:
+<pre>200522-22:53:41,29 nipype.utils INFO:
 	 Running nipype version 1.5.0-rc1 (latest: 1.4.2)
 </pre>
 </div>
@@ -45,6 +45,32 @@ description: "Here we have the Nodes wrapping around our core functions, which c
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%capture</span>
+<span class="c1">#exporti</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">which</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">pipetography.core</span> <span class="k">as</span> <span class="nn">ppt</span>
+
+<span class="kn">from</span> <span class="nn">nipype</span> <span class="kn">import</span> <span class="n">IdentityInterface</span><span class="p">,</span> <span class="n">Function</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">import</span> <span class="n">SelectFiles</span><span class="p">,</span> <span class="n">DataSink</span>
+<span class="kn">from</span> <span class="nn">nipype.pipeline</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">MapNode</span><span class="p">,</span> <span class="n">Workflow</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.freesurfer.preprocess</span> <span class="kn">import</span> <span class="n">ReconAll</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.utils</span> <span class="kn">import</span> <span class="n">BrainMask</span><span class="p">,</span> <span class="n">TensorMetrics</span><span class="p">,</span> <span class="n">DWIExtract</span><span class="p">,</span> <span class="n">MRMath</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.preprocess</span> <span class="kn">import</span> <span class="n">MRDeGibbs</span><span class="p">,</span> <span class="n">DWIBiasCorrect</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.reconst</span> <span class="kn">import</span> <span class="n">FitTensor</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces</span> <span class="kn">import</span> <span class="n">ants</span>
+<span class="kn">from</span> <span class="nn">nipype.interfaces</span> <span class="kn">import</span> <span class="n">fsl</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -106,8 +132,7 @@ Attributes:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Example:</p>
-
+<h4 id="Example:">Example:<a class="anchor-link" href="#Example:"> </a></h4>
 </div>
 </div>
 </div>
@@ -435,6 +460,12 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Outputs:">Outputs:<a class="anchor-link" href="#Outputs:"> </a></h4>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The <code>derivatives</code> directory will contain the follwoing after running the pipeline:</p>
