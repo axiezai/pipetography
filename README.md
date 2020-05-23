@@ -41,7 +41,7 @@ The following pipeline is produced by running the default set up in [pipeline](h
 ```
 #example
 from IPython.display import Image
-Image('/Users/xxie/sample_data/derivatives/pipetography/pipetography_detailed.png')
+Image('docs/images/output_5_0.png')
 ```
 
 
