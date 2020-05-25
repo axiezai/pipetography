@@ -23,22 +23,10 @@ from nipype.interfaces import fsl
 # Cell
 class pipeline:
     """
-    A class containing functionalities and inputs to the image processing pipeline.
-    For step-by-step preprocessing example instead of a connected pipeline, see `core` page.
-
-    This pipeline makes the following assumptions:
-        - Data input is in valid BIDS format
-        - Align all anat and dwi images to MNI space via ACPC HCP procedure
-
-    Input:
-
-        - BIDS_dir (str): Valid BIDS directory with DWI modality
-
-        - RPE_design (str): Reverse phase encoding design for DWI
-
-        - Regrid (Bool): [False] Whether to resample DWI to a template image's voxel grid
-
-        - mrtrix_nthreads (Int): [0] Number of paralel threads to perform mrtrix tasks, default to 0, which disables multi-threading
+    Create `core` functionality nodes for a `Nipype` workflow that selects data inputs iteratively from `BIDS_dir` that has both `anat` and `dwi` modalities,
+    you will need to specify the reverse phase encoding design of your dwi acquisition with `RPE_design`, and declare whether you want to re-sample your dwi
+    voxels to MNI 1mm voxel grids (by default `Regrid = False`). Lastly, you can specify how many threads you want `mrtrix3` functions to have, by default,
+    `mrtrix_nthreads = 0`, meaning multi-threading is disabled. Multi-threading is different from parallel processing, the threads work in individual cores.
 
     """
 
@@ -906,7 +894,10 @@ class pipeline:
 
 
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
-    def run_pipeline(self, parallel = True):
-        if parallel is True:
-            processes = int(input('Number of Processes: '))
-            self.workflow.run('MultiProc', plugin_args = {'n_procs': processes})
+    def run_pipeline(self, parallel = None):
+        if type(parallel) == int:
+            print("Running workflow with {} parallel processes".format(parallel))
+            self.workflow.run('MultiProc', plugin_args = {'n_procs': parallel})
+        elif parallel is None:
+            print("Parallel processing is not enabled, running workflow serially.")
+            self.workflow.run()

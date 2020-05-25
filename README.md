@@ -13,7 +13,7 @@ The pre-processing workflow has been updated to reflect what's seen in the optim
 
 Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the `Singularity` or `Docker` recipe in the repository instead of installing the Python module.
 
- - To build singularity image: `singularity build -s pipetography.simg singularity.def`
+ - To build sandbox singularity image: `singularity build -s pipetography.simg singularity.def`
 
  - Run singularity image with: `singularity run pipetography.simg` (You will have to bind your data directories in addition to just `singularity run`)
 
@@ -33,8 +33,7 @@ Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, 
  - [Matlab Run Time Compiler for freesurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime)
  
 
-The pipeline visualized:
----
+## The pipeline:
 
 The following pipeline is produced by running the default set up in [pipeline](https://axiezai.github.io/pipetography/pipeline/). And each individual node in the workflow is shown in [core](https://axiezai.github.io/pipetography/core/).
 

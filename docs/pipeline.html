@@ -30,7 +30,7 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200522-22:53:41,29 nipype.utils INFO:
+<pre>200525-12:18:29,712 nipype.utils INFO:
 	 Running nipype version 1.5.0-rc1 (latest: 1.4.2)
 </pre>
 </div>
@@ -77,7 +77,8 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="A-pipeline-class-that-puts-everything-together.">A <a href="/pipetography/pipeline"><code>pipeline</code></a> class that puts everything together.<a class="anchor-link" href="#A-pipeline-class-that-puts-everything-together."> </a></h4>
+<h2 id="Preprocessing-pipeline-module:">Preprocessing <a href="/pipetography/pipeline"><code>pipeline</code></a> module:<a class="anchor-link" href="#Preprocessing-pipeline-module:"> </a></h2><p>A class containing <a href="/pipetography/core"><code>core</code></a> functionalities wrapped in a <code>Nipype</code> workflow, assuming your input data is in valid BIDS format. This pipeline will follow the [DESIGNER] protocol and align your T1 &amp; DWI to MNI template space (ACPC HCP procedure), perform all denoising &amp; artifact removal steps, and correct the DWI gradients accordingly.</p>
+
 </div>
 </div>
 </div>
@@ -101,24 +102,10 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 <div class="output_markdown rendered_html output_subarea ">
 <h2 id="pipeline" class="doc_header"><code>class</code> <code>pipeline</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/pipeline.py#L24" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>pipeline</code>(<strong><code>BIDS_dir</code></strong>=<em><code>'data'</code></em>, <strong><code>RPE_design</code></strong>=<em><code>'-rpe_none'</code></em>, <strong><code>Regrid</code></strong>=<em><code>False</code></em>, <strong><code>mrtrix_nthreads</code></strong>=<em><code>0</code></em>)</p>
 </blockquote>
-<p>A class containing functionalities and inputs to the image processing pipeline.
-For step-by-step preprocessing example instead of a connected pipeline, see <a href="/pipetography/core"><code>core</code></a> page.</p>
-<p>This pipeline makes the following assumptions:</p>
-
-<pre><code>- Data input is in valid BIDS format
-- Align all anat and dwi images to MNI space via ACPC HCP procedure
-
-</code></pre>
-<p>Input:
-    BIDS_dir (str): Valid BIDS directory with DWI modality
-    RPE_design (str): Reverse phase encoding design for DWI
-    Regrid (Bool): [False] Whether to resample DWI to a template image's voxel grid
-    mrtrix_nthreads (Int): [0] Number of paralel threads to perform mrtrix tasks, default to 0, which disables multi-threading
-Attributes:
-    data_dir (str): input BIDS data directory
-    sub_list (List): List of subject IDs read from the BIDS directory
-    layout (PyBIDS Layout): PyBIDS Layout for querying
-    bfiles_fsl (tuple)</p>
+<p>Create <a href="/pipetography/core"><code>core</code></a> functionality nodes for a <code>Nipype</code> workflow that selects data inputs iteratively from <code>BIDS_dir</code> that has both <code>anat</code> and <code>dwi</code> modalities,
+you will need to specify the reverse phase encoding design of your dwi acquisition with <code>RPE_design</code>, and declare whether you want to re-sample your dwi
+voxels to MNI 1mm voxel grids (by default <code>Regrid = False</code>). Lastly, you can specify how many threads you want <code>mrtrix3</code> functions to have, by default,
+<code>mrtrix_nthreads = 0</code>, meaning multi-threading is disabled. Multi-threading is different from parallel processing, the threads work in individual cores.</p>
 
 </div>
 
@@ -132,7 +119,14 @@ Attributes:
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Example:">Example:<a class="anchor-link" href="#Example:"> </a></h4>
+<h3 id="Example:">Example:<a class="anchor-link" href="#Example:"> </a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Create a <a href="/pipetography/pipeline"><code>pipeline</code></a>:</p>
+
 </div>
 </div>
 </div>
@@ -217,7 +211,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Take a look at what's in the <a href="/pipetography/pipeline"><code>pipeline</code></a>:</p>
+<p>Take a look at all the nodes and variables in the <a href="/pipetography/pipeline"><code>pipeline</code></a>:</p>
 
 </div>
 </div>
@@ -321,7 +315,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can set up preprocessing pipeline with default parameters:</p>
+<p>We can set up preprocessing pipeline with default parameters, this will connect all workflow nodes with default input names and parameter values:</p>
 
 </div>
 </div>
@@ -363,7 +357,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>All the default settings may not be optimal for your dataset, run the processing for a test image and see the intermediate results and then tweak the available inputs to improve the output image quality.</p>
-<p>Now that our pre-processing Nodes are properly setup, we can connect and create a workflow:</p>
+<p>Now that our pre-processing Nodes are properly setup, we can visualize our workflow:</p>
 
 </div>
 </div>
@@ -431,6 +425,13 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Run-pipeline:">Run pipeline:<a class="anchor-link" href="#Run-pipeline:"> </a></h3><p>Calling <code>run_pipeline</code> will prompt an user input for the number of parallel processes</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -439,7 +440,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">run_pipeline</span><span class="p">(</span><span class="n">parallel</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">run_pipeline</span><span class="p">(</span><span class="n">parallel</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -462,7 +463,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Outputs:">Outputs:<a class="anchor-link" href="#Outputs:"> </a></h4>
+<h2 id="Outputs:">Outputs:<a class="anchor-link" href="#Outputs:"> </a></h2>
 </div>
 </div>
 </div>
