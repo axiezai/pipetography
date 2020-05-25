@@ -30,45 +30,12 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200525-12:18:29,712 nipype.utils INFO:
+<pre>200525-12:32:49,206 nipype.utils INFO:
 	 Running nipype version 1.5.0-rc1 (latest: 1.4.2)
 </pre>
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%capture</span>
-<span class="c1">#exporti</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">which</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-
-<span class="kn">import</span> <span class="nn">pipetography.core</span> <span class="k">as</span> <span class="nn">ppt</span>
-
-<span class="kn">from</span> <span class="nn">nipype</span> <span class="kn">import</span> <span class="n">IdentityInterface</span><span class="p">,</span> <span class="n">Function</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">import</span> <span class="n">SelectFiles</span><span class="p">,</span> <span class="n">DataSink</span>
-<span class="kn">from</span> <span class="nn">nipype.pipeline</span> <span class="kn">import</span> <span class="n">Node</span><span class="p">,</span> <span class="n">MapNode</span><span class="p">,</span> <span class="n">Workflow</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.freesurfer.preprocess</span> <span class="kn">import</span> <span class="n">ReconAll</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.utils</span> <span class="kn">import</span> <span class="n">BrainMask</span><span class="p">,</span> <span class="n">TensorMetrics</span><span class="p">,</span> <span class="n">DWIExtract</span><span class="p">,</span> <span class="n">MRMath</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.preprocess</span> <span class="kn">import</span> <span class="n">MRDeGibbs</span><span class="p">,</span> <span class="n">DWIBiasCorrect</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.reconst</span> <span class="kn">import</span> <span class="n">FitTensor</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces</span> <span class="kn">import</span> <span class="n">ants</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces</span> <span class="kn">import</span> <span class="n">fsl</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
 
@@ -100,7 +67,7 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="pipeline" class="doc_header"><code>class</code> <code>pipeline</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/pipeline.py#L24" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>pipeline</code>(<strong><code>BIDS_dir</code></strong>=<em><code>'data'</code></em>, <strong><code>RPE_design</code></strong>=<em><code>'-rpe_none'</code></em>, <strong><code>Regrid</code></strong>=<em><code>False</code></em>, <strong><code>mrtrix_nthreads</code></strong>=<em><code>0</code></em>)</p>
+<h2 id="pipeline" class="doc_header"><code>class</code> <code>pipeline</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/pipeline.py#L23" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>pipeline</code>(<strong><code>BIDS_dir</code></strong>=<em><code>'data'</code></em>, <strong><code>RPE_design</code></strong>=<em><code>'-rpe_none'</code></em>, <strong><code>Regrid</code></strong>=<em><code>False</code></em>, <strong><code>mrtrix_nthreads</code></strong>=<em><code>0</code></em>)</p>
 </blockquote>
 <p>Create <a href="/pipetography/core"><code>core</code></a> functionality nodes for a <code>Nipype</code> workflow that selects data inputs iteratively from <code>BIDS_dir</code> that has both <code>anat</code> and <code>dwi</code> modalities,
 you will need to specify the reverse phase encoding design of your dwi acquisition with <code>RPE_design</code>, and declare whether you want to re-sample your dwi
