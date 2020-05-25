@@ -52,10 +52,23 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the <code>Singularity</code> or <code>Docker</code> recipe in the repository instead of installing the Python module.</p>
-<ul>
+<h4 id="Singularity-(recommended):">Singularity (recommended):<a class="anchor-link" href="#Singularity-(recommended):"> </a></h4><ul>
 <li><p>To build sandbox singularity image: <code>singularity build -s pipetography.simg singularity.def</code></p>
 </li>
 <li><p>Run singularity image with: <code>singularity run pipetography.simg</code> (You will have to bind your data directories in addition to just <code>singularity run</code>)</p>
+</li>
+</ul>
+<h4 id="Docker:">Docker:<a class="anchor-link" href="#Docker:"> </a></h4><ul>
+<li><p>Pull the docker image: <code>docker pull axiezai/pipetography</code></p>
+</li>
+<li><p>Run with BIDS directory and interactive bash terminal: <code>docker run -v &lt;BIDS_DIR&gt;:&lt;Docker_BIDS_DIR&gt; -it axiezai/pipetography bash</code></p>
+</li>
+</ul>
+<p>Known container issues:</p>
+<ul>
+<li><p>The freesurfer <code>license.txt</code> file, although copied into the containers and the environment variable <code>FS_LICENSE</code> is set, must be moved into the freesurfer home folder before running the pipeline. So once your image is built, run it interactively and manually move the license file with <code>mv /license.txt /opt/freesurfer-6.0.0-min/</code></p>
+</li>
+<li><p>If <code>singularity build</code> fails with <code>apt-get install</code> error complaining about unauthenticated packages, add <code>--allow-unauthenticated</code> to every <code>apt-get</code> line in the <code>sinngularity.def</code> file.</p>
 </li>
 </ul>
 <h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>

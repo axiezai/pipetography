@@ -122,7 +122,7 @@ class pipeline:
         # create raw DWI brain mask
         self.createMask = MapNode(BrainMask(), name='raw_dwi2mask', iterfield='in_file')
         # check for gradients and create a new image with correct gradients
-        self.GradCheck = MapNode(ppt.GradCheck(), name='dwigradcheck', iterfield=['in_file','mask_file'])
+        self.GradCheck = MapNode(ppt.GradCheck(), name='dwigradcheck', iterfield=['in_file','mask_file', 'grad_file'])
         self.NewGradMR = MapNode(ppt.Convert(), name='mrconvert', iterfield = ["in_file", 'grad_file'])
 
         # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
@@ -249,7 +249,7 @@ class pipeline:
         assert "ANTSPATH" in os.environ
         print("ANTS is valid")
         #mrtrix:
-        assert which('mrview') is not None
+        assert which('dwifslpreproc') is not None
         print("mrtrix3 is valid")
         #freesurfer:
         assert "FREESURFER_HOME" in os.environ

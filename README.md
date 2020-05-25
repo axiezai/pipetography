@@ -13,10 +13,23 @@ The pre-processing workflow has been updated to reflect what's seen in the optim
 
 Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the `Singularity` or `Docker` recipe in the repository instead of installing the Python module.
 
+#### Singularity (recommended):
+
  - To build sandbox singularity image: `singularity build -s pipetography.simg singularity.def`
 
  - Run singularity image with: `singularity run pipetography.simg` (You will have to bind your data directories in addition to just `singularity run`)
+ 
+#### Docker:
 
+ - Pull the docker image: `docker pull axiezai/pipetography`
+ 
+ - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography bash`
+
+Known container issues:
+ - The freesurfer `license.txt` file, although copied into the containers and the environment variable `FS_LICENSE` is set, must be moved into the freesurfer home folder before running the pipeline. So once your image is built, run it interactively and manually move the license file with `mv /license.txt /opt/freesurfer-6.0.0-min/`
+
+ - If `singularity build` fails with `apt-get install` error complaining about unauthenticated packages, add `--allow-unauthenticated` to every `apt-get` line in the `sinngularity.def` file.
+ 
 #### Creating your own environment and install `pipetography` as a Python module:
 
 `pip install pipetography`
