@@ -70,6 +70,8 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </li>
 <li><p>If <code>singularity build</code> fails with <code>apt-get install</code> error complaining about unauthenticated packages, add <code>--allow-unauthenticated</code> to every <code>apt-get</code> line in the <code>sinngularity.def</code> file.</p>
 </li>
+<li><p>Containers missing standard libraries like <code>libopenblas</code> or <code>libfortran</code>, this is because <code>$LS_LIBRARY_PATH</code> is missing conda environment's lib path. We need to append the environment's lib path with <code>export LB_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/miniconda-latest/envs/tracts/lib/</code></p>
+</li>
 </ul>
 <h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>
 <p>Since <code>pipetography</code> is a <code>Nipype</code> wrapper around <code>mrtrix3</code>, <code>ANTs</code>, and <code>FSL</code>, you have to follow their installation instructions and set them up appropriately on your machine as well:</p>

@@ -30,6 +30,8 @@ Known container issues:
 
  - If `singularity build` fails with `apt-get install` error complaining about unauthenticated packages, add `--allow-unauthenticated` to every `apt-get` line in the `sinngularity.def` file.
  
+ - Containers missing standard libraries like `libopenblas` or `libfortran`, this is because `$LS_LIBRARY_PATH` is missing conda environment's lib path. We need to append the environment's lib path with `export LB_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/miniconda-latest/envs/tracts/lib/`
+ 
 #### Creating your own environment and install `pipetography` as a Python module:
 
 `pip install pipetography`
