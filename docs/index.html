@@ -55,7 +55,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <h4 id="Singularity-(recommended):">Singularity (recommended):<a class="anchor-link" href="#Singularity-(recommended):"> </a></h4><ul>
 <li><p>To build sandbox singularity image: <code>singularity build -s pipetography.simg singularity.def</code></p>
 </li>
-<li><p>Run singularity image with: <code>singularity run pipetography.simg</code> (You will have to bind your data directories in addition to just <code>singularity run</code>)</p>
+<li><p>Run singularity image with: <code>singularity run -B &lt;BIDS_DIR&gt;:&lt;Singularity_BIDS_DIR&gt; pipetography.simg</code> (You will have to bind your data directories in addition to just <code>singularity run</code>)</p>
 </li>
 </ul>
 <h4 id="Docker:">Docker:<a class="anchor-link" href="#Docker:"> </a></h4><ul>
@@ -71,6 +71,8 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><p>If <code>singularity build</code> fails with <code>apt-get install</code> error complaining about unauthenticated packages, add <code>--allow-unauthenticated</code> to every <code>apt-get</code> line in the <code>sinngularity.def</code> file.</p>
 </li>
 <li><p>Containers missing standard libraries like <code>libopenblas</code> or <code>libfortran</code>, this is because <code>$LS_LIBRARY_PATH</code> is missing conda environment's lib path. We need to append the environment's lib path with <code>export LB_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/miniconda-latest/envs/tracts/lib/</code></p>
+</li>
+<li><p><a href="https://github.com/ReproNim/neurodocker/issues/285">Freesurfer6.0.0-min <code>recon-all</code> is missing commands if <code>-parallel</code> or <code>-openmp</code> are set to <code>True</code></a>.</p>
 </li>
 </ul>
 <h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>

@@ -320,7 +320,7 @@ class pipeline:
 
     # +++++++++++++++++++++++++++ Freesurfer reconall inputs +++++++++++++++++++++ #
     # Freesurfer recon-all
-    def recon_inputs(self, hipp = True):
+    def recon_inputs(self, hipp = True, parallel = False):
         """
         We will multiproc the entire workflow, so parallel here is not recommended.
         Only recommend parallel for single subject runs or group level runs.
@@ -335,8 +335,8 @@ class pipeline:
             print('Freesurfer output at {}'.format(os.path.join(Path(self.bids_dir).parent, 'derivatives', 'freesurfer')))
 
         self.reconall.inputs.subjects_dir = os.path.join(os.path.join(Path(self.bids_dir).parent, 'derivatives', 'freesurfer'))
-        self.reconall.inputs.hippocampal_subfields_T1 = True # we want this for compeleteness of data
-        self.reconall.inputs.parallel = True
+        self.reconall.inputs.hippocampal_subfields_T1 = hipp # we want this for compeleteness of data
+        self.reconall.inputs.parallel = parallel
         # self.reconall.inputs.subject_id = self.sub_list
 
 

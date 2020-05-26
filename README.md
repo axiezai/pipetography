@@ -17,7 +17,7 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
 
  - To build sandbox singularity image: `singularity build -s pipetography.simg singularity.def`
 
- - Run singularity image with: `singularity run pipetography.simg` (You will have to bind your data directories in addition to just `singularity run`)
+ - Run singularity image with: `singularity run -B <BIDS_DIR>:<Singularity_BIDS_DIR> pipetography.simg` (You will have to bind your data directories in addition to just `singularity run`)
  
 #### Docker:
 
@@ -31,6 +31,8 @@ Known container issues:
  - If `singularity build` fails with `apt-get install` error complaining about unauthenticated packages, add `--allow-unauthenticated` to every `apt-get` line in the `sinngularity.def` file.
  
  - Containers missing standard libraries like `libopenblas` or `libfortran`, this is because `$LS_LIBRARY_PATH` is missing conda environment's lib path. We need to append the environment's lib path with `export LB_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/miniconda-latest/envs/tracts/lib/`
+ 
+ - [Freesurfer6.0.0-min `recon-all` is missing commands if `-parallel` or `-openmp` are set to `True`](https://github.com/ReproNim/neurodocker/issues/285). 
  
 #### Creating your own environment and install `pipetography` as a Python module:
 
