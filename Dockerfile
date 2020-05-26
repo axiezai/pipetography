@@ -169,7 +169,7 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
              "pybids" \
              "fastcore==0.1.11" \
              "nilearn" \
-	     "pipetography==0.2.4"" \
+	     "pipetography==0.2.5"" \
     && rm -rf ~/.cache/pip/* \
     && sync
 
@@ -242,7 +242,8 @@ RUN echo '{ \
     \n        "pip_install": [ \
     \n          "pybids", \
     \n          "fastcore==0.1.11", \
-    \n          "nilearn" \
+    \n          "nilearn", \
+    \n          "pipetography==0.2.5"
     \n        ] \
     \n      } \
     \n    ], \
@@ -265,7 +266,7 @@ RUN echo '{ \
     \n    ], \
     \n    [ \
     \n      "run_bash", \
-    \n      "cd $FREESURFER_HOME && ln -s /opt/matlabmcr-2012b MCRv80" \
+    \n      "cd $FREESURFER_HOME && ln -s /opt/matlabmcr-2012b MCRv80 && mv /license.txt ." \
     \n    ], \
     \n    [ \
     \n      "env", \
