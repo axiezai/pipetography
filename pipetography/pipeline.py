@@ -415,7 +415,7 @@ class pipeline:
 
 
     # Gibbs ringing artifact removal
-    def degibbs_inputs(self, out_file="ringing_removed.nii.gz"):
+    def degibbs_inputs(self, out_file="ringing_removed.mif"):
         """
         Set inputs to ringing removal node
         """
@@ -426,7 +426,7 @@ class pipeline:
     def fslpreproc_inputs(
         self,
         eddy_options = '"--slm=linear --repol"',
-        out_file="preproc.nii.gz"
+        out_file="preproc.mif"
     ):
         """
         Set inputs to mrtrix3's dwipreproc.
