@@ -305,7 +305,7 @@ class pipeline:
 
     def acpcwarp_inputs(
         self,
-        out_file='acpc_t1.nii.gz',
+        out_file='acpc_t1.nii',
         rel_warp = True,
         method = 'spline'
     ):
