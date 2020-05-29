@@ -305,17 +305,20 @@ class pipeline:
 
     def acpcwarp_inputs(
         self,
-        out_file='acpc_t1.nii',
+        out_file = 'acpc_t1.nii',
+        output_type = 'NIFTI',
         rel_warp = True,
         method = 'spline'
     ):
         """
         Inputs for FSL's `applywarp`
         We want spline interpolation, relative warp field, premat = aff2rigid mat output.
+        `NIFTI` is default output type to match freesurfer T1 input field requirement.
         """
         self.ACPC_warp.inputs.out_file = out_file
         self.ACPC_warp.inputs.relwarp = rel_warp
         self.ACPC_warp.inputs.interp = method
+        self.ACPC_warp.inputs.output_type= output_type
         self.ACPC_warp.inputs.ref_file = self.MNI_template
 
     # +++++++++++++++++++++++++++ Freesurfer reconall inputs +++++++++++++++++++++ #
@@ -425,7 +428,7 @@ class pipeline:
     # dwifslpreproc - Distortion correction with mrtrix3
     def fslpreproc_inputs(
         self,
-        eddy_options = '"--slm=linear --repol"',
+        eddy_options = '"--slm=linear --repol "',
         out_file="preproc.mif"
     ):
         """
@@ -852,6 +855,8 @@ class pipeline:
                 (self.mni_dwi, self.datasink, [("out_json", "preproc_mni.@json")])
             ]
         )
+        self.workflow.config['execution'] = {'use_relative_paths':'True',
+                                            'hash_method': 'content'}
 
 
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #

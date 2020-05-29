@@ -66,13 +66,15 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </ul>
 <p>Known container issues:</p>
 <ul>
-<li><p>The freesurfer <code>license.txt</code> file, although copied into the containers and the environment variable <code>FS_LICENSE</code> is set, must be moved into the freesurfer home folder before running the pipeline. So once your image is built, run it interactively and manually move the license file with <code>mv /license.txt /opt/freesurfer-6.0.0-min/</code></p>
+<li><p>The freesurfer <code>license.txt</code> file, although copied into the containers and the environment variable <code>FS_LICENSE</code> is set, must be moved into the freesurfer home folder before running the pipeline. So once your image is built, run it interactively and manually move the license file with <code>mv /license.txt /opt/freesurfer-6.0.0-min/</code> **Added a move license command in container recipe files'</p>
+</li>
+<li><p>Singularity image missing freesurfer path to <code>nu_correct</code> as part of <code>$PATH</code>.</p>
 </li>
 <li><p>If <code>singularity build</code> fails with <code>apt-get install</code> error complaining about unauthenticated packages, add <code>--allow-unauthenticated</code> to every <code>apt-get</code> line in the <code>sinngularity.def</code> file.</p>
 </li>
-<li><p>Containers missing standard libraries like <code>libopenblas</code> or <code>libfortran</code>, this is because <code>$LS_LIBRARY_PATH</code> is missing conda environment's lib path. We need to append the environment's lib path with <code>export LB_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/miniconda-latest/envs/tracts/lib/</code></p>
+<li><p>Containers missing standard libraries like <code>libopenblas</code> or <code>libfortran</code>, this is because <code>$LS_LIBRARY_PATH</code> is missing conda environment's lib path. We need to append the environment's lib path with <code>export LB_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/miniconda-latest/envs/tracts/lib/</code>. <strong>The conda env path has been appended as part of the container recipe file</strong></p>
 </li>
-<li><p><a href="https://github.com/ReproNim/neurodocker/issues/285">Freesurfer6.0.0-min <code>recon-all</code> is missing commands if <code>-parallel</code> or <code>-openmp</code> are set to <code>True</code></a>.</p>
+<li><p><a href="https://github.com/ReproNim/neurodocker/issues/285">Freesurfer6.0.0-min <code>recon-all</code> is missing commands if <code>-parallel</code> or <code>-openmp</code> are set to <code>True</code></a>. The default <code>-parallel</code> <strong>setting has been set to False for <code>pipetography.pipeline</code></strong>.</p>
 </li>
 </ul>
 <h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>
