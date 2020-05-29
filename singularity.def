@@ -145,7 +145,7 @@ bash -c "source activate tracts
       "pybids" \
       "fastcore==0.1.11" \
       "nilearn" \
-      "pipetography==0.2.7""
+      "pipetography==0.2.8""
 rm -rf ~/.cache/pip/*
 sync
 
@@ -226,7 +226,7 @@ echo '{
 \n          "pybids",
 \n          "fastcore==0.1.11",
 \n          "nilearn",
-\n          "pipetography=0.2.7"
+\n          "pipetography=0.2.8"
 \n        ]
 \n      }
 \n    ],
@@ -281,6 +281,8 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/opt/matlabmc
 export MATLABCMD="/opt/matlabmcr-2012b/v80/toolbox/matlab"
 export FREESURFER_HOME="/opt/freesurfer-6.0.0-min"
 export PATH="/opt/freesurfer-6.0.0-min/bin:$PATH"
+export PATH="/opt/freesurfer-6.0.0-min/mni/bin:$PATH"
+export PATH="/opt/freesurfer-6.0.0-min/tktools:$PATH"
 export CONDA_DIR="/opt/miniconda-latest"
 export PATH="/opt/miniconda-latest/bin:$PATH"
 export FS_LICENSE="/license.txt"
