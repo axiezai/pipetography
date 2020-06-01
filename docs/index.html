@@ -52,10 +52,10 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the <code>Singularity</code> or <code>Docker</code> recipe in the repository instead of installing the Python module.</p>
-<h4 id="Singularity-(recommended):">Singularity (recommended):<a class="anchor-link" href="#Singularity-(recommended):"> </a></h4><ul>
-<li><p>To build sandbox singularity image: <code>singularity build -s pipetography.simg singularity.def</code></p>
+<h4 id="Singularity:">Singularity:<a class="anchor-link" href="#Singularity:"> </a></h4><ul>
+<li><p>Currently has pathing issues as seen in the singularity issues page: <a href="https://github.com/hpcng/singularity/issues/5040">https://github.com/hpcng/singularity/issues/5040</a>, the 3.6 release candidate should fix this... For now, use docker image if you can. If not, the singularity container will not be able to execute freesurfer <code>recon-all</code> step of the workflow. All DWI preprocessing steps will work though.</p>
 </li>
-<li><p>Run singularity image with: <code>singularity run -B &lt;BIDS_DIR&gt;:&lt;Singularity_BIDS_DIR&gt; pipetography.simg</code> (You will have to bind your data directories in addition to just <code>singularity run</code>)</p>
+<li><p>Obtain the singularity image with <code>singularity pull docker://axiezai/pipetography:0.2.8</code> or <code>singularity build --remote pipetography.sif docker://axiezai/pipetography:0.2.8</code>. The second option allows you to build remotely via Syslabs Cloud, this will require a remote log tokeen in which you can obtain after registering at <a href="https://cloud.sylabs.io/builder">https://cloud.sylabs.io/builder</a>.</p>
 </li>
 </ul>
 <h4 id="Docker:">Docker:<a class="anchor-link" href="#Docker:"> </a></h4><ul>
@@ -66,13 +66,9 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </ul>
 <p>Known container issues:</p>
 <ul>
-<li><p>The freesurfer <code>license.txt</code> file, although copied into the containers and the environment variable <code>FS_LICENSE</code> is set, must be moved into the freesurfer home folder before running the pipeline. So once your image is built, run it interactively and manually move the license file with <code>mv /license.txt /opt/freesurfer-6.0.0-min/</code> **Added a move license command in container recipe files'</p>
-</li>
 <li><p>Singularity image missing freesurfer path to <code>nu_correct</code> as part of <code>$PATH</code>.</p>
 </li>
 <li><p>If <code>singularity build</code> fails with <code>apt-get install</code> error complaining about unauthenticated packages, add <code>--allow-unauthenticated</code> to every <code>apt-get</code> line in the <code>sinngularity.def</code> file.</p>
-</li>
-<li><p>Containers missing standard libraries like <code>libopenblas</code> or <code>libfortran</code>, this is because <code>$LS_LIBRARY_PATH</code> is missing conda environment's lib path. We need to append the environment's lib path with <code>export LB_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/miniconda-latest/envs/tracts/lib/</code>. <strong>The conda env path has been appended as part of the container recipe file</strong></p>
 </li>
 <li><p><a href="https://github.com/ReproNim/neurodocker/issues/285">Freesurfer6.0.0-min <code>recon-all</code> is missing commands if <code>-parallel</code> or <code>-openmp</code> are set to <code>True</code></a>. The default <code>-parallel</code> <strong>setting has been set to False for <code>pipetography.pipeline</code></strong>.</p>
 </li>

@@ -243,7 +243,7 @@ RUN echo '{ \
     \n          "pybids", \
     \n          "fastcore==0.1.11", \
     \n          "nilearn", \
-    \n          "pipetography==0.2.8"
+    \n          "pipetography==0.2.8" \
     \n        ] \
     \n      } \
     \n    ], \

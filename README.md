@@ -13,11 +13,11 @@ The pre-processing workflow has been updated to reflect what's seen in the optim
 
 Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the `Singularity` or `Docker` recipe in the repository instead of installing the Python module.
 
-#### Singularity (recommended):
+#### Singularity:
 
- - To build sandbox singularity image: `singularity build -s pipetography.simg singularity.def`
-
- - Run singularity image with: `singularity run -B <BIDS_DIR>:<Singularity_BIDS_DIR> pipetography.simg` (You will have to bind your data directories in addition to just `singularity run`)
+ - Currently has pathing issues as seen in the singularity issues page: https://github.com/hpcng/singularity/issues/5040, the 3.6 release candidate should fix this... For now, use docker image if you can. If not, the singularity container will not be able to execute freesurfer `recon-all` step of the workflow. All DWI preprocessing steps will work though.
+ 
+ - Obtain the singularity image with `singularity pull docker://axiezai/pipetography:0.2.8` or `singularity build --remote pipetography.sif docker://axiezai/pipetography:0.2.8`. The second option allows you to build remotely via Syslabs Cloud, this will require a remote log tokeen in which you can obtain after registering at https://cloud.sylabs.io/builder. 
  
 #### Docker:
 
@@ -26,13 +26,9 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
  - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography bash`
 
 Known container issues:
- - The freesurfer `license.txt` file, although copied into the containers and the environment variable `FS_LICENSE` is set, must be moved into the freesurfer home folder before running the pipeline. So once your image is built, run it interactively and manually move the license file with `mv /license.txt /opt/freesurfer-6.0.0-min/` **Added a move license command in container recipe files'
- 
  - Singularity image missing freesurfer path to `nu_correct` as part of `$PATH`. 
 
  - If `singularity build` fails with `apt-get install` error complaining about unauthenticated packages, add `--allow-unauthenticated` to every `apt-get` line in the `sinngularity.def` file.
- 
- - Containers missing standard libraries like `libopenblas` or `libfortran`, this is because `$LS_LIBRARY_PATH` is missing conda environment's lib path. We need to append the environment's lib path with `export LB_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/miniconda-latest/envs/tracts/lib/`. **The conda env path has been appended as part of the container recipe file**
  
  - [Freesurfer6.0.0-min `recon-all` is missing commands if `-parallel` or `-openmp` are set to `True`](https://github.com/ReproNim/neurodocker/issues/285). The default `-parallel` **setting has been set to False for `pipetography.pipeline`**.
  
