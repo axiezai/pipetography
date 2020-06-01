@@ -21,9 +21,9 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
  
 #### Docker:
 
- - Pull the docker image: `docker pull axiezai/pipetography`
+ - Pull the docker image: `docker pull axiezai/pipetography:0.2.8`
  
- - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography bash`
+ - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography:0.2.8 bash`
 
 Known container issues:
  - Singularity image missing freesurfer path to `nu_correct` as part of `$PATH`. 
