@@ -276,7 +276,7 @@ class PreProcNodes:
         self.createMask.inputs.out_file='b0_brain_mask.mif'
         self.createMask.inputs.nthreads=mrtrix_nthreads
         self.GradCheck.inputs.export_grad=True
-        self.GradCheck.inputs.out_bfile=corrected.b
+        self.GradCheck.inputs.out_bfile='corrected.b'
         self.GradCheck.inputs.force=True
         self.GradCheck.inputs.quiet=True
         self.GradCheck.inputs.nthreads=mrtrix_nthreads
