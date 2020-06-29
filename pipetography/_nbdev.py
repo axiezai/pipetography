@@ -57,10 +57,13 @@ index = {"get_subs": "00_core.ipynb",
          "MRRegridOutputSpec": "00_core.ipynb",
          "MRRegrid": "00_core.ipynb",
          "mask2seedtuple": "00_core.ipynb",
-         "pipeline": "01_pipeline.ipynb"}
+         "pipeline": "01_pipeline.ipynb",
+         "PreProcNodes": "02_nodes.ipynb",
+         "ACPCNodes": "02_nodes.ipynb"}
 
 modules = ["core.py",
-           "pipeline.py"]
+           "pipeline.py",
+           "nodes.py"]
 
 doc_url = "https://axiezai.github.io/pipetography/"
 
