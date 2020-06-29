@@ -439,6 +439,7 @@ class ACPCNodes:
             ppt.MRTransform(),
             name='mrtransform',
             iterfield=["in_file", "linear_xfm"]
+        )
         self.regrid = MapNode(
             ppt.MRRegrid(),
             name = 'mrgrid',
