@@ -25,11 +25,11 @@ class PreProcNodes:
     """
 
     def __init__(self, bids_dir, bids_path_template, sub_list, RPE_design):
-        self.subject_source = Node(IdentityInterface(fields=["subject_id"]), name = "sub_source")
+        self.subject_source = Node(IdentityInterface(fields=["subject_id", "ext"]), name = "sub_source")
         self.subject_source.iterables=[("subject_id", sub_list)]
         if RPE_design == '-rpe_none':
             self.sub_grad_files = MapNode(
-                Function(input_names=['sub_dwi'],
+                Function(input_names=['sub_dwi', 'ext'],
                     output_names=["fslgrad"],
                     function=ppt.get_sub_gradfiles
                 ),
@@ -44,7 +44,7 @@ class PreProcNodes:
         elif RPE_design == '-rpe_all':
             self.sub_grad_files1 = MapNode(
                 Function(
-                    input_names=["sub_dwi"],
+                    input_names=["sub_dwi", "ext"],
                     output_names=["fslgrad"],
                     function=ppt.get_sub_gradfiles
                 ),
@@ -53,7 +53,7 @@ class PreProcNodes:
             )
             self.sub_grad_files2 = MapNode(
                 Function(
-                    input_names=["sub_dwi"],
+                    input_names=["sub_dwi", "ext"],
                     output_names=["fslgrad"],
                     function=ppt.get_sub_gradfiles
                 ),
@@ -252,8 +252,10 @@ class PreProcNodes:
         )
         print('Data sink (output folder) is set to {}'.format(os.path.join(Path(bids_dir).parent, 'derivatives')))
 
-    def set_inputs(self, bids_dir, RPE_design, mrtrix_nthreads):
+    def set_inputs(self, bids_dir, bids_ext, RPE_design, mrtrix_nthreads):
+        self.subject_source.inputs.ext=bids_ext
         if RPE_design == '-rpe_none':
+            self.sub_grad_files.inputs.ext = bids_ext
             self.mrconvert.inputs.out_file='raw_dwi.mif'
             self.mrconvert.inputs.export_grad=True
             self.mrconvert.inputs.out_bfile='raw_dwi.b'
@@ -261,6 +263,8 @@ class PreProcNodes:
             self.mrconvert.quiet=True
             self.mrconvert.inputs.nthreads=mrtrix_nthreads
         elif RPE_design == '-rpe_all':
+            self.sub_grad_files1.inputs.ext = bids_ext
+            self.sub_grad_files2.inputs.ext = bids_ext
             self.mrconvert1.inputs.out_file='raw_dwi1.mif'
             self.mrconvert1.inputs.export_grad=True
             self.mrconvert1.inputs.out_bfile='raw_dwi1.b'
