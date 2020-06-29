@@ -42,13 +42,13 @@ def get_bfiles_tuple(in_List):
     return bvs_tuple
 
 # Cell
-def get_sub_gradfiles(sub_dwi):
+def get_sub_gradfiles(sub_dwi, ext = 'nii.gz'):
     import os, sys
     """
     For a given layout and a subject's DWI, grab the matching gradient files
     """
-    sub_bvec = sub_dwi.replace('nii.gz', 'bvec')
-    sub_bval = sub_dwi.replace('nii.gz', 'bval')
+    sub_bvec = sub_dwi.replace(ext, 'bvec')
+    sub_bval = sub_dwi.replace(ext, 'bval')
     if os.path.exists(sub_bvec) and os.path.exists(sub_bval):
         grad_files = tuple([sub_bvec, sub_bval])
         return grad_files
