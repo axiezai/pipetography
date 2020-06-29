@@ -246,7 +246,7 @@ class PreProcNodes:
 
         self.datasink = Node(
             DataSink(
-                base_directory=os.path.join(Path(BIDS_dir).parent, 'derivatives')
+                base_directory=os.path.join(Path(bids_dir).parent, 'derivatives')
             ),
             name="datasink"
         )
