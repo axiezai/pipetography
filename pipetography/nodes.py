@@ -441,8 +441,8 @@ class ACPCNodes:
             iterfield=["in_file", "linear_xfm"]
         self.regrid = MapNode(
             ppt.MRRegrid(),
-            name'mrgrid',
-            iterfield='in_file'
+            name = 'mrgrid',
+            iterfield = 'in_file'
         )
 
     def set_inputs(self, bids_dir, MNI_template):
