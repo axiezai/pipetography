@@ -44,21 +44,21 @@ class PreProcNodes:
         elif RPE_design == '-rpe_all':
             self.sub_grad_files1 = MapNode(
                 Function(
-                    input_names=["sub_dwi1"],
-                    output_names=["fslgrad1"],
+                    input_names=["sub_dwi"],
+                    output_names=["fslgrad"],
                     function=ppt.get_sub_gradfiles
                 ),
                 name = "sub_grad_files1",
-                iterfield="sub_dwi1"
+                iterfield="sub_dwi"
             )
             self.sub_grad_files2 = MapNode(
                 Function(
-                    input_names=["sub_dwi2"],
-                    output_names=["fslgrad2"],
+                    input_names=["sub_dwi"],
+                    output_names=["fslgrad"],
                     function=ppt.get_sub_gradfiles
                 ),
                 name = "sub_grad_files2",
-                iterfield="sub_dwi2"
+                iterfield="sub_dwi"
             )
             self.mrconvert1 = MapNode(
                 ppt.Convert(),
