@@ -3,7 +3,6 @@
 __all__ = ['get_subs', 'get_bfiles_tuple', 'get_sub_gradfiles', 'anat2id', 'BIDS_metadata']
 
 # Internal Cell
-#exporti
 import os, sys
 from nipype.interfaces.base import CommandLine, CommandLineInputSpec, File
 from nipype.interfaces.base import TraitedSpec, traits
@@ -137,6 +136,60 @@ class PipetographyBaseInputSpec(CommandLineInputSpec):
     quiet = traits.Bool(
         argstr="-quiet", desc="suppress verbose outputs"
     )
+
+# Internal Cell
+class MRCatInputSpec(CommandLineInputSpec):
+    """inputs to mrtrix3's mrcat"""
+    image1 = File(
+        exists=True, mandatory=True, argstr="%s", position=1, desc="first input image"
+    )
+    image2 = File(
+        exists=True, mandatory=True, argstr="%s", position=2, desc="additional input image"
+    )
+    out_file = File(
+        mandatory=True, argstr="%s", position =3, desc="output image"
+    )
+
+class MRCatOutputSpec(TraitedSpec):
+    """mrcat output file spec"""
+    out_file = File(argstr="%s", desc="output image")
+
+class MRCat(CommandLine):
+    "Concatenate images"
+    _cmd = "mrcat"
+    input_spec = MRCatInputSpec
+    output_spec = MRCatOutputSpec
+
+    def _list_outputs(self):
+        outputs = self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
+        return outputs
+
+class GradCatInputSpec(CommandLineInputSpec):
+    grad1 = File(
+        exists=True, mandatory = True, argstr="%s", position = 1, desc="first gradient"
+    )
+    grad2 = File(
+        exists=True, mandatory = True, argstr="%s", position = 2, desc="second gradient"
+    )
+    out_file = File(
+        mandatory=True, argstr="%s", position = 3, desc="output gradient"
+    )
+
+class GradCatOutputSpec(TraitedSpec):
+    """concatenated gradient file"""
+    out_file =  File(argstr="%s", desc="output gradient")
+
+class GradCat(CommandLine):
+    """concatenate gradients"""
+    _cmd = "cat"
+    input_spec = GradCatInputSpec
+    output_spec = GradCatOutputSpec
+
+    def  _list_outputs(self):
+        outputs = self.output_spec().get
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
+        return outputs
 
 # Internal Cell
 class aff2rigidInputSpec(CommandLineInputSpec):
