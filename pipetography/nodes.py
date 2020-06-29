@@ -259,7 +259,7 @@ class PreProcNodes:
             self.mrconvert.force=True
             self.mrconvert.quiet=True
             self.mrconvert.inputs.nthreads=mrtrix_nthreads
-        elif RPE_design='-rpe_all':
+        elif RPE_design == '-rpe_all':
             self.mrconvert1.inputs.out_file='raw_dwi1.mif'
             self.mrconvert1.inputs.export_grad=True
             self.mrconvert1.inputs.out_bfile='raw_dwi1.b'
