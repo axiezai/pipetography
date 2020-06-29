@@ -31,7 +31,8 @@ class PreProcNodes:
             self.sub_grad_files = MapNode(
                 Function(input_names=['sub_dwi'],
                     output_names=["fslgrad"],
-                    function=ppt.get_sub_gradfiles),
+                    function=ppt.get_sub_gradfiles
+                ),
                 name = 'sub_grad_files',
                 iterfield = 'sub_dwi'
             )
@@ -45,7 +46,7 @@ class PreProcNodes:
                 Function(
                     input_names=["sub_dwi1"],
                     output_names=["fslgrad1"],
-                    function=ppt.get_sub_gradfile
+                    function=ppt.get_sub_gradfiles
                 ),
                 name = "sub_grad_files1",
                 iterfield="sub_dwi1"
@@ -54,7 +55,7 @@ class PreProcNodes:
                 Function(
                     input_names=["sub_dwi2"],
                     output_names=["fslgrad2"],
-                    function=ppt.get_sub_gradfile
+                    function=ppt.get_sub_gradfiles
                 ),
                 name = "sub_grad_files2",
                 iterfield="sub_dwi2"
