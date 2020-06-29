@@ -467,13 +467,13 @@ class ACPCNodes:
         self.reconall.inputs.parallel=False
         self.reconall.inputs.hippocampal_subfields_T1 = True
         self.reconall.inputs.directive='all'
-        if not os.path.exists(os.path.join(Path(self.bids_dir).parent, 'derivatives', 'freesurfer')):
+        if not os.path.exists(os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer')):
             print('No freesurfer subject folder (output folder) found, creating it at {}'.format(
-                os.path.join(Path(self.bids_dir).parent, 'derivatives', 'freesurfer'))
+                os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer'))
                  )
-            os.makedirs(os.path.join(Path(self.bids_dir).parent, 'derivatives', 'freesurfer'))
-        elif os.path.exists(os.path.join(Path(self.bids_dir).parent, 'derivatives', 'freesurfer')):
-            print('Freesurfer output at {}'.format(os.path.join(Path(self.bids_dir).parent, 'derivatives', 'freesurfer')))
+            os.makedirs(os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer'))
+        elif os.path.exists(os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer')):
+            print('Freesurfer output at {}'.format(os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer')))
         self.reconall.inputs.subjects_dir = os.path.join(
             Path(bids_dir).parent, 'derivatives', 'freesurfer'
         )
