@@ -300,7 +300,7 @@ class PreProcNodes:
         self.biascorrect.inputs.use_ants=True
         self.biascorrect.inputs.out_file='dwi_bias.mif'
         self.biascorrect.inputs.bias='biasfield.mif'
-        self.grad_info.inputs.exoirt_grad=True
+        self.grad_info.inputs.export_grad=True
         self.grad_info.inputs.out_bfile = 'rician_tmp.b'
         self.grad_info.inputs.force=True
         self.grad_info.inputs.quiet=True
