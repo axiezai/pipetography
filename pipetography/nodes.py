@@ -250,7 +250,7 @@ class PreProcNodes:
             ),
             name="datasink"
         )
-        print('Data sink (output folder) is set to {}'.format(os.path.join(Path(BIDS_dir).parent, 'derivatives')))
+        print('Data sink (output folder) is set to {}'.format(os.path.join(Path(bids_dir).parent, 'derivatives')))
 
     def set_inputs(self, bids_dir, RPE_design, mrtrix_nthreads):
         if RPE_design == '-rpe_none':
