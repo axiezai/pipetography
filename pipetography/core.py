@@ -167,18 +167,18 @@ class MRCat(CommandLine):
 
 class GradCatInputSpec(CommandLineInputSpec):
     grad1 = File(
-        mandatory = True, argstr="%s", position = 1, desc="first gradient"
+        argstr="%s", position = 1, desc="first gradient"
     )
     grad2 = File(
-        mandatory = True, argstr="%s", position = 2, desc="second gradient"
+        argstr="%s", position = 2, desc="second gradient"
     )
     out_file = File(
-        mandatory=True, argstr="> %s", position = 3, desc="output gradient"
+        argstr="> %s", position = 3, desc="output gradient"
     )
 
 class GradCatOutputSpec(TraitedSpec):
     """concatenated gradient file"""
-    out_file =  File(argstr="%s", desc="output gradient")
+    out_file = File(argstr="%s", desc="output gradient")
 
 class GradCat(CommandLine):
     """concatenate gradients"""

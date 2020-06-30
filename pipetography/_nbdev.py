@@ -69,7 +69,8 @@ index = {"get_subs": "00_core.ipynb",
 
 modules = ["core.py",
            "pipeline.py",
-           "nodes.py"]
+           "nodes.py",
+           "i.py"]
 
 doc_url = "https://axiezai.github.io/pipetography/"
 
