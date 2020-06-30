@@ -23,226 +23,187 @@ class PreProcNodes:
     """
     All nodes in preprocessing pipeline
     """
-
-    def __init__(self, bids_dir, bids_path_template, sub_list, RPE_design):
+    def __init__(self, bids_dir, bids_path_template, bids_ext, sub_list, RPE_design):
         self.subject_source = Node(IdentityInterface(fields=["subject_id", "ext"]), name = "sub_source")
         self.subject_source.iterables=[("subject_id", sub_list)]
         if RPE_design == '-rpe_none':
-            self.sub_grad_files = MapNode(
+            self.sub_grad_files = Node(
                 Function(input_names=['sub_dwi', 'ext'],
                     output_names=["fslgrad"],
                     function=ppt.get_sub_gradfiles
                 ),
                 name = 'sub_grad_files',
-                iterfield = 'sub_dwi'
             )
-            self.mrconvert = MapNode(
+            self.mrconvert = Node(
                 ppt.Convert(),
                 name='mrtrix_image',
-                iterfield=['in_file', 'grad_fsl']
             )
         elif RPE_design == '-rpe_all':
-            self.sub_grad_files1 = MapNode(
+            self.sub_grad_files1 = Node(
                 Function(
                     input_names=["sub_dwi", "ext"],
                     output_names=["fslgrad"],
                     function=ppt.get_sub_gradfiles
                 ),
                 name = "sub_grad_files1",
-                iterfield="sub_dwi"
             )
-            self.sub_grad_files2 = MapNode(
+            self.sub_grad_files2 = Node(
                 Function(
                     input_names=["sub_dwi", "ext"],
                     output_names=["fslgrad"],
                     function=ppt.get_sub_gradfiles
                 ),
                 name = "sub_grad_files2",
-                iterfield="sub_dwi"
             )
-            self.mrconvert1 = MapNode(
+            self.mrconvert1 = Node(
                 ppt.Convert(),
                 name='mrtrix_image1',
-                iterfield=["in_file", "grad_fsl"]
             )
-            self.mrconvert2 = MapNode(
+            self.mrconvert2 = Node(
                 ppt.Convert(),
                 name='mrtrix_image2',
-                iterfield=["in_file", "grad_fsl"]
             )
             # concatenate the two images and their gradient files.
-            self.mrconcat = MapNode(
+            self.mrconcat = Node(
                 ppt.MRCat(),
                 name='concat_dwi',
-                iterfield=["image1", "image2"]
             )
-            self.gradcat = MapNode(
+            self.gradcat = Node(
                 ppt.GradCat(),
                 name='concat_grad',
-                iterfield=["grad1, grad2"]
             )
         self.select_files = Node(
             SelectFiles(bids_path_template, base_directory=bids_dir),
             name='select_files'
         )
-        self.get_metadata = MapNode(
+        self.get_metadata = Node(
             Function(
                 input_names=['path', 'bids_dir'],
                 output_names=['ReadoutTime', 'PE_DIR'],
                 function=ppt.BIDS_metadata
             ),
             name='get_metadata',
-            iterfield='path'
         )
-        self.createMask = MapNode(
+        self.createMask = Node(
             BrainMask(),
             name='raw_dwi2mask',
-            iterfield='in_file'
         )
-        self.GradCheck = MapNode(
+        self.GradCheck = Node(
             ppt.GradCheck(),
             name='dwigradcheck',
-            iterfield=['in_file','mask_file', 'grad_file']
         )
-        self.NewGradMR = MapNode(
+        self.NewGradMR = Node(
             ppt.Convert(),
             name='mrconvert',
-            iterfield = ["in_file", 'grad_file']
         )
-        self.denoise = MapNode(
+        self.denoise = Node(
             ppt.dwidenoise(),
             name='denoise',
-            iterfield='in_file'
         )
-        self.degibbs = MapNode(
+        self.degibbs = Node(
             MRDeGibbs(),
             name='ringing_removal',
-            iterfield='in_file'
         )
-        self.fslpreproc = MapNode(
+        self.fslpreproc = Node(
             ppt.dwipreproc(),
             name = "dwifslpreproc",
-            iterfield=["in_file", "grad_file", "RO_time", "pe_dir"]
         )
-        self.biascorrect = MapNode(
+        self.biascorrect = Node(
             ppt.BiasCorrect(),
             name = 'dwibiascorret',
-            iterfield=["in_file", "grad_file"]
         )
-        self.grad_info = MapNode(
+        self.grad_info = Node(
             ppt.MRInfo(),
             name = 'NewGradient',
-            iterfield = ["in_file", "grad_file"]
         )
-        self.low_noise_map = MapNode(
+        self.low_noise_map = Node(
             ppt.CheckNIZ(),
             name = 'LowNoiseMap',
-            iterfield=["isfinite", "cond_if"]
         )
-        self.rician_noise = MapNode(
+        self.rician_noise = Node(
             ppt.RicianNoise(),
             name = 'RicianNoise',
-            iterfield = ["in_file","lownoisemap"]
         )
-        self.check_rician = MapNode(
+        self.check_rician = Node(
             ppt.CheckNIZ(),
             name = 'NoiseComparison',
-            iterfield = ["isfinite", "cond_if"]
         )
-        self.convert_rician = MapNode(
+        self.convert_rician = Node(
             ppt.Convert(),
             name = "ConvnertRician",
-            iterfield = ["in_file", "grad_file"]
         )
-        self.dwi_mask = MapNode(
+        self.dwi_mask = Node(
             BrainMask(),
             name='dwi2mask',
-            iterfield='in_file'
         )
-        self.fit_tensor = MapNode(
+        self.fit_tensor = Node(
             FitTensor(),
             name='dwi2tensor',
-            iterfield=['in_file', 'in_mask']
         )
-        self.tensor_FA = MapNode(
+        self.tensor_FA = Node(
             TensorMetrics(),
             name='tensor2metrics',
-            iterfield='in_file'
         )
-        self.wm_mask = MapNode(
+        self.wm_mask = Node(
             ppt.MRThreshold(),
             name = 'mrthreshold',
-            iterfield='in_file'
         )
-        self.norm_intensity = MapNode(
+        self.norm_intensity = Node(
             ppt.DWINormalize(),
             name='dwinormalise',
-            iterfield=['in_file','mask_file']
         )
-        self.sub_b0extract = MapNode(
+        self.sub_b0extract = Node(
             DWIExtract(),
             name='sub_b0extract',
-            iterfield='in_file'
         )
-        self.sub_b0mean = MapNode(
+        self.sub_b0mean = Node(
             MRMath(),
             name='sub_mrmath_mean',
-            iterfield='in_file'
         )
-        self.sub_b0mask = MapNode(
+        self.sub_b0mask = Node(
             BrainMask(),
             name='sub_dwi2mask',
-            iterfield='in_file'
         )
-        self.sub_convert_dwi = MapNode(
+        self.sub_convert_dwi = Node(
             ppt.Convert(),
             name="sub_dwi2nii",
-            iterfield="in_file"
         )
-        self.sub_convert_mask = MapNode(
+        self.sub_convert_mask = Node(
             ppt.Convert(),
             name="sub_mask2nii",
-            iterfield="in_file"
         )
-        self.sub_apply_mask = MapNode(
+        self.sub_apply_mask = Node(
             fsl.ApplyMask(),
             name='sub_ApplyMask',
-            iterfield=['in_file', 'mask_file']
         )
-        self.mni_b0extract = MapNode(
+        self.mni_b0extract = Node(
             DWIExtract(),
             name='mni_b0extract',
-            iterfield='in_file'
         )
-        self.mni_b0mean = MapNode(
+        self.mni_b0mean = Node(
             MRMath(),
             name='mni_mrmath_mean',
-            iterfield='in_file'
         )
-        self.mni_b0mask = MapNode(
+        self.mni_b0mask = Node(
             BrainMask(),
             name='mni_dwi2mask',
-            iterfield='in_file'
         )
-        self.mni_convert_dwi = MapNode(
+        self.mni_convert_dwi = Node(
             ppt.Convert(),
             name='mni_dwi2nii',
-            iterfield='in_file'
         )
-        self.mni_convert_mask  = MapNode(
+        self.mni_convert_mask  = Node(
             ppt.Convert(),
             name='mni_mask2nii',
-            iterfield='in_file'
         )
-        self.mni_apply_mask = MapNode(
+        self.mni_apply_mask = Node(
             fsl.ApplyMask(),
             name='mni_ApplyMask',
-            iterfield=['in_file', 'mask_file']
         )
-        self.mni_dwi = MapNode(
+        self.mni_dwi = Node(
             ppt.Convert(),
             name='MNI_Outputs',
-            iterfield='in_file')
+        )
 
         self.datasink = Node(
             DataSink(
@@ -277,6 +238,8 @@ class PreProcNodes:
             self.mrconvert2.inputs.force=True
             self.mrconvert2.inputs.quiet=True
             self.mrconvert2.inputs.nthreads=mrtrix_nthreads
+            self.mrconcat.inputs.out_file = 'raw_dwi.mif'
+            self.gradcat.inputs.out_file = 'raw_dwi.b'
         self.createMask.inputs.out_file='b0_brain_mask.mif'
         self.createMask.inputs.nthreads=mrtrix_nthreads
         self.GradCheck.inputs.export_grad=True
@@ -381,74 +344,61 @@ class ACPCNodes:
     Freesurfer recon-all nodes
     """
     def __init__(self, MNI_template):
-        self.get_fs_id = MapNode(
+        self.get_fs_id = Node(
             Function(
                 input_names=['anat_files'],
                 output_names=['fs_id_list'],
                 function=ppt.anat2id
             ),
             name='freesurfer_sub_id',
-            iterfield='anat_files'
         )
-        self.reduceFOV = MapNode(
+        self.reduceFOV = Node(
             fsl.utils.RobustFOV(),
             name="reduce_FOV",
-            iterfield="in_file"
         )
-        self.xfminverse = MapNode(
+        self.xfminverse = Node(
             fsl.utils.ConvertXFM(),
             name="transform_inverse",
-            iterfield="in_file"
         )
-        self.flirt = MapNode(
+        self.flirt = Node(
             fsl.preprocess.FLIRT(),
             name="FLIRT",
-            iterfield="in_file"
         )
-        self.concatxfm = MapNode(
+        self.concatxfm = Node(
             fsl.utils.ConvertXFM(),
             name="concat_transform",
-            iterfield=["in_file", "in_file2"]
         )
-        self.alignxfm = MapNode(
+        self.alignxfm = Node(
             ppt.fslaff2rigid(),
             name='aff2rigid',
-            iterfield="in_file"
         )
-        self.ACPC_warp = MapNode(
+        self.ACPC_warp = Node(
             fsl.preprocess.ApplyWarp(),
             name='apply_warp',
-            iterfield=["in_file", "premat"]
         )
-        self.reconall = MapNode(
+        self.reconall = Node(
             ReconAll(),
             name='FSrecon',
-            iterfield=["T1_files","subject_id"]
         )
-        self.t1_bet = MapNode(
+        self.t1_bet = Node(
             fsl.preprocess.BET(),
             name='fsl_bet',
-            iterfield='in_file'
         )
-        self.epi_reg = MapNode(
+        self.epi_reg = Node(
             fsl.epi.EpiReg(),
             name='fsl_epireg',
-            iterfield=['epi','t1_head', 't1_brain']
         )
-        self.acpc_xfm = MapNode(
+        self.acpc_xfm = Node(
             ppt.TransConvert(),
             name='transformconvert',
-            iterfield=["flirt_xfm","flirt_in","flirt_ref"]
         )
-        self.apply_xfm = MapNode(
+        self.apply_xfm = Node(
             ppt.MRTransform(),
             name='mrtransform',
-            iterfield=["in_file", "linear_xfm"]
         )
-        self.regrid = MapNode(
+        self.regrid = Node(
             ppt.MRRegrid(),
             name = 'mrgrid',
-            iterfield = 'in_file'
         )
 
     def set_inputs(self, bids_dir, MNI_template):
