@@ -167,13 +167,13 @@ class MRCat(CommandLine):
 
 class GradCatInputSpec(CommandLineInputSpec):
     grad1 = File(
-        exists=True, mandatory = True, argstr="%s", position = 1, desc="first gradient"
+        mandatory = True, argstr="%s", position = 1, desc="first gradient"
     )
     grad2 = File(
-        exists=True, mandatory = True, argstr="%s", position = 2, desc="second gradient"
+        mandatory = True, argstr="%s", position = 2, desc="second gradient"
     )
     out_file = File(
-        mandatory=True, argstr="%s", position = 3, desc="output gradient"
+        mandatory=True, argstr="> %s", position = 3, desc="output gradient"
     )
 
 class GradCatOutputSpec(TraitedSpec):
@@ -187,7 +187,7 @@ class GradCat(CommandLine):
     output_spec = GradCatOutputSpec
 
     def  _list_outputs(self):
-        outputs = self.output_spec().get
+        outputs = self.output_spec().get()
         outputs["out_file"] = os.path.abspath(self.inputs.out_file)
         return outputs
 
