@@ -108,6 +108,10 @@ class PreProcNodes:
             ppt.dwipreproc(),
             name = "dwifslpreproc",
         )
+        self.NewMask =  Node(
+                BrainMask(),
+                name='recreate_mask'
+        )
         self.biascorrect = Node(
             ppt.BiasCorrect(),
             name = 'dwibiascorret',
@@ -264,6 +268,8 @@ class PreProcNodes:
         self.fslpreproc.inputs.force=True
         self.fslpreproc.inputs.quiet=True
         self.fslpreproc.inputs.nthreads=mrtrix_nthreads
+        self.fslpreproc.inputs.export_grad=True
+        self.fslpreproc.inputs.out_bfile='eddy_dwi.b'
         self.biascorrect.inputs.use_ants=True
         self.biascorrect.inputs.out_file='dwi_bias.mif'
         self.biascorrect.inputs.bias='biasfield.mif'

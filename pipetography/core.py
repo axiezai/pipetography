@@ -429,6 +429,7 @@ class dwipreprocInputSpec(PipetographyBaseInputSpec):
 
 class dwipreprocOutputSpec(TraitedSpec):
     out_file = File(argstr="%s", desc="output denoised, corrected, preproc image")
+    out_bfile = File(argstr="%s", desc="eddy corrected gradients")
 
 
 class dwipreproc(CommandLine):
@@ -453,6 +454,8 @@ class dwipreproc(CommandLine):
     def _list_outputs(self):
         outputs = self.output_spec().get()
         outputs["out_file"] = os.path.abspath(self.inputs.out_file)
+        if self.inputs.export_grad == True:
+            outputs["out_bfile"] = os.path.abspath(self.inputs.out_bfile)
         return outputs
 
 # Internal Cell
