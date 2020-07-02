@@ -108,6 +108,18 @@ class PreProcNodes:
             ppt.dwipreproc(),
             name = "dwifslpreproc",
         )
+        self.GradUpdate = Node(
+            ppt.GradCheck(),
+            name = 'alter_gradient'
+        )
+        self.ModGrad = Node(
+            ppt.MRInfo(),
+            name = 'modify_gradient'
+        )
+        self.UpdateMif = Node(
+            ppt.Convert(),
+            name =  'update_image'
+        )
         self.NewMask =  Node(
                 BrainMask(),
                 name='recreate_mask'
@@ -270,6 +282,10 @@ class PreProcNodes:
         self.fslpreproc.inputs.nthreads=mrtrix_nthreads
         self.fslpreproc.inputs.export_grad=True
         self.fslpreproc.inputs.out_bfile='eddy_dwi.b'
+        self.GradUpdate.inputs.export_grad=True
+        self.GradUpdate.inputs.out_bfile='tmp.b'
+        self.ModGrad.inputs.export_grad=True
+        self.ModGrad.inputs.out_bfile='modified.b'
         self.biascorrect.inputs.use_ants=True
         self.biascorrect.inputs.out_file='dwi_bias.mif'
         self.biascorrect.inputs.bias='biasfield.mif'
