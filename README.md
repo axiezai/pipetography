@@ -50,17 +50,4 @@ Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, 
 
 ## The pipeline:
 
-The following pipeline is produced by running the default set up in [pipeline](https://axiezai.github.io/pipetography/pipeline/). And each individual node in the workflow is shown in [core](https://axiezai.github.io/pipetography/core/).
-
-```
-#example
-from IPython.display import Image
-Image('docs/images/output_5_0.png')
-```
-
-
-
-
-![png](docs/images/output_5_0.png)
-
-
+Currently supports `-rpe_none`  and `-rpe_all` options.
