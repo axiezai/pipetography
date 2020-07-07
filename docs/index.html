@@ -55,11 +55,11 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <h4 id="Singularity:">Singularity:<a class="anchor-link" href="#Singularity:"> </a></h4><ul>
 <li><p>Currently has pathing issues as seen in the singularity issues page: <a href="https://github.com/hpcng/singularity/issues/5040">https://github.com/hpcng/singularity/issues/5040</a>, the 3.6 release candidate should fix this... For now, use docker image if you can. If not, the singularity container will not be able to execute freesurfer <code>recon-all</code> step of the workflow. All DWI preprocessing steps will work though.</p>
 </li>
-<li><p>Obtain the singularity image with <code>singularity pull docker://axiezai/pipetography:0.2.8</code> or <code>singularity build --remote pipetography.sif docker://axiezai/pipetography:0.2.8</code>. The second option allows you to build remotely via Syslabs Cloud, this will require a remote log tokeen in which you can obtain after registering at <a href="https://cloud.sylabs.io/builder">https://cloud.sylabs.io/builder</a>.</p>
+<li><p>Obtain the singularity image with <code>singularity pull docker://axiezai/pipetography:0.2.9a</code> or <code>singularity build --remote pipetography.sif docker://axiezai/pipetography:0.2.9a</code>. The second option allows you to build remotely via Syslabs Cloud, this will require a remote log tokeen in which you can obtain after registering at <a href="https://cloud.sylabs.io/builder">https://cloud.sylabs.io/builder</a>.</p>
 </li>
 </ul>
 <h4 id="Docker:">Docker:<a class="anchor-link" href="#Docker:"> </a></h4><ul>
-<li><p>Pull the docker image: <code>docker pull axiezai/pipetography:0.2.8</code></p>
+<li><p>Pull the docker image: <code>docker pull axiezai/pipetography:0.2.9a</code></p>
 </li>
 <li><p>Run with BIDS directory and interactive bash terminal: <code>docker run -v &lt;BIDS_DIR&gt;:&lt;Docker_BIDS_DIR&gt; -it axiezai/pipetography:0.2.8 bash</code></p>
 </li>
@@ -69,8 +69,6 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><p>Singularity image missing freesurfer path to <code>nu_correct</code> as part of <code>$PATH</code>.</p>
 </li>
 <li><p>If <code>singularity build</code> fails with <code>apt-get install</code> error complaining about unauthenticated packages, add <code>--allow-unauthenticated</code> to every <code>apt-get</code> line in the <code>sinngularity.def</code> file.</p>
-</li>
-<li><p><a href="https://github.com/ReproNim/neurodocker/issues/285">Freesurfer6.0.0-min <code>recon-all</code> is missing commands if <code>-parallel</code> or <code>-openmp</code> are set to <code>True</code></a>. The default <code>-parallel</code> <strong>setting has been set to False for <code>pipetography.pipeline</code></strong>.</p>
 </li>
 </ul>
 <h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>
@@ -99,7 +97,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Currently supports <code>-rpe_none</code>  and <code>-rpe_all</code> options.</p>
+<p>Currently supports acquisitions with no reverse phase encoding (<code>-rpe_none</code>)  and reverse phase encoding in all DWI directions (<code>-rpe_all</code>) options.</p>
 
 </div>
 </div>

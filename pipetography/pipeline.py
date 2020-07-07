@@ -248,7 +248,7 @@ class pipeline:
                 [
                     (self.PreProcNodes.select_files, self.PreProcNodes.mrconvert, [('dwi', 'in_file')]),
                     (self.PreProcNodes.select_files, self.PreProcNodes.sub_grad_files, [('dwi', 'sub_dwi')]),
-                    (self.PreProcNodes.sub_grad_files, self.PreProcNodes.mrconvert, [('fslgrad', 'grad_fsl')])
+                    (self.PreProcNodes.sub_grad_files, self.PreProcNodes.mrconvert, [('fslgrad', 'grad_fsl')]),
                     (self.PreProcNodes.mrconvert, self.PreProcNodes.createMask, [('out_file', 'in_file')]),
                     (self.PreProcNodes.mrconvert, self.PreProcNodes.GradCheck, [('out_file', 'in_file')]),
                     (self.PreProcNodes.mrconvert, self.PreProcNodes.GradCheck, [('out_bfile', 'grad_file')]),

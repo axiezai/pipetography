@@ -17,11 +17,11 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
 
  - Currently has pathing issues as seen in the singularity issues page: https://github.com/hpcng/singularity/issues/5040, the 3.6 release candidate should fix this... For now, use docker image if you can. If not, the singularity container will not be able to execute freesurfer `recon-all` step of the workflow. All DWI preprocessing steps will work though.
  
- - Obtain the singularity image with `singularity pull docker://axiezai/pipetography:0.2.8` or `singularity build --remote pipetography.sif docker://axiezai/pipetography:0.2.8`. The second option allows you to build remotely via Syslabs Cloud, this will require a remote log tokeen in which you can obtain after registering at https://cloud.sylabs.io/builder. 
+ - Obtain the singularity image with `singularity pull docker://axiezai/pipetography:0.2.9a` or `singularity build --remote pipetography.sif docker://axiezai/pipetography:0.2.9a`. The second option allows you to build remotely via Syslabs Cloud, this will require a remote log tokeen in which you can obtain after registering at https://cloud.sylabs.io/builder. 
  
 #### Docker:
 
- - Pull the docker image: `docker pull axiezai/pipetography:0.2.8`
+ - Pull the docker image: `docker pull axiezai/pipetography:0.2.9a`
  
  - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography:0.2.8 bash`
 
@@ -29,8 +29,6 @@ Known container issues:
  - Singularity image missing freesurfer path to `nu_correct` as part of `$PATH`. 
 
  - If `singularity build` fails with `apt-get install` error complaining about unauthenticated packages, add `--allow-unauthenticated` to every `apt-get` line in the `sinngularity.def` file.
- 
- - [Freesurfer6.0.0-min `recon-all` is missing commands if `-parallel` or `-openmp` are set to `True`](https://github.com/ReproNim/neurodocker/issues/285). The default `-parallel` **setting has been set to False for `pipetography.pipeline`**.
  
 #### Creating your own environment and install `pipetography` as a Python module:
 
@@ -50,4 +48,4 @@ Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, 
 
 ## The pipeline:
 
-Currently supports `-rpe_none`  and `-rpe_all` options.
+Currently supports acquisitions with no reverse phase encoding (`-rpe_none`)  and reverse phase encoding in all DWI directions (`-rpe_all`) options.
