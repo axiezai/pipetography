@@ -17,13 +17,21 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
 
  - Currently has pathing issues as seen in the singularity issues page: https://github.com/hpcng/singularity/issues/5040, the 3.6 release candidate should fix this... For now, use docker image if you can. If not, the singularity container will not be able to execute freesurfer `recon-all` step of the workflow. All DWI preprocessing steps will work though.
  
- - Obtain the singularity image with `singularity pull docker://axiezai/pipetography:0.2.9a` or `singularity build --remote pipetography.sif docker://axiezai/pipetography:0.2.9a`. The second option allows you to build remotely via Syslabs Cloud, this will require a remote log tokeen in which you can obtain after registering at https://cloud.sylabs.io/builder. 
+ - This is a large image, you will need to set the following environment variables to somewhere other than `/tmp`:
+     - `export SINGULARITY_TMPDIR={YOUR DESTINATION DIR}`
+     - `export SINGULARITY_LOCALCACHEDIR={YOUR DESTINATION DIR}`
+     - `export SINGULARITY_CACHEDIR={YOUR DESTINATION DIR}`
+     - `export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}`
+     
+ - Obtain the singularity image with `singularity pull docker://axiezai/pipetography:0.3.1`.
+ 
+ - Run interactively with `singularity shell --nv --B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
  
 #### Docker:
 
- - Pull the docker image: `docker pull axiezai/pipetography:0.2.9a`
+ - Pull the docker image: `docker pull axiezai/pipetography:0.3.1`
  
- - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography:0.2.8 bash`
+ - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography:0.3.1 bash`
 
 Known container issues:
  - Singularity image missing freesurfer path to `nu_correct` as part of `$PATH`. 

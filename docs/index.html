@@ -55,13 +55,23 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <h4 id="Singularity:">Singularity:<a class="anchor-link" href="#Singularity:"> </a></h4><ul>
 <li><p>Currently has pathing issues as seen in the singularity issues page: <a href="https://github.com/hpcng/singularity/issues/5040">https://github.com/hpcng/singularity/issues/5040</a>, the 3.6 release candidate should fix this... For now, use docker image if you can. If not, the singularity container will not be able to execute freesurfer <code>recon-all</code> step of the workflow. All DWI preprocessing steps will work though.</p>
 </li>
-<li><p>Obtain the singularity image with <code>singularity pull docker://axiezai/pipetography:0.2.9a</code> or <code>singularity build --remote pipetography.sif docker://axiezai/pipetography:0.2.9a</code>. The second option allows you to build remotely via Syslabs Cloud, this will require a remote log tokeen in which you can obtain after registering at <a href="https://cloud.sylabs.io/builder">https://cloud.sylabs.io/builder</a>.</p>
+<li><p>This is a large image, you will need to set the following environment variables to somewhere other than <code>/tmp</code>:</p>
+<ul>
+<li><code>export SINGULARITY_TMPDIR={YOUR DESTINATION DIR}</code></li>
+<li><code>export SINGULARITY_LOCALCACHEDIR={YOUR DESTINATION DIR}</code></li>
+<li><code>export SINGULARITY_CACHEDIR={YOUR DESTINATION DIR}</code></li>
+<li><code>export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}</code></li>
+</ul>
+</li>
+<li><p>Obtain the singularity image with <code>singularity pull docker://axiezai/pipetography:0.3.1</code>.</p>
+</li>
+<li><p>Run interactively with <code>singularity shell --nv --B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code></p>
 </li>
 </ul>
 <h4 id="Docker:">Docker:<a class="anchor-link" href="#Docker:"> </a></h4><ul>
-<li><p>Pull the docker image: <code>docker pull axiezai/pipetography:0.2.9a</code></p>
+<li><p>Pull the docker image: <code>docker pull axiezai/pipetography:0.3.1</code></p>
 </li>
-<li><p>Run with BIDS directory and interactive bash terminal: <code>docker run -v &lt;BIDS_DIR&gt;:&lt;Docker_BIDS_DIR&gt; -it axiezai/pipetography:0.2.8 bash</code></p>
+<li><p>Run with BIDS directory and interactive bash terminal: <code>docker run -v &lt;BIDS_DIR&gt;:&lt;Docker_BIDS_DIR&gt; -it axiezai/pipetography:0.3.1 bash</code></p>
 </li>
 </ul>
 <p>Known container issues:</p>
