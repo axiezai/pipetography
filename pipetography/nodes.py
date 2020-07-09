@@ -359,7 +359,6 @@ class PreProcNodes:
         self.mni_dwi.inputs.out_fslgrad = ('dwi_acpc.bvecs', 'dwi_acpc.bvals')
         self.mni_dwi.inputs.out_json = 'dwi_acpc_1mm.json'
 
-
 # Cell
 class ACPCNodes:
     """

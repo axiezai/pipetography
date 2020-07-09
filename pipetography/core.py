@@ -511,7 +511,6 @@ class BiasCorrect(CommandLine):
         # Get the attribute saved during _run_interface
         return outputs
 
-
 # Internal Cell
 class MRInfoInputSpec(PipetographyBaseInputSpec):
     in_file = File(

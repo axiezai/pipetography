@@ -79,7 +79,6 @@ voxels to MNI 1mm voxel grids (by default <code>Regrid = False</code>). Lastly, 
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
 
 <span class="n">wf_1</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">BIDS_dir</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
-<span class="n">wf_1</span><span class="o">.</span><span class="n">check_environment</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">bids_dir</span> <span class="o">==</span> <span class="s1">&#39;data&#39;</span>
 <span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">RPE_design</span> <span class="o">==</span> <span class="s1">&#39;-rpe_none&#39;</span>
 <span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">Regrid</span> <span class="o">==</span> <span class="kc">True</span>
