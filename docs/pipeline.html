@@ -86,14 +86,14 @@ voxels to MNI 1mm voxel grids (by default <code>Regrid = False</code>). Lastly, 
 <span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;nii.gz&#39;</span>
 <span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">MNI_template</span> <span class="o">==</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expandvars</span><span class="p">(</span><span class="s1">&#39;$FSLDIR/data/standard/MNI152_T1_1mm.nii.gz&#39;</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span> <span class="o">==</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">sub_list</span>
-<span class="n">wf_1</span><span class="o">.</span><span class="n">create_nodes</span><span class="p">()</span>
-<span class="n">wf_1</span><span class="o">.</span><span class="n">connect_nodes</span><span class="p">(</span><span class="n">RPE_design</span><span class="o">=</span><span class="s1">&#39;-rpe_none&#39;</span><span class="p">)</span>
+<span class="c1">#wf_1.create_nodes()</span>
+<span class="c1">#wf_1.connect_nodes(RPE_design=&#39;-rpe_none&#39;)</span>
 
 <span class="n">wf_2</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">BIDS_dir</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">&#39;nii&#39;</span><span class="p">,</span> <span class="n">RPE_design</span><span class="o">=</span><span class="s1">&#39;-rpe_all&#39;</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">wf_2</span><span class="o">.</span><span class="n">RPE_design</span> <span class="o">==</span> <span class="s1">&#39;-rpe_all&#39;</span>
 <span class="k">assert</span> <span class="n">wf_2</span><span class="o">.</span><span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;nii&#39;</span>
-<span class="n">wf_2</span><span class="o">.</span><span class="n">create_nodes</span><span class="p">()</span>
-<span class="n">wf_2</span><span class="o">.</span><span class="n">connect_nodes</span><span class="p">(</span><span class="n">RPE_design</span><span class="o">=</span><span class="s1">&#39;-rpe_all&#39;</span><span class="p">)</span>
+<span class="c1">#wf_2.create_nodes()</span>
+<span class="c1">#wf_2.connect_nodes(RPE_design=&#39;-rpe_all&#39;)</span>
 </pre></div>
 
     </div>
@@ -108,12 +108,6 @@ voxels to MNI 1mm voxel grids (by default <code>Regrid = False</code>). Lastly, 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>derivatives folder found at ./derivatives
 Creating layout of data directory, might take a while if there are a lot of subjects
-FSLOUTPUTTYPE is valid
-FSLDIR is valid
-ANTS is valid
-mrtrix3 is valid
-Freesurfer path found
-Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 Data sink (output folder) is set to ./derivatives
 Freesurfer output at ./derivatives/freesurfer
 </pre>
@@ -125,6 +119,17 @@ Freesurfer output at ./derivatives/freesurfer
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>/Users/xxie/miniconda3/envs/tracts/lib/python3.8/site-packages/bids/layout/models.py:98: FutureWarning: The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). As of version 0.14.0, it will include the leading dot. To suppress this warning and include the leading dot, use `bids.config.set_option(&#39;extension_initial_dot&#39;, True)`.
   warnings.warn(&#34;The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). &#34;
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>derivatives folder found at ./derivatives
+Creating layout of data directory, might take a while if there are a lot of subjects
+Data sink (output folder) is set to ./derivatives
+Freesurfer output at ./derivatives/freesurfer
 </pre>
 </div>
 </div>
