@@ -3,7 +3,6 @@
 __all__ = ['get_subs', 'get_bfiles_tuple', 'get_sub_gradfiles', 'anat2id', 'BIDS_metadata']
 
 # Internal Cell
-#exporti
 import os, sys
 from nipype.interfaces.base import CommandLine, CommandLineInputSpec, File
 from nipype.interfaces.base import TraitedSpec, traits
@@ -43,13 +42,13 @@ def get_bfiles_tuple(in_List):
     return bvs_tuple
 
 # Cell
-def get_sub_gradfiles(sub_dwi):
+def get_sub_gradfiles(sub_dwi, ext = 'nii.gz'):
     import os, sys
     """
     For a given layout and a subject's DWI, grab the matching gradient files
     """
-    sub_bvec = sub_dwi.replace('nii.gz', 'bvec')
-    sub_bval = sub_dwi.replace('nii.gz', 'bval')
+    sub_bvec = sub_dwi.replace(ext, 'bvec')
+    sub_bval = sub_dwi.replace(ext, 'bval')
     if os.path.exists(sub_bvec) and os.path.exists(sub_bval):
         grad_files = tuple([sub_bvec, sub_bval])
         return grad_files
@@ -128,7 +127,7 @@ class PipetographyBaseInputSpec(CommandLineInputSpec):
     )
     nthreads = traits.Int(
         argstr="-nthreads %d",
-        desc="number of threads for mrtrix funnctions only. If zero, multithreading is disabled",
+        desc="number of threads for mrtrix functions only. If zero, multi-threading is disabled",
         nohash=True,
     )
     force = traits.Bool(
@@ -137,6 +136,60 @@ class PipetographyBaseInputSpec(CommandLineInputSpec):
     quiet = traits.Bool(
         argstr="-quiet", desc="suppress verbose outputs"
     )
+
+# Internal Cell
+class MRCatInputSpec(CommandLineInputSpec):
+    """inputs to mrtrix3's mrcat"""
+    image1 = File(
+        exists=True, mandatory=True, argstr="%s", position=1, desc="first input image"
+    )
+    image2 = File(
+        exists=True, mandatory=True, argstr="%s", position=2, desc="additional input image"
+    )
+    out_file = File(
+        mandatory=True, argstr="%s", position =3, desc="output image"
+    )
+
+class MRCatOutputSpec(TraitedSpec):
+    """mrcat output file spec"""
+    out_file = File(argstr="%s", desc="output image")
+
+class MRCat(CommandLine):
+    "Concatenate images"
+    _cmd = "mrcat"
+    input_spec = MRCatInputSpec
+    output_spec = MRCatOutputSpec
+
+    def _list_outputs(self):
+        outputs = self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
+        return outputs
+
+class GradCatInputSpec(CommandLineInputSpec):
+    grad1 = File(
+        argstr="%s", position = 1, desc="first gradient"
+    )
+    grad2 = File(
+        argstr="%s", position = 2, desc="second gradient"
+    )
+    out_file = File(
+        argstr="> %s", position = 3, desc="output gradient"
+    )
+
+class GradCatOutputSpec(TraitedSpec):
+    """concatenated gradient file"""
+    out_file = File(argstr="%s", desc="output gradient")
+
+class GradCat(CommandLine):
+    """concatenate gradients"""
+    _cmd = "cat"
+    input_spec = GradCatInputSpec
+    output_spec = GradCatOutputSpec
+
+    def  _list_outputs(self):
+        outputs = self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
+        return outputs
 
 # Internal Cell
 class aff2rigidInputSpec(CommandLineInputSpec):
@@ -376,6 +429,7 @@ class dwipreprocInputSpec(PipetographyBaseInputSpec):
 
 class dwipreprocOutputSpec(TraitedSpec):
     out_file = File(argstr="%s", desc="output denoised, corrected, preproc image")
+    out_bfile = File(argstr="%s", desc="eddy corrected gradients")
 
 
 class dwipreproc(CommandLine):
@@ -400,6 +454,8 @@ class dwipreproc(CommandLine):
     def _list_outputs(self):
         outputs = self.output_spec().get()
         outputs["out_file"] = os.path.abspath(self.inputs.out_file)
+        if self.inputs.export_grad == True:
+            outputs["out_bfile"] = os.path.abspath(self.inputs.out_bfile)
         return outputs
 
 # Internal Cell
@@ -454,7 +510,6 @@ class BiasCorrect(CommandLine):
         outputs['bias'] = os.path.abspath(self.inputs.bias)
         # Get the attribute saved during _run_interface
         return outputs
-
 
 # Internal Cell
 class MRInfoInputSpec(PipetographyBaseInputSpec):

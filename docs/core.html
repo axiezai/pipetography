@@ -24,54 +24,6 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
     
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>200601-12:43:51,210 nipype.utils INFO:
-	 Running nipype version 1.5.0-rc1 (latest: 1.4.2)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%capture</span>
-<span class="c1">#exporti</span>
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">CommandLine</span><span class="p">,</span> <span class="n">CommandLineInputSpec</span><span class="p">,</span> <span class="n">File</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.base</span> <span class="kn">import</span> <span class="n">TraitedSpec</span><span class="p">,</span> <span class="n">traits</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.io</span> <span class="kn">import</span> <span class="n">BIDSDataGrabber</span>
-<span class="kn">from</span> <span class="nn">bids.layout</span> <span class="kn">import</span> <span class="n">BIDSLayout</span>
-
-<span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nb</span>
-<span class="kn">from</span> <span class="nn">nilearn</span> <span class="kn">import</span> <span class="n">plotting</span>
-<span class="kn">from</span> <span class="nn">nilearn.image</span> <span class="kn">import</span> <span class="n">new_img_like</span>
-
-<span class="kn">from</span> <span class="nn">nipype.interfaces</span> <span class="kn">import</span> <span class="n">fsl</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.freesurfer.preprocess</span> <span class="kn">import</span> <span class="n">ReconAll</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.utils</span> <span class="kn">import</span> <span class="n">BrainMask</span><span class="p">,</span> <span class="n">TensorMetrics</span><span class="p">,</span> <span class="n">DWIExtract</span><span class="p">,</span> <span class="n">MRMath</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.preprocess</span> <span class="kn">import</span> <span class="n">MRDeGibbs</span><span class="p">,</span> <span class="n">DWIBiasCorrect</span>
-<span class="kn">from</span> <span class="nn">nipype.interfaces.mrtrix3.reconst</span> <span class="kn">import</span> <span class="n">FitTensor</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -91,18 +43,33 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
 <span class="c1"># if our sample data can create BIDS layouts</span>
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+<span class="c1"># data_dir = &quot;/Users/xxie/sample_data/tinnitus2&quot;</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
+<span class="c1">#layout = BIDSLayout(data_dir)</span>
+<span class="c1">#assert len(layout.get_subjects()) != 0</span>
+<span class="c1">#assert type(layout.get_subjects() is list)</span>
 
 <span class="n">layout</span> <span class="o">=</span> <span class="n">BIDSLayout</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">())</span> <span class="o">!=</span> <span class="mi">0</span>
 <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">)</span>
-
-<span class="c1"># layout = BIDSLayout(data2)</span>
-<span class="c1"># assert len(layout.get_subjects()) != 0</span>
-<span class="c1"># assert type(layout.get_subjects() is list)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/xxie/miniconda3/envs/tracts/lib/python3.8/site-packages/bids/layout/models.py:98: FutureWarning: The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). As of version 0.14.0, it will include the leading dot. To suppress this warning and include the leading dot, use `bids.config.set_option(&#39;extension_initial_dot&#39;, True)`.
+  warnings.warn(&#34;The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). &#34;
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -139,7 +106,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_subs" class="doc_header"><code>get_subs</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_subs</code>(<strong><code>sub_dir</code></strong>=<em><code>'data'</code></em>)</p>
+<h4 id="get_subs" class="doc_header"><code>get_subs</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_subs</code>(<strong><code>sub_dir</code></strong>=<em><code>'data'</code></em>)</p>
 </blockquote>
 <p>Gets list of subjects in a BIDS directory, by default it looks in "data" folder in your CWD
 Input str of path to BIDS dir otherwise</p>
@@ -161,7 +128,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
 <span class="n">sub_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
 </pre></div>
@@ -177,7 +144,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Creating layout of data directory, might take a while if there are a lot of subjects
-[&#39;01&#39;]
+[&#39;11048&#39;]
 </pre>
 </div>
 </div>
@@ -246,7 +213,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_bfiles_tuple" class="doc_header"><code>get_bfiles_tuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_bfiles_tuple</code>(<strong><code>in_List</code></strong>)</p>
+<h4 id="get_bfiles_tuple" class="doc_header"><code>get_bfiles_tuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_bfiles_tuple</code>(<strong><code>in_List</code></strong>)</p>
 </blockquote>
 <p>read .bvec and .bval files in as a list and spit out tuple for nipype input</p>
 
@@ -272,12 +239,14 @@ Input str of path to BIDS dir otherwise</p>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
     <span class="n">session</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
-    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bvec&quot;</span><span class="p">,</span> <span class="s2">&quot;bval&quot;</span><span class="p">],</span>
+    <span class="n">extension</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bvec&quot;</span><span class="p">,</span> <span class="s2">&quot;bval&quot;</span><span class="p">],</span>
     <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="c1"># here we are using session 002 as an example input</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">bfiles</span><span class="p">)</span>
 <span class="n">bfiles_fsl</span> <span class="o">=</span> <span class="n">get_bfiles_tuple</span><span class="p">(</span><span class="n">bfiles</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">bfiles_fsl</span><span class="p">)</span>
+<span class="c1">#if bfiles are grabbed</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_bfiles_tuple</span><span class="p">(</span><span class="n">bfiles</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
 </pre></div>
 
     </div>
@@ -290,31 +259,12 @@ Input str of path to BIDS dir otherwise</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-002/dwi/sub-01_ses-002_dwi.bval&#39;, &#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-002/dwi/sub-01_ses-002_dwi.bvec&#39;]
-(&#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-002/dwi/sub-01_ses-002_dwi.bvec&#39;, &#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-002/dwi/sub-01_ses-002_dwi.bval&#39;)
+<pre>[&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bval&#39;, &#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bvec&#39;]
+(&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bvec&#39;, &#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bval&#39;)
 </pre>
 </div>
 </div>
 
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="c1">#if bfiles are grabbed</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_bfiles_tuple</span><span class="p">(</span><span class="n">bfiles</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
 
@@ -338,7 +288,7 @@ Input str of path to BIDS dir otherwise</p>
 <span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
-    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">,</span> <span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
+    <span class="n">extension</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">,</span> <span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
     <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">dwi</span><span class="p">)</span>
@@ -354,7 +304,7 @@ Input str of path to BIDS dir otherwise</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-002/dwi/sub-01_ses-002_dwi.nii.gz&#39;, &#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-003/dwi/sub-01_ses-003_dwi.nii.gz&#39;]
+<pre>[&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.nii.gz&#39;]
 </pre>
 </div>
 </div>
@@ -408,7 +358,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_sub_gradfiles" class="doc_header"><code>get_sub_gradfiles</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_sub_gradfiles</code>(<strong><code>sub_dwi</code></strong>)</p>
+<h4 id="get_sub_gradfiles" class="doc_header"><code>get_sub_gradfiles</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_sub_gradfiles</code>(<strong><code>sub_dwi</code></strong>, <strong><code>ext</code></strong>=<em><code>'nii.gz'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -430,7 +380,7 @@ Input str of path to BIDS dir otherwise</p>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
 <span class="c1">#usage</span>
-<span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">sub_grad_files</span>
 </pre></div>
 
@@ -446,12 +396,31 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-003/dwi/sub-01_ses-003_dwi.bvec&#39;,
- &#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-003/dwi/sub-01_ses-003_dwi.bval&#39;)</pre>
+<pre>(&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bvec&#39;,
+ &#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bval&#39;)</pre>
 </div>
 
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
+<span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_grad_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -477,7 +446,7 @@ Input str of path to BIDS dir otherwise</p>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">datatype</span> <span class="o">=</span> <span class="s1">&#39;anat&#39;</span><span class="p">,</span>
     <span class="c1">#session=&#39;002&#39;,</span>
-    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">,</span> <span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
+    <span class="n">extension</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
     <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">anat</span><span class="p">)</span>
@@ -493,7 +462,7 @@ Input str of path to BIDS dir otherwise</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-002/anat/sub-01_ses-002_T1w.nii.gz&#39;, &#39;/Users/xxie/sample_data/BIDS_output/sub-01/ses-003/anat/sub-01_ses-003_T1w.nii.gz&#39;]
+<pre>[]
 </pre>
 </div>
 </div>
@@ -528,7 +497,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="anat2id" class="doc_header"><code>anat2id</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>anat2id</code>(<strong><code>anat_files</code></strong>)</p>
+<h4 id="anat2id" class="doc_header"><code>anat2id</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L60" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>anat2id</code>(<strong><code>anat_files</code></strong>)</p>
 </blockquote>
 <p>Takes input anat file BIDS names and creates freesurfer output directory names as inputs to subject_id
 The format of the output is [sub<em>id]</em>[session_id]</p>
@@ -569,7 +538,7 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;sub-01_ses-002&#39;</pre>
+<pre>&#39;sub-MINN294_ses-01&#39;</pre>
 </div>
 
 </div>
@@ -604,7 +573,7 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="BIDS_metadata" class="doc_header"><code>BIDS_metadata</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L74" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>BIDS_metadata</code>(<strong><code>path</code></strong>, <strong><code>bids_dir</code></strong>)</p>
+<h4 id="BIDS_metadata" class="doc_header"><code>BIDS_metadata</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L73" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>BIDS_metadata</code>(<strong><code>path</code></strong>, <strong><code>bids_dir</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -627,7 +596,7 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
 <span class="c1">#usage</span>
 
-<span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
+<span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Total readout time is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TRtime</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Phase encoding direction is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pe_dir</span><span class="p">))</span>
 </pre></div>
@@ -642,10 +611,100 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Total readout time is 0.16524
-Phase encoding direction is j
+<pre>No totalreadouttime in BIDS DWI JSON file, setting to default 0.1
+Total readout time is 0.1
+Phase encoding direction is j-
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
+<span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">pe_dir</span> <span class="o">==</span> <span class="s1">&#39;j-&#39;</span>
+<span class="k">assert</span> <span class="n">TRtime</span> <span class="o">==</span> <span class="mf">0.1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>No totalreadouttime in BIDS DWI JSON file, setting to default 0.1
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/xxie/miniconda3/envs/tracts/lib/python3.8/site-packages/bids/layout/models.py:98: FutureWarning: The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). As of version 0.14.0, it will include the leading dot. To suppress this warning and include the leading dot, use `bids.config.set_option(&#39;extension_initial_dot&#39;, True)`.
+  warnings.warn(&#34;The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). &#34;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Concatenate-images-and-gradients">Concatenate images and gradients<a class="anchor-link" href="#Concatenate-images-and-gradients"> </a></h4><p>For when there is a reverse phase encoding volume:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
+<span class="c1">#usage</span>
+<span class="n">catgrad</span> <span class="o">=</span> <span class="n">GradCat</span><span class="p">()</span>
+<span class="n">catgrad</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">grad1</span> <span class="o">=</span> <span class="s1">&#39;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrtrix_image1/mapflow/_mrtrix_image10/raw_dwi1.b&#39;</span>
+<span class="n">catgrad</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">grad2</span> <span class="o">=</span> <span class="s1">&#39;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrtrix_image2/mapflow/_mrtrix_image20/raw_dwi2.b&#39;</span>
+<span class="n">catgrad</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;/Users/xxie/sample_data/derivatives/raw_dwi.b&#39;</span>
+<span class="n">catgrad</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;nipype.interfaces.base.support.InterfaceResult at 0x7f93d0a03550&gt;</pre>
+</div>
+
 </div>
 
 </div>

@@ -1,0 +1,24 @@
+name: tracts
+channels:
+    - conda-forge
+    - defaults
+dependencies:
+    - ipython
+    - pip
+    - dipy
+    - nibabel
+    - pytest
+    - matplotlib
+    - numpy
+    - scipy
+    - pip:
+        - black
+        - bids-validator
+        - fastcore
+        - jupyterlab
+        - nbdev
+        - neurodocker
+        - nilearn
+        - nipype
+        - pandas
+        - pybids

@@ -15,6 +15,9 @@ entries:
     - output: web,pdf
       title: Module pipeline
       url: /pipeline
+    - output: web,pdf
+      title: Module nodes
+      url: /nodes
     output: web
     title: pipetography
   output: web

@@ -8,6 +8,12 @@ index = {"get_subs": "00_core.ipynb",
          "anat2id": "00_core.ipynb",
          "BIDS_metadata": "00_core.ipynb",
          "PipetographyBaseInputSpec": "00_core.ipynb",
+         "MRCatInputSpec": "00_core.ipynb",
+         "MRCatOutputSpec": "00_core.ipynb",
+         "MRCat": "00_core.ipynb",
+         "GradCatInputSpec": "00_core.ipynb",
+         "GradCatOutputSpec": "00_core.ipynb",
+         "GradCat": "00_core.ipynb",
          "aff2rigidInputSpec": "00_core.ipynb",
          "aff2rigidOutputSpec": "00_core.ipynb",
          "fslaff2rigid": "00_core.ipynb",
@@ -57,10 +63,13 @@ index = {"get_subs": "00_core.ipynb",
          "MRRegridOutputSpec": "00_core.ipynb",
          "MRRegrid": "00_core.ipynb",
          "mask2seedtuple": "00_core.ipynb",
-         "pipeline": "01_pipeline.ipynb"}
+         "pipeline": "01_pipeline.ipynb",
+         "PreProcNodes": "02_nodes.ipynb",
+         "ACPCNodes": "02_nodes.ipynb"}
 
 modules = ["core.py",
-           "pipeline.py"]
+           "pipeline.py",
+           "nodes.py"]
 
 doc_url = "https://axiezai.github.io/pipetography/"
 

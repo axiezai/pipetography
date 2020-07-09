@@ -2,6 +2,7 @@
   "pipetography": {
     "Overview": "/",
     "Module core": "/core",
-    "Module pipeline": "/pipeline"
+    "Module pipeline": "/pipeline",
+    "Module nodes": "/nodes"
   }
 }
