@@ -29,7 +29,7 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Preprocessing-pipeline-module:">Preprocessing <a href="/pipetography/pipeline"><code>pipeline</code></a> module:<a class="anchor-link" href="#Preprocessing-pipeline-module:"> </a></h2><p>A class containing <a href="/pipetography/core"><code>core</code></a> functionalities wrapped in a <code>Nipype</code> workflow, assuming your input data is in valid BIDS format. This pipeline will follow the [DESIGNER] protocol and align your T1 &amp; DWI to MNI template space (ACPC HCP procedure), perform all denoising &amp; artifact removal steps, and correct the DWI gradients accordingly.</p>
+<h2 id="Preprocessing-pipeline-module:">Preprocessing <a href="/pipetography/pipeline#pipeline"><code>pipeline</code></a> module:<a class="anchor-link" href="#Preprocessing-pipeline-module:"> </a></h2><p>A class containing <code>core</code> functionalities wrapped in a <code>Nipype</code> workflow, assuming your input data is in valid BIDS format. This pipeline will follow the [DESIGNER] protocol and align your T1 &amp; DWI to MNI template space (ACPC HCP procedure), perform all denoising &amp; artifact removal steps, and correct the DWI gradients accordingly.</p>
 
 </div>
 </div>
@@ -69,6 +69,73 @@ voxels to MNI 1mm voxel grids (by default <code>Regrid = False</code>). Lastly, 
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
+
+<span class="n">wf_1</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">BIDS_dir</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="n">wf_1</span><span class="o">.</span><span class="n">check_environment</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">bids_dir</span> <span class="o">==</span> <span class="s1">&#39;data&#39;</span>
+<span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">RPE_design</span> <span class="o">==</span> <span class="s1">&#39;-rpe_none&#39;</span>
+<span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">Regrid</span> <span class="o">==</span> <span class="kc">True</span>
+<span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">recon</span> <span class="o">==</span> <span class="kc">True</span>
+<span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;nii.gz&#39;</span>
+<span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">MNI_template</span> <span class="o">==</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expandvars</span><span class="p">(</span><span class="s1">&#39;$FSLDIR/data/standard/MNI152_T1_1mm.nii.gz&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">get_subjects</span><span class="p">()</span> <span class="o">==</span> <span class="n">wf_1</span><span class="o">.</span><span class="n">sub_list</span>
+<span class="n">wf_1</span><span class="o">.</span><span class="n">create_nodes</span><span class="p">()</span>
+<span class="n">wf_1</span><span class="o">.</span><span class="n">connect_nodes</span><span class="p">(</span><span class="n">RPE_design</span><span class="o">=</span><span class="s1">&#39;-rpe_none&#39;</span><span class="p">)</span>
+
+<span class="n">wf_2</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">BIDS_dir</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">&#39;nii&#39;</span><span class="p">,</span> <span class="n">RPE_design</span><span class="o">=</span><span class="s1">&#39;-rpe_all&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">wf_2</span><span class="o">.</span><span class="n">RPE_design</span> <span class="o">==</span> <span class="s1">&#39;-rpe_all&#39;</span>
+<span class="k">assert</span> <span class="n">wf_2</span><span class="o">.</span><span class="n">ext</span> <span class="o">==</span> <span class="s1">&#39;nii&#39;</span>
+<span class="n">wf_2</span><span class="o">.</span><span class="n">create_nodes</span><span class="p">()</span>
+<span class="n">wf_2</span><span class="o">.</span><span class="n">connect_nodes</span><span class="p">(</span><span class="n">RPE_design</span><span class="o">=</span><span class="s1">&#39;-rpe_all&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>derivatives folder found at ./derivatives
+Creating layout of data directory, might take a while if there are a lot of subjects
+FSLOUTPUTTYPE is valid
+FSLDIR is valid
+ANTS is valid
+mrtrix3 is valid
+Freesurfer path found
+Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
+Data sink (output folder) is set to ./derivatives
+Freesurfer output at ./derivatives/freesurfer
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/xxie/miniconda3/envs/tracts/lib/python3.8/site-packages/bids/layout/models.py:98: FutureWarning: The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). As of version 0.14.0, it will include the leading dot. To suppress this warning and include the leading dot, use `bids.config.set_option(&#39;extension_initial_dot&#39;, True)`.
+  warnings.warn(&#34;The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). &#34;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Example:">Example:<a class="anchor-link" href="#Example:"> </a></h3>
@@ -77,7 +144,7 @@ voxels to MNI 1mm voxel grids (by default <code>Regrid = False</code>). Lastly, 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Create a <a href="/pipetography/pipeline"><code>pipeline</code></a>:</p>
+<p>Create a <a href="/pipetography/pipeline#pipeline"><code>pipeline</code></a>:</p>
 
 </div>
 </div>
@@ -161,7 +228,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Take a look at what's in the <a href="/pipetography/pipeline"><code>pipeline</code></a>:</p>
+<p>Take a look at what's in the <a href="/pipetography/pipeline#pipeline"><code>pipeline</code></a>:</p>
 
 </div>
 </div>
@@ -234,7 +301,6 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 
 <span class="c1"># now that our anatomy &amp; dwi file templates are correct, we can initiate our nodes:</span>
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="n">create_nodes</span><span class="p">()</span>
-<span class="n">preproc_dwi</span><span class="o">.</span><span class="n">PreProcNodes</span><span class="o">.</span><span class="n">sub_grad_files1</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;nii&#39;</span>
 
 <span class="n">preproc_dwi</span><span class="o">.</span><span class="vm">__dict__</span>
 </pre></div>

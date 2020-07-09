@@ -127,7 +127,7 @@ class PipetographyBaseInputSpec(CommandLineInputSpec):
     )
     nthreads = traits.Int(
         argstr="-nthreads %d",
-        desc="number of threads for mrtrix funnctions only. If zero, multithreading is disabled",
+        desc="number of threads for mrtrix functions only. If zero, multi-threading is disabled",
         nohash=True,
     )
     force = traits.Bool(

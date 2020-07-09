@@ -253,9 +253,6 @@ class pipeline:
                     (self.PreProcNodes.mrconvert, self.PreProcNodes.GradCheck, [('out_file', 'in_file')]),
                     (self.PreProcNodes.mrconvert, self.PreProcNodes.GradCheck, [('out_bfile', 'grad_file')]),
                     (self.PreProcNodes.mrconvert, self.PreProcNodes.NewGradMR, [('out_file', 'in_file')]),
-                    (self.PreProcNodes.select_files, self.PreProcNodes.get_metadata, [("dwi", "path")]),
-                    (self.PreProcNodes.get_metadata, self.PreProcNodes.fslpreproc, [("ReadoutTime", "RO_time"),
-                                                                                    ("PE_DIR", "pe_dir")]),
                     (self.PreProcNodes.fslpreproc, self.PreProcNodes.GradUpdate, [('out_bfile', 'grad_file')])
                 ]
             )

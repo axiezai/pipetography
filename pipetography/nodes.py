@@ -126,7 +126,7 @@ class PreProcNodes:
         )
         self.biascorrect = Node(
             ppt.BiasCorrect(),
-            name = 'dwibiascorret',
+            name = 'dwibiascorrect',
         )
         self.grad_info = Node(
             ppt.MRInfo(),
@@ -146,7 +146,7 @@ class PreProcNodes:
         )
         self.convert_rician = Node(
             ppt.Convert(),
-            name = "ConvnertRician",
+            name = "ConvertRician",
         )
         self.dwi_mask = Node(
             BrainMask(),

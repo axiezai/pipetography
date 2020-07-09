@@ -58,6 +58,21 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/xxie/miniconda3/envs/tracts/lib/python3.8/site-packages/bids/layout/models.py:98: FutureWarning: The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). As of version 0.14.0, it will include the leading dot. To suppress this warning and include the leading dot, use `bids.config.set_option(&#39;extension_initial_dot&#39;, True)`.
+  warnings.warn(&#34;The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). &#34;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -224,12 +239,14 @@ Input str of path to BIDS dir otherwise</p>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
     <span class="n">session</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
-    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bvec&quot;</span><span class="p">,</span> <span class="s2">&quot;bval&quot;</span><span class="p">],</span>
+    <span class="n">extension</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;bvec&quot;</span><span class="p">,</span> <span class="s2">&quot;bval&quot;</span><span class="p">],</span>
     <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
 <span class="p">)</span> <span class="c1"># here we are using session 002 as an example input</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">bfiles</span><span class="p">)</span>
 <span class="n">bfiles_fsl</span> <span class="o">=</span> <span class="n">get_bfiles_tuple</span><span class="p">(</span><span class="n">bfiles</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">bfiles_fsl</span><span class="p">)</span>
+<span class="c1">#if bfiles are grabbed</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_bfiles_tuple</span><span class="p">(</span><span class="n">bfiles</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
 </pre></div>
 
     </div>
@@ -254,25 +271,6 @@ Input str of path to BIDS dir otherwise</p>
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="c1">#if bfiles are grabbed</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_bfiles_tuple</span><span class="p">(</span><span class="n">bfiles</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Get-dwi-images:">Get dwi images:<a class="anchor-link" href="#Get-dwi-images:"> </a></h4>
@@ -290,7 +288,7 @@ Input str of path to BIDS dir otherwise</p>
 <span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
-    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">,</span> <span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
+    <span class="n">extension</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">,</span> <span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
     <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">dwi</span><span class="p">)</span>
@@ -306,7 +304,7 @@ Input str of path to BIDS dir otherwise</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;/Users/xxie/sample_data/tinnitus2/sub-MINN294/ses-01/dwi/sub-MINN294_ses-01_run-1_dwi.nii&#39;, &#39;/Users/xxie/sample_data/tinnitus2/sub-MINN294/ses-01/dwi/sub-MINN294_ses-01_run-2_dwi.nii&#39;]
+<pre>[&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.nii.gz&#39;]
 </pre>
 </div>
 </div>
@@ -382,7 +380,7 @@ Input str of path to BIDS dir otherwise</p>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
 <span class="c1">#usage</span>
-<span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">sub_grad_files</span>
 </pre></div>
 
@@ -398,12 +396,31 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>(&#39;/Users/xxie/sample_data/tinnitus2/sub-MINN294/ses-01/dwi/sub-MINN294_ses-01_run-2_dwi.nii&#39;,
- &#39;/Users/xxie/sample_data/tinnitus2/sub-MINN294/ses-01/dwi/sub-MINN294_ses-01_run-2_dwi.nii&#39;)</pre>
+<pre>(&#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bvec&#39;,
+ &#39;/Users/xxie/lab/pipetography/data/sub-11048/ses-1/dwi/sub-11048_ses-1_dwi.bval&#39;)</pre>
 </div>
 
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
+<span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_grad_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -429,7 +446,7 @@ Input str of path to BIDS dir otherwise</p>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">datatype</span> <span class="o">=</span> <span class="s1">&#39;anat&#39;</span><span class="p">,</span>
     <span class="c1">#session=&#39;002&#39;,</span>
-    <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">,</span> <span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
+    <span class="n">extension</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
     <span class="n">return_type</span><span class="o">=</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">anat</span><span class="p">)</span>
@@ -445,7 +462,7 @@ Input str of path to BIDS dir otherwise</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;/Users/xxie/sample_data/tinnitus2/sub-MINN294/ses-01/anat/sub-MINN294_ses-01_run-1_T1w.nii&#39;, &#39;/Users/xxie/sample_data/tinnitus2/sub-MINN294/ses-01/anat/sub-MINN294_ses-01_run-1_T2w.nii&#39;, &#39;/Users/xxie/sample_data/tinnitus2/sub-MINN294/ses-01/anat/sub-MINN294_ses-01_run-2_T1w.nii&#39;, &#39;/Users/xxie/sample_data/tinnitus2/sub-MINN294/ses-01/anat/sub-MINN294_ses-01_run-2_T2w.nii&#39;]
+<pre>[]
 </pre>
 </div>
 </div>
@@ -579,7 +596,7 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
 <span class="c1">#usage</span>
 
-<span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
+<span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Total readout time is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TRtime</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Phase encoding direction is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pe_dir</span><span class="p">))</span>
 </pre></div>
@@ -594,8 +611,52 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Total readout time is 0.077397059
-Phase encoding direction is j
+<pre>No totalreadouttime in BIDS DWI JSON file, setting to default 0.1
+Total readout time is 0.1
+Phase encoding direction is j-
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
+<span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">pe_dir</span> <span class="o">==</span> <span class="s1">&#39;j-&#39;</span>
+<span class="k">assert</span> <span class="n">TRtime</span> <span class="o">==</span> <span class="mf">0.1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>No totalreadouttime in BIDS DWI JSON file, setting to default 0.1
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/xxie/miniconda3/envs/tracts/lib/python3.8/site-packages/bids/layout/models.py:98: FutureWarning: The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). As of version 0.14.0, it will include the leading dot. To suppress this warning and include the leading dot, use `bids.config.set_option(&#39;extension_initial_dot&#39;, True)`.
+  warnings.warn(&#34;The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). &#34;
 </pre>
 </div>
 </div>
