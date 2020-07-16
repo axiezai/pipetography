@@ -5,6 +5,7 @@ __all__ = ['PreProcNodes', 'ACPCNodes']
 # Internal Cell
 import os
 from pathlib import Path
+from itertools import product
 
 import pipetography.core as ppt
 
@@ -23,9 +24,17 @@ class PreProcNodes:
     """
     All nodes in preprocessing pipeline
     """
-    def __init__(self, bids_dir, bids_path_template, bids_ext, sub_list, RPE_design):
-        self.subject_source = Node(IdentityInterface(fields=["subject_id", "ext"]), name = "sub_source")
-        self.subject_source.iterables=[("subject_id", sub_list)]
+    def __init__(self, bids_dir, bids_path_template, bids_ext, RPE_design, sub_list, ses_list, exclude_list = [()]):
+        # create sub-graphs for subjects and sessions combos
+        all_sub_ses_combos = set(product(sub_list, ses_list))
+        filtered_sub_ses_list = list(all_sub_ses_combos - set(exclude_list))
+        sub_iter = [tup[0] for tup in filtered_sub_ses_list]
+        ses_iter = [tup[1] for tup in filtered_sub_ses_list]
+        self.subject_source = Node(IdentityInterface(fields=["subject_id", "session_id"]),
+                                   iterables=[("subject_id", sub_iter), ("session_id", ses_iter)],
+                                   synchronize=True,
+                                   name = "sub_source")
+        # reverse phase encoding design selection
         if RPE_design == '-rpe_none':
             self.sub_grad_files = Node(
                 Function(input_names=['sub_dwi', 'ext'],
