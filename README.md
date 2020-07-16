@@ -23,15 +23,15 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `export SINGULARITY_CACHEDIR={YOUR DESTINATION DIR}`
      - `export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}`
      
- - Obtain the singularity image with `singularity pull docker://axiezai/pipetography:0.3.1`.
+ - Obtain the singularity image with `singularity pull docker://axiezai/pipetography:0.3.2`.
  
  - Run interactively with `singularity shell --nv --B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
  
 #### Docker:
 
- - Pull the docker image: `docker pull axiezai/pipetography:0.3.1`
+ - Pull the docker image: `docker pull axiezai/pipetography:0.3.2`
  
- - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography:0.3.1 bash`
+ - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography:0.3.2 bash`
 
 Known container issues:
  - Singularity image missing freesurfer path to `nu_correct` as part of `$PATH`. 
