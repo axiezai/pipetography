@@ -159,7 +159,8 @@ class pipeline:
         # connections:
         self.workflow.connect(
             [
-                (self.PreProcNodes.subject_source, self.PreProcNodes.select_files, [('subject_id', 'subject_id')]),
+                (self.PreProcNodes.subject_source, self.PreProcNodes.select_files, [('subject_id', 'subject_id'),
+                                                                                    ('session_id', 'session_id')]),
                 (self.PreProcNodes.select_files, self.ACPCNodes.reduceFOV, [("anat", "in_file")]),
                 (self.PreProcNodes.select_files, self.ACPCNodes.ACPC_warp, [("anat", "in_file")]),
                 (self.ACPCNodes.reduceFOV, self.ACPCNodes.xfminverse, [("out_transform", "in_file")]),
