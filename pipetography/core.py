@@ -30,7 +30,8 @@ def get_subs(sub_dir="data"):
     )
     layout = BIDSLayout(sub_dir)
     sub_list = layout.get_subjects()
-    return sub_list, layout
+    ses_list = layout.get_sessions()
+    return sub_list, ses_list, layout
 
 # Cell
 def get_bfiles_tuple(in_List):
