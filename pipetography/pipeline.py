@@ -29,7 +29,7 @@ class pipeline:
     `mrtrix_nthreads = 0`, meaning multi-threading is disabled. Multi-threading is different from parallel processing, the threads work in individual cores.
     """
 
-    def __init__(self, BIDS_dir="data", ext = "nii.gz", RPE_design="-rpe_none", Regrid=True, recon = True, mrtrix_nthreads=0):
+    def __init__(self, BIDS_dir="data", ext = "nii.gz", RPE_design = "-rpe_none", Regrid = True, recon = True, mrtrix_nthreads = 6, skip_tuples = [()]):
         """
         Nodes are initialized with the bare minimum of inputs or default parameters
         Remaining inputs are either connected in the Nipype workflow or are user inputs
@@ -39,6 +39,7 @@ class pipeline:
             - Regrid (bool): whether to resample your dwi to MNI template 1mm voxel grids
             - recon (bool): whether to perform freesurfer's recon-all
             - mrtrix_nthreads (int): how many threads to use for mrtrix3 functions
+            - skip_tuples (tuple): [('sub_label', ' ses_label')] specify which subjects and sessions combos to exclude from pipeline
         """
         self.bids_dir = BIDS_dir
         self.RPE_design = RPE_design
@@ -46,9 +47,10 @@ class pipeline:
         self.recon = recon
         self.mrtrix_nthreads = mrtrix_nthreads
         self.ext = ext
+        self.excludes = skip_tuples
         self.MNI_template = os.path.expandvars('$FSLDIR/data/standard/MNI152_T1_1mm.nii.gz')
         # Create derivatives folder if it doesn't exist:
-        if not os.path.exists(os.path.join(BIDS_dir, '..', 'derivatives')):
+        if not os.path.exists(os.path.join(Path(BIDS_dir).parent, 'derivatives')):
             print('No derivatives folder, creating it at {}'.format(
                 os.path.join(Path(BIDS_dir).parent, 'derivatives'))
                  )
@@ -56,36 +58,36 @@ class pipeline:
         elif os.path.exists(os.path.join(Path(BIDS_dir).parent, 'derivatives')):
             print('derivatives folder found at {}'.format(os.path.join(Path(BIDS_dir).parent, 'derivatives')))
         # Generate BIDS Layout, and create subject ID list:
-        self.sub_list, self.layout = ppt.get_subs(self.bids_dir)
+        self.sub_list, self.ses_list, self.layout = ppt.get_subs(self.bids_dir)
         # string templates for images: the templates will depend on rpe_design:
         #  - rpe_none: anat_file, dwi_file, b_files
         #  - rpe_all/rpe_pair: anat_file, dwi_file, rdwi_file, b_files, rb_files
         if RPE_design == '-rpe_none':
             self.anat_file = os.path.join(
-                'sub-{subject_id}', 'ses-*', 'anat', 'sub-{subject_id}_ses-*_T1w.{ext}'
+                'sub-{subject_id}', 'ses-{session_id}', 'anat', 'sub-{subject_id}_ses-{session_id}_T1w.' + ext
             )
             self.dwi_file = os.path.join(
-                "sub-{subject_id}", "ses-*", "dwi", "sub-{subject_id}_ses-*_dwi.{ext}",
+                "sub-{subject_id}", "ses-{session_id}", "dwi", "sub-{subject_id}_ses-{session_id}_dwi." + ext
             )
             self.b_files = os.path.join(
-                "sub-{subject_id}", "ses-*", "dwi", "sub-{subject_id}_ses-*_dwi.bv*"
+                "sub-{subject_id}", "ses-{session_id}", "dwi", "sub-{subject_id}_ses-{session_id}_dwi.bv*"
             )
         elif RPE_design == '-rpe_all':
             # if all directions were acquired twice, with reverse phase encoding directions.
             self.anat_file = os.path.join(
-                'sub-{subject_id}', 'ses-*', 'anat', 'sub-{subject_id}_ses-*_T1w.{ext}'
+                'sub-{subject_id}', 'ses-{session_id}', 'anat', 'sub-{subject_id}_ses-{session_id}_T1w.' + ext
             )
             self.dwi_file = os.path.join(
-                "sub-{subject_id}", "ses-*", "dwi", "sub-{subject_id}_ses-*_run-1_dwi.{ext}",
+                "sub-{subject_id}", "ses-{session_id}", "dwi", "sub-{subject_id}_ses-{session_id}_ap_dwi." + ext,
             )
             self.b_files = os.path.join(
-                "sub-{subject_id}", "ses-*", "dwi", "sub-{subject_id}_ses-*_run-1_dwi.bv*"
+                "sub-{subject_id}", "ses-{session_id}", "dwi", "sub-{subject_id}_ses-{session_id}_ap_dwi.bv*"
             )
             self.rdwi_file = os.path.join(
-                "sub-{subject_id}", "ses-*", "dwi", "sub-{subject_id}_ses-*_run-2_dwi.{ext}",
+                "sub-{subject_id}", "ses-{session_id}", "dwi", "sub-{subject_id}_ses-{session_id}_pa_dwi." + ext,
             )
             self.rb_files = os.path.join(
-                "sub-{subject_id}", "ses-*", "dwi", "sub-{subject_id}_ses-*_run-2_dwi.bv*"
+                "sub-{subject_id}", "ses-{session_id}", "dwi", "sub-{subject_id}_ses-{session_id}_pa_dwi.bv*"
             )
 
     def create_nodes(self):
@@ -103,7 +105,7 @@ class pipeline:
                 "rdwi": self.rdwi_file,
                 "rbfiles": self.rb_files
             }
-        self.PreProcNodes = nodes.PreProcNodes(bids_dir=self.bids_dir, bids_path_template=self.sub_template, bids_ext = self.ext, sub_list=self.sub_list, RPE_design=self.RPE_design)
+        self.PreProcNodes = nodes.PreProcNodes(bids_dir=self.bids_dir, bids_path_template=self.sub_template, bids_ext = self.ext, RPE_design=self.RPE_design, sub_list=self.sub_list, ses_list=self.ses_list, exclude_list = self.excludes)
         self.PreProcNodes.set_inputs(bids_dir=self.bids_dir, bids_ext = self.ext, RPE_design=self.RPE_design, mrtrix_nthreads=self.mrtrix_nthreads)
         self.ACPCNodes = nodes.ACPCNodes(MNI_template=self.MNI_template)
         self.ACPCNodes.set_inputs(bids_dir=self.bids_dir, MNI_template=self.MNI_template)

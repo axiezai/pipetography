@@ -58,21 +58,6 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/Users/xxie/miniconda3/envs/tracts/lib/python3.8/site-packages/bids/layout/models.py:98: FutureWarning: The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). As of version 0.14.0, it will include the leading dot. To suppress this warning and include the leading dot, use `bids.config.set_option(&#39;extension_initial_dot&#39;, True)`.
-  warnings.warn(&#34;The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). &#34;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -129,8 +114,9 @@ Input str of path to BIDS dir otherwise</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="n">sub_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+<span class="n">sub_list</span><span class="p">,</span> <span class="n">ses_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ses_list</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -145,6 +131,7 @@ Input str of path to BIDS dir otherwise</p>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Creating layout of data directory, might take a while if there are a lot of subjects
 [&#39;11048&#39;]
+[&#39;1&#39;]
 </pre>
 </div>
 </div>
@@ -165,7 +152,9 @@ Input str of path to BIDS dir otherwise</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="c1">#if subjects were all grabbed</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span><span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span><span class="p">))</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span><span class="p">))</span>
+<span class="c1">#if sessions were all grabbed</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span> <span class="o">+</span> <span class="s1">&#39;/ses-*&#39;</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -179,6 +168,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Creating layout of data directory, might take a while if there are a lot of subjects
+Creating layout of data directory, might take a while if there are a lot of subjects
 </pre>
 </div>
 </div>
@@ -213,7 +203,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_bfiles_tuple" class="doc_header"><code>get_bfiles_tuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_bfiles_tuple</code>(<strong><code>in_List</code></strong>)</p>
+<h4 id="get_bfiles_tuple" class="doc_header"><code>get_bfiles_tuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_bfiles_tuple</code>(<strong><code>in_List</code></strong>)</p>
 </blockquote>
 <p>read .bvec and .bval files in as a list and spit out tuple for nipype input</p>
 
@@ -358,7 +348,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_sub_gradfiles" class="doc_header"><code>get_sub_gradfiles</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_sub_gradfiles</code>(<strong><code>sub_dwi</code></strong>, <strong><code>ext</code></strong>=<em><code>'nii.gz'</code></em>)</p>
+<h4 id="get_sub_gradfiles" class="doc_header"><code>get_sub_gradfiles</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_sub_gradfiles</code>(<strong><code>sub_dwi</code></strong>, <strong><code>ext</code></strong>=<em><code>'nii.gz'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -497,7 +487,7 @@ Input str of path to BIDS dir otherwise</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="anat2id" class="doc_header"><code>anat2id</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L60" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>anat2id</code>(<strong><code>anat_files</code></strong>)</p>
+<h4 id="anat2id" class="doc_header"><code>anat2id</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>anat2id</code>(<strong><code>anat_files</code></strong>)</p>
 </blockquote>
 <p>Takes input anat file BIDS names and creates freesurfer output directory names as inputs to subject_id
 The format of the output is [sub<em>id]</em>[session_id]</p>
@@ -573,7 +563,7 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="BIDS_metadata" class="doc_header"><code>BIDS_metadata</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L73" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>BIDS_metadata</code>(<strong><code>path</code></strong>, <strong><code>bids_dir</code></strong>)</p>
+<h4 id="BIDS_metadata" class="doc_header"><code>BIDS_metadata</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L74" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>BIDS_metadata</code>(<strong><code>path</code></strong>, <strong><code>bids_dir</code></strong>)</p>
 </blockquote>
 
 </div>
