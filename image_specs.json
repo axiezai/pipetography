@@ -6,15 +6,14 @@
     ["ants", {"version": "2.3.1"}],
     ["fsl", {"version": "6.0.1"}],
     ["matlabmcr", {"version": "2012b"}],
-    ["freesurfer", {"version": "6.0.0-min"}],
+    ["freesurfer", {"version": "7.1.0"}],
     ["miniconda",
       {"create_env": "tracts",
         "conda_install": ["python=3.7.3", "pip=20.0.2", "dipy", "nipype", "nibabel", "pytest", "matplotlib"],
         "pip_install": ["pybids", "fastcore==0.1.11", "nilearn", "pipetography==0.3.2"]}],
-    ["add-to-entrypoint", "source activate tracts"],
     ["copy", ["license.txt", "/license.txt"]],
     ["install", ["git", "ssh", "tar", "gzip", "ca-certificates"]],
-    ["run_bash", "cd /opt/freesurfer-6.0.0-min && ln -s /opt/matlabmcr-2012b/v80 MCRv80 && mv /license.txt ."],
+    ["run_bash", "cd /opt/freesurfer-7.1.0 && ln -s /opt/matlabmcr-2012b/v80 MCRv80 && mv /license.txt ."],
     ["env", {"FS_LICENSE": "/license.txt"}]
   ]
 }
