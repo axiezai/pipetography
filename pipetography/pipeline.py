@@ -23,10 +23,16 @@ from nipype.interfaces import fsl
 # Cell
 class pipeline:
     """
-    Create `core` functionality nodes for a `Nipype` workflow that selects data inputs iteratively from `BIDS_dir` that has both `anat` and `dwi` modalities,
-    you will need to specify the reverse phase encoding design of your dwi acquisition with `RPE_design`, and declare whether you want to re-sample your dwi
-    voxels to MNI 1mm voxel grids (by default `Regrid = False`). Lastly, you can specify how many threads you want `mrtrix3` functions to have, by default,
-    `mrtrix_nthreads = 0`, meaning multi-threading is disabled. Multi-threading is different from parallel processing, the threads work in individual cores.
+    Create a `Nipype` workflow that selects data inputs iteratively from `BIDS_dir` that has both `anat` and `dwi` modalities.
+
+    Inputs to specify:
+        - BIDS_dir (str): path to BIDS dataset
+        - ext (str): extension of your images. Default is set to "nii.gz"
+        - RPE_design (str): default is "-rpe_none", reverse phase encoding design for your DWI acquisition. Also supports '-rpe_all'
+        - Regrid (bool): whether  to resample DWI to  1mm MNI template
+        - recon (bool): whether to include Freesurfer's reconall as an additional preprocessing step. This generates a white matter mask which may be useful for tractograms.
+        - mrtrix_nthreads (int): how many threads for mrtrix3 algorithms. Disable multithreading by setting to 0. Default is 6.
+        - skip_tuples (tuple): [('subject', 'session')] ID pair to skip.
     """
 
     def __init__(self, BIDS_dir="data", ext = "nii.gz", RPE_design = "-rpe_none", Regrid = True, recon = True, mrtrix_nthreads = 6, skip_tuples = [()]):

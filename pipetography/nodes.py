@@ -22,7 +22,16 @@ from nipype.interfaces import fsl
 # Cell
 class PreProcNodes:
     """
-    All nodes in preprocessing pipeline
+    All nodes in DWI preprocessing pipeline. All inputs are set during `pipeline.create_nodes()` call.
+
+    Inputs:
+        - bids_dir (str)
+        - bids_path_template (dict)
+        - bids_ext (str)
+        - RPE_design (str)
+        - sub_list (List)
+        - ses_list (List)
+        - excluse_list (tuple)
     """
     def __init__(self, bids_dir, bids_path_template, bids_ext, RPE_design, sub_list, ses_list, exclude_list = [()]):
         # create sub-graphs for subjects and sessions combos
@@ -371,7 +380,9 @@ class PreProcNodes:
 # Cell
 class ACPCNodes:
     """
-    Freesurfer recon-all nodes
+    Anatomy related and Freesurfer recon-all nodes
+    Inputs:
+        - MNI_template: path to MNI template provided by FSL.
     """
     def __init__(self, MNI_template):
         self.get_fs_id = Node(
