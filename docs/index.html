@@ -51,10 +51,8 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the <code>Singularity</code> or <code>Docker</code> recipe in the repository instead of installing the Python module.</p>
+<p>Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the <code>Singularity</code> definition file in the repository instead of installing the Python module.</p>
 <h4 id="Singularity:">Singularity:<a class="anchor-link" href="#Singularity:"> </a></h4><ul>
-<li><p>Currently has pathing issues as seen in the singularity issues page: <a href="https://github.com/hpcng/singularity/issues/5040">https://github.com/hpcng/singularity/issues/5040</a>, the 3.6 release candidate should fix this... For now, use docker image if you can. If not, the singularity container will not be able to execute freesurfer <code>recon-all</code> step of the workflow. All DWI preprocessing steps will work though.</p>
-</li>
 <li><p>This is a large image, you will need to set the following environment variables to somewhere other than <code>/tmp</code>:</p>
 <ul>
 <li><code>export SINGULARITY_TMPDIR={YOUR DESTINATION DIR}</code></li>
@@ -63,23 +61,30 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><code>export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}</code></li>
 </ul>
 </li>
-<li><p>Obtain the singularity image with <code>singularity pull docker://axiezai/pipetography:0.3.2</code>.</p>
+<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, pulling from a base image often encounters inconsistent paths and binaries behavior. You  will need to have sudo permissions to perform singularity build.</p>
+<ul>
+<li><code>sudo singularity build {image_file_name}.sif singularity.def</code></li>
+</ul>
 </li>
-<li><p>Run interactively with <code>singularity shell --nv --B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code></p>
+<li><p>To run interactively or as a job execution, you will need a few flags:</p>
+<ul>
+<li><code>-e</code> for a clean environnment</li>
+<li><code>-B</code> to bind your freesurfer license file to the image, as well as data/code directories.</li>
+<li><code>singularity shell -e -B &lt;freesurfer_license_path&gt;:/license.txt -B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code></li>
+<li>Once inside the singularity shell, confirm the license file is recognized as a environment variable. Or declare it with:<ul>
+<li><code>export FS_LICENSE="/license.txt"</code></li>
+</ul>
+</li>
+<li>Sometimes Freesurfer set-up doesn't run as container entry-point. <ul>
+<li>Fix with <code>source /opt/freesurfer-7.1.0/SetUpFreeSurfer.sh</code></li>
+</ul>
 </li>
 </ul>
-<h4 id="Docker:">Docker:<a class="anchor-link" href="#Docker:"> </a></h4><ul>
-<li><p>Pull the docker image: <code>docker pull axiezai/pipetography:0.3.2</code></p>
-</li>
-<li><p>Run with BIDS directory and interactive bash terminal: <code>docker run -v &lt;BIDS_DIR&gt;:&lt;Docker_BIDS_DIR&gt; -it axiezai/pipetography:0.3.2 bash</code></p>
 </li>
 </ul>
 <p>Known container issues:</p>
 <ul>
-<li><p>Singularity image missing freesurfer path to <code>nu_correct</code> as part of <code>$PATH</code>.</p>
-</li>
-<li><p>If <code>singularity build</code> fails with <code>apt-get install</code> error complaining about unauthenticated packages, add <code>--allow-unauthenticated</code> to every <code>apt-get</code> line in the <code>sinngularity.def</code> file.</p>
-</li>
+<li>Singularity image missing freesurfer's <code>nu_correct</code> and empty pearl binaries. </li>
 </ul>
 <h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>
 <p>Since <code>pipetography</code> is a <code>Nipype</code> wrapper around <code>mrtrix3</code>, <code>ANTs</code>, and <code>FSL</code>, you have to follow their installation instructions and set them up appropriately on your machine as well:</p>
@@ -90,7 +95,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </li>
 <li><p><a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation">FSL</a></p>
 </li>
-<li><p><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">Freesurfer v6.0</a></p>
+<li><p><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">Freesurfer v7.1.0</a></p>
 </li>
 <li><p><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime">Matlab Run Time Compiler for freesurfer</a></p>
 </li>

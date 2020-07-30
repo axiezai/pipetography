@@ -11,11 +11,9 @@ The pre-processing workflow has been updated to reflect what's seen in the optim
 
 ## Install
 
-Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the `Singularity` or `Docker` recipe in the repository instead of installing the Python module.
+Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the `Singularity` definition file in the repository instead of installing the Python module.
 
 #### Singularity:
-
- - Currently has pathing issues as seen in the singularity issues page: https://github.com/hpcng/singularity/issues/5040, the 3.6 release candidate should fix this... For now, use docker image if you can. If not, the singularity container will not be able to execute freesurfer `recon-all` step of the workflow. All DWI preprocessing steps will work though.
  
  - This is a large image, you will need to set the following environment variables to somewhere other than `/tmp`:
      - `export SINGULARITY_TMPDIR={YOUR DESTINATION DIR}`
@@ -23,20 +21,20 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `export SINGULARITY_CACHEDIR={YOUR DESTINATION DIR}`
      - `export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}`
      
- - Obtain the singularity image with `singularity pull docker://axiezai/pipetography:0.3.2`.
+ - Build the singularity image with the `singularity.def` file provided in Github, pulling from a base image often encounters inconsistent paths and binaries behavior. You  will need to have sudo permissions to perform singularity build.
+     - `sudo singularity build {image_file_name}.sif singularity.def`
  
- - Run interactively with `singularity shell --nv --B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
- 
-#### Docker:
-
- - Pull the docker image: `docker pull axiezai/pipetography:0.3.2`
- 
- - Run with BIDS directory and interactive bash terminal: `docker run -v <BIDS_DIR>:<Docker_BIDS_DIR> -it axiezai/pipetography:0.3.2 bash`
-
+ - To run interactively or as a job execution, you will need a few flags:
+     - `-e` for a clean environnment
+     - `-B` to bind your freesurfer license file to the image, as well as data/code directories.
+     - `singularity shell -e -B <freesurfer_license_path>:/license.txt -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
+     - Once inside the singularity shell, confirm the license file is recognized as a environment variable. Or declare it with:
+         - `export FS_LICENSE="/license.txt"`
+     - Sometimes Freesurfer set-up doesn't run as container entry-point. 
+         - Fix with `source /opt/freesurfer-7.1.0/SetUpFreeSurfer.sh`
+     
 Known container issues:
- - Singularity image missing freesurfer path to `nu_correct` as part of `$PATH`. 
-
- - If `singularity build` fails with `apt-get install` error complaining about unauthenticated packages, add `--allow-unauthenticated` to every `apt-get` line in the `sinngularity.def` file.
+ - Singularity image missing freesurfer's `nu_correct` and empty pearl binaries. 
  
 #### Creating your own environment and install `pipetography` as a Python module:
 
@@ -49,7 +47,7 @@ Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, 
      
  - [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
  
- - [Freesurfer v6.0](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall)
+ - [Freesurfer v7.1.0](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall)
  
  - [Matlab Run Time Compiler for freesurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime)
  

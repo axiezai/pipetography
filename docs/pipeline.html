@@ -54,10 +54,16 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 <div class="output_markdown rendered_html output_subarea ">
 <h2 id="pipeline" class="doc_header"><code>class</code> <code>pipeline</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/pipeline.py#L24" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>pipeline</code>(<strong><code>BIDS_dir</code></strong>=<em><code>'data'</code></em>, <strong><code>ext</code></strong>=<em><code>'nii.gz'</code></em>, <strong><code>RPE_design</code></strong>=<em><code>'-rpe_none'</code></em>, <strong><code>Regrid</code></strong>=<em><code>True</code></em>, <strong><code>recon</code></strong>=<em><code>True</code></em>, <strong><code>mrtrix_nthreads</code></strong>=<em><code>6</code></em>, <strong><code>skip_tuples</code></strong>=<em><code>[()]</code></em>)</p>
 </blockquote>
-<p>Create <a href="/pipetography/core"><code>core</code></a> functionality nodes for a <code>Nipype</code> workflow that selects data inputs iteratively from <code>BIDS_dir</code> that has both <code>anat</code> and <code>dwi</code> modalities,
-you will need to specify the reverse phase encoding design of your dwi acquisition with <code>RPE_design</code>, and declare whether you want to re-sample your dwi
-voxels to MNI 1mm voxel grids (by default <code>Regrid = False</code>). Lastly, you can specify how many threads you want <code>mrtrix3</code> functions to have, by default,
-<code>mrtrix_nthreads = 0</code>, meaning multi-threading is disabled. Multi-threading is different from parallel processing, the threads work in individual cores.</p>
+<p>Create a <code>Nipype</code> workflow that selects data inputs iteratively from <code>BIDS_dir</code> that has both <code>anat</code> and <code>dwi</code> modalities.</p>
+<p>Inputs to specify:</p>
+
+<pre><code>- BIDS_dir (str): path to BIDS dataset
+- ext (str): extension of your images. Default is set to "nii.gz"
+- RPE_design (str): default is "-rpe_none", reverse phase encoding design for your DWI acquisition. Also supports '-rpe_all'
+- Regrid (bool): whether  to resample DWI to  1mm MNI template
+- recon (bool): whether to include Freesurfer's reconall as an additional preprocessing step. This generates a white matter mask which may be useful for tractograms.
+- mrtrix_nthreads (int): how many threads for mrtrix3 algorithms. Disable multithreading by setting to 0. Default is 6.
+- skip_tuples (tuple): [('subject', 'session')] ID pair to skip.</code></pre>
 
 </div>
 
