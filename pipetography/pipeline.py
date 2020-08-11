@@ -258,7 +258,8 @@ class pipeline:
                     (self.ACPCNodes.wm_flirt, self.ACPCNodes.wm_concatxfm, [("out_matrix_file", "in_file2")]),
                     (self.ACPCNodes.wm_concatxfm, self.ACPCNodes.wm_alignxfm, [("out_file", "in_file")]),
                     (self.ACPCNodes.wm_alignxfm, self.ACPCNodes.wm_ACPC_warp, [("out_file", "premat")]),
-                    (self.ACPCNodes.wm_ACPC_warp, self.PreProcNodes.datasink, [("out_file", "preproc_mni.@wm_mask")])
+                    (self.ACPCNodes.wm_ACPC_warp, self.ACPCNodes.wm_threshold, [("out_file", "in_file")]),
+                    (self.ACPCNodes.wm_threshold, self.PreProcNodes.datasink, [("out_file", "preproc_mni.@wm_mask")])
                 ]
             )
 
