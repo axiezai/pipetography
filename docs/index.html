@@ -53,7 +53,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the <code>Singularity</code> definition file in the repository instead of installing the Python module.</p>
 <h4 id="Singularity:">Singularity:<a class="anchor-link" href="#Singularity:"> </a></h4><ul>
-<li><p>This is a large image, you will need to set the following environment variables to somewhere other than <code>/tmp</code>:</p>
+<li><p>This is a large image, you will need to set the following environment variables to somewhere other than <code>/tmp</code> if you want to avoid memory errors:</p>
 <ul>
 <li><code>export SINGULARITY_TMPDIR={YOUR DESTINATION DIR}</code></li>
 <li><code>export SINGULARITY_LOCALCACHEDIR={YOUR DESTINATION DIR}</code></li>
@@ -61,9 +61,14 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><code>export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}</code></li>
 </ul>
 </li>
-<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, pulling from a base image often encounters inconsistent paths and binaries behavior. You  will need to have sudo permissions to perform singularity build.</p>
+<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, you will need to have sudo permissions to perform singularity build.</p>
 <ul>
 <li><code>sudo singularity build {image_file_name}.sif singularity.def</code></li>
+</ul>
+</li>
+<li><p>OR pull the built singularity image from cloud library:</p>
+<ul>
+<li><code>singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.4</code></li>
 </ul>
 </li>
 <li><p>To run interactively or as a job execution, you will need a few flags:</p>
@@ -82,10 +87,6 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </ul>
 </li>
 </ul>
-<p>Known container issues:</p>
-<ul>
-<li>Singularity image missing freesurfer's <code>nu_correct</code> and empty pearl binaries. </li>
-</ul>
 <h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>
 <p>Since <code>pipetography</code> is a <code>Nipype</code> wrapper around <code>mrtrix3</code>, <code>ANTs</code>, and <code>FSL</code>, you have to follow their installation instructions and set them up appropriately on your machine as well:</p>
 <ul>
@@ -100,6 +101,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><p><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime">Matlab Run Time Compiler for freesurfer</a></p>
 </li>
 </ul>
+<p>Everything listed in this section is included in the singularity container.</p>
 
 </div>
 </div>

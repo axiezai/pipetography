@@ -249,9 +249,20 @@ class pipeline:
                     (self.PreProcNodes.select_files, self.ACPCNodes.get_fs_id,  [("anat", "anat_files")]),
                     (self.ACPCNodes.ACPC_warp, self.ACPCNodes.reconall, [("out_file", "T1_files")]),
                     (self.ACPCNodes.get_fs_id, self.ACPCNodes.reconall, [("fs_id_list", "subject_id")]),
-
+                    (self.ACPCNodes.reconall, self.ACPCNodes.wm_extract, [("aseg", "in_file")]),
+                    (self.ACPCNodes.wm_extract, self.ACPCNodes.wm_reduceFOV, [("out_file", "in_file")]),
+                    (self.ACPCNodes.wm_extract, self.ACPCNodes.wm_ACPC_warp, [("out_file", "in_file")]),
+                    (self.ACPCNodes.wm_reduceFOV, self.ACPCNodes.wm_xfminverse, [("out_transform", "in_file")]),
+                    (self.ACPCNodes.wm_xfminverse, self.ACPCNodes.wm_concatxfm, [("out_file", "in_file")]),
+                    (self.ACPCNodes.wm_reduceFOV, self.ACPCNodes.wm_flirt, [("out_roi", "in_file")]),
+                    (self.ACPCNodes.wm_flirt, self.ACPCNodes.wm_concatxfm, [("out_matrix_file", "in_file2")]),
+                    (self.ACPCNodes.wm_concatxfm, self.ACPCNodes.wm_alignxfm, [("out_file", "in_file")]),
+                    (self.ACPCNodes.wm_alignxfm, self.ACPCNodes.wm_ACPC_warp, [("out_file", "premat")]),
+                    (self.ACPCNodes.wm_ACPC_warp, self.ACPCNodes.wm_threshold, [("out_file", "in_file")]),
+                    (self.ACPCNodes.wm_threshold, self.PreProcNodes.datasink, [("out_file", "preproc_mni.@wm_mask")])
                 ]
             )
+
         if RPE_design == '-rpe_none':
             self.workflow.connect(
                 [

@@ -441,6 +441,39 @@ class ACPCNodes:
             ppt.MRRegrid(),
             name = 'mrgrid',
         )
+        # WM Mask Creation from FreeSurfer aseg parcellation
+        self.wm_extract= Node(
+            ppt.WMBinarize(),
+            name='wmbinarize_aseg'
+        )
+        self.wm_reduceFOV = Node(
+            fsl.utils.RobustFOV(),
+            name="wm_reduce_FOV",
+        )
+        self.wm_xfminverse = Node(
+            fsl.utils.ConvertXFM(),
+            name="wm_transform_inverse",
+        )
+        self.wm_flirt = Node(
+            fsl.preprocess.FLIRT(),
+            name="wm_FLIRT",
+        )
+        self.wm_concatxfm = Node(
+            fsl.utils.ConvertXFM(),
+            name="wm_concat_transform",
+        )
+        self.wm_alignxfm = Node(
+            ppt.fslaff2rigid(),
+            name='wm_aff2rigid',
+        )
+        self.wm_ACPC_warp = Node(
+            fsl.preprocess.ApplyWarp(),
+            name='wm_apply_warp',
+        )
+        self.wm_threshold = Node(
+            ppt.MRThreshold(),
+            name='binarize_wm',
+        )
 
     def set_inputs(self, bids_dir, MNI_template):
         self.reduceFOV.inputs.out_transform='roi2full.mat'
@@ -482,3 +515,20 @@ class ACPCNodes:
         self.apply_xfm.inputs.out_file = 'dwi_acpc.mif'
         self.regrid.inputs.out_file = 'dwi_acpc_1mm.mif'
         self.regrid.inputs.regrid = MNI_template
+        self.wm_extract.inputs.all_wm = True
+        self.wm_reduceFOV.inputs.out_transform='wm_roi2full.mat'
+        self.wm_reduceFOV.inputs.out_roi='wm_robustfov.nii.gz'
+        self.wm_flirt.inputs.reference=MNI_template
+        self.wm_flirt.inputs.interp='spline'
+        self.wm_flirt.inputs.out_matrix_file='wm_roi2std.mat'
+        self.wm_flirt.inputs.out_file='wm_acpc_mni.nii.gz'
+        self.wm_xfminverse.inputs.out_file='wm_full2roi.mat'
+        self.wm_xfminverse.inputs.invert_xfm=True
+        self.wm_concatxfm.inputs.concat_xfm=True
+        self.wm_concatxfm.inputs.out_file='wm_full2std.mat'
+        self.wm_alignxfm.inputs.out_file='wm_outputmatrix'
+        self.wm_ACPC_warp.inputs.out_file='wm_acpc.nii'
+        self.wm_ACPC_warp.inputs.relwarp=True
+        self.wm_ACPC_warp.inputs.output_type='NIFTI'
+        self.wm_ACPC_warp.inputs.interp='spline'
+        self.wm_ACPC_warp.inputs.ref_file=MNI_template
