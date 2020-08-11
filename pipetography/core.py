@@ -847,6 +847,41 @@ class MRTransform(CommandLine):
         return outputs
 
 # Internal Cell
+class WMBinarizeInputSpec(CommandLineInputSpec):
+    in_file = File(
+        exists=True,
+        mandatory=True,
+        argstr="--i %s",
+        desc="Input aseg.mgz freesurfer recon-all output",
+        position=0,
+    )
+    out_file = File(
+        argstr="--o %s",
+        desc="output WM binary mask",
+        position = 1
+    )
+    all_wm = traits.Bool(
+        argstr="--all-wm",
+        desc="set match vals to 2, 41, 77, 251-255, 7, and 46, (aseg for all WM)",
+        position = 2
+    )
+
+class WMBinarizeOutputSpec(TraitedSpec):
+    out_file = File(desc="Output white matter mask")
+
+class WMBinarize(CommandLine):
+    """
+    mri_binarize
+    """
+    _cmd = 'mri_binarize'
+    input_spec = WMBinarizeInputSpec
+    output_spec = WMBinarizeOutputSpec
+    def _list_outputs(self):
+        outputs=self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
+        return outputs
+
+# Internal Cell
 class MRRegridInputSpec(PipetographyBaseInputSpec):
     in_file = File(
         exists=True,

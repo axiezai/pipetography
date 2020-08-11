@@ -65,7 +65,10 @@ index = {"get_subs": "00_core.ipynb",
          "mask2seedtuple": "00_core.ipynb",
          "pipeline": "01_pipeline.ipynb",
          "PreProcNodes": "02_nodes.ipynb",
-         "ACPCNodes": "02_nodes.ipynb"}
+         "ACPCNodes": "02_nodes.ipynb",
+         "WMBinarizeInputSpec": "00_core.ipynb",
+         "WMBinarizeOutputSpec": "00_core.ipynb",
+         "WMBinarize": "00_core.ipynb"}
 
 modules = ["core.py",
            "pipeline.py",
