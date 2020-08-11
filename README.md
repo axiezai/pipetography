@@ -15,14 +15,17 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
 
 #### Singularity:
  
- - This is a large image, you will need to set the following environment variables to somewhere other than `/tmp`:
+ - This is a large image, you will need to set the following environment variables to somewhere other than `/tmp` if you want to avoid memory errors:
      - `export SINGULARITY_TMPDIR={YOUR DESTINATION DIR}`
      - `export SINGULARITY_LOCALCACHEDIR={YOUR DESTINATION DIR}`
      - `export SINGULARITY_CACHEDIR={YOUR DESTINATION DIR}`
      - `export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}`
      
- - Build the singularity image with the `singularity.def` file provided in Github, pulling from a base image often encounters inconsistent paths and binaries behavior. You  will need to have sudo permissions to perform singularity build.
+ - Build the singularity image with the `singularity.def` file provided in Github, you will need to have sudo permissions to perform singularity build.
      - `sudo singularity build {image_file_name}.sif singularity.def`
+     
+ - OR pull the built singularity image from cloud library:
+    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.4`
  
  - To run interactively or as a job execution, you will need a few flags:
      - `-e` for a clean environnment
@@ -32,10 +35,7 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
          - `export FS_LICENSE="/license.txt"`
      - Sometimes Freesurfer set-up doesn't run as container entry-point. 
          - Fix with `source /opt/freesurfer-7.1.0/SetUpFreeSurfer.sh`
-     
-Known container issues:
- - Singularity image missing freesurfer's `nu_correct` and empty pearl binaries. 
- 
+      
 #### Creating your own environment and install `pipetography` as a Python module:
 
 `pip install pipetography`
@@ -51,6 +51,7 @@ Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, 
  
  - [Matlab Run Time Compiler for freesurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime)
  
+Everything listed in this section is included in the singularity container.
 
 ## The pipeline:
 

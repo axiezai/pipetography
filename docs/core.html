@@ -41,8 +41,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="c1"># if our sample data can create BIDS layouts</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># if our sample data can create BIDS layouts</span>
 <span class="c1"># data_dir = &quot;/Users/xxie/sample_data/tinnitus2&quot;</span>
 <span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;data&#39;</span>
 <span class="c1">#layout = BIDSLayout(data_dir)</span>
@@ -113,8 +112,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="n">sub_list</span><span class="p">,</span> <span class="n">ses_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sub_list</span><span class="p">,</span> <span class="n">ses_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ses_list</span><span class="p">)</span>
 </pre></div>
@@ -149,8 +147,7 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="kn">import</span> <span class="nn">glob</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
 <span class="c1">#if subjects were all grabbed</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span><span class="p">))</span>
 <span class="c1">#if sessions were all grabbed</span>
@@ -166,10 +163,18 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Creating layout of data directory, might take a while if there are a lot of subjects
-Creating layout of data directory, might take a while if there are a lot of subjects
-</pre>
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-3-4f5c95212092&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">import</span> glob
+<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-red-fg">#if subjects were all grabbed</span>
+<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">assert</span> len<span class="ansi-blue-fg">(</span>get_subs<span class="ansi-blue-fg">(</span>data_dir<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">==</span> len<span class="ansi-blue-fg">(</span>glob<span class="ansi-blue-fg">.</span>glob<span class="ansi-blue-fg">(</span>data_dir <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">&#39;/sub-*&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> <span class="ansi-red-fg">#if sessions were all grabbed</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span> <span class="ansi-green-fg">assert</span> len<span class="ansi-blue-fg">(</span>get_subs<span class="ansi-blue-fg">(</span>data_dir<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">==</span> len<span class="ansi-blue-fg">(</span>glob<span class="ansi-blue-fg">.</span>glob<span class="ansi-blue-fg">(</span>data_dir <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">&#39;/sub-*&#39;</span> <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">&#39;/ses-*&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;data_dir&#39; is not defined</pre>
 </div>
 </div>
 
@@ -224,8 +229,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="n">bfiles</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bfiles</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
     <span class="n">session</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
@@ -274,8 +278,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">datatype</span><span class="o">=</span><span class="s2">&quot;dwi&quot;</span><span class="p">,</span>
     <span class="n">extension</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;.nii&quot;</span><span class="p">,</span> <span class="s2">&quot;.nii.gz&quot;</span><span class="p">],</span>
@@ -312,8 +315,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="c1">#if all sessions are grabbed</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#if all sessions are grabbed</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dwi</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">layout</span><span class="o">.</span><span class="n">get_sessions</span><span class="p">())</span>
 </pre></div>
 
@@ -368,8 +370,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 <span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">sub_grad_files</span>
 </pre></div>
@@ -405,8 +406,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sub_grad_files</span> <span class="o">=</span> <span class="n">get_sub_gradfiles</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_grad_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
 </pre></div>
 
@@ -430,8 +430,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 <span class="n">anat</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
     <span class="n">subject</span><span class="o">=</span><span class="n">sub_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">datatype</span> <span class="o">=</span> <span class="s1">&#39;anat&#39;</span><span class="p">,</span>
@@ -509,8 +508,7 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">list_id</span> <span class="o">=</span> <span class="n">anat2id</span><span class="p">(</span><span class="n">anat_files</span><span class="o">=</span><span class="n">anat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">list_id</span>
@@ -583,8 +581,7 @@ The format of the output is [sub<em>id]</em>[session_id]</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Total readout time is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TRtime</span><span class="p">))</span>
@@ -621,8 +618,7 @@ Phase encoding direction is j-
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#test</span>
-<span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">TRtime</span><span class="p">,</span> <span class="n">pe_dir</span> <span class="o">=</span> <span class="n">BIDS_metadata</span><span class="p">(</span><span class="n">dwi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bids_dir</span> <span class="o">=</span> <span class="n">data_dir</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">pe_dir</span> <span class="o">==</span> <span class="s1">&#39;j-&#39;</span>
 <span class="k">assert</span> <span class="n">TRtime</span> <span class="o">==</span> <span class="mf">0.1</span>
 </pre></div>
@@ -671,8 +667,7 @@ Phase encoding direction is j-
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 <span class="n">catgrad</span> <span class="o">=</span> <span class="n">GradCat</span><span class="p">()</span>
 <span class="n">catgrad</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">grad1</span> <span class="o">=</span> <span class="s1">&#39;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrtrix_image1/mapflow/_mrtrix_image10/raw_dwi1.b&#39;</span>
 <span class="n">catgrad</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">grad2</span> <span class="o">=</span> <span class="s1">&#39;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrtrix_image2/mapflow/_mrtrix_image20/raw_dwi2.b&#39;</span>
@@ -717,8 +712,7 @@ Phase encoding direction is j-
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">rfov</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">RobustFOV</span><span class="p">()</span> <span class="c1"># first reduce FOV of T1 image</span>
 <span class="n">rfov</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="n">anat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -813,8 +807,7 @@ Phase encoding direction is j-
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Freesurfer-recon-all-for-the-ACPC-aligned-image:">Freesurfer <code>recon-all</code> for the ACPC-aligned image:<a class="anchor-link" href="#Freesurfer-recon-all-for-the-ACPC-aligned-image:"> </a></h2><p>Note the <code>T1_files</code> input field has to be a <code>.nii</code> file, a compressed <code>.nii.gz</code> will not be compatible.</p>
-
+<h2 id="Freesurfer-recon-all-for-the-ACPC-aligned-image:">Freesurfer <code>recon-all</code> for the ACPC-aligned image:<a class="anchor-link" href="#Freesurfer-recon-all-for-the-ACPC-aligned-image:"> </a></h2>
 </div>
 </div>
 </div>
@@ -825,8 +818,7 @@ Phase encoding direction is j-
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 <span class="n">reconall</span> <span class="o">=</span> <span class="n">ReconAll</span><span class="p">()</span>
 <span class="n">reconall</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">directive</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span>
 <span class="c1"># reconall.inputs.subject_id = &#39;sub-&#39;+sub_list[0]</span>
@@ -888,8 +880,7 @@ Phase encoding direction is j-
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="c1"># get session 2&#39;s dwi image:</span>
 <span class="n">dwi</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
@@ -953,8 +944,7 @@ Phase encoding direction is j-
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">createMask</span> <span class="o">=</span> <span class="n">BrainMask</span><span class="p">()</span>
 <span class="n">createMask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/raw_dwi.mif&#39;</span>
@@ -1019,8 +1009,7 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">gradcheck</span> <span class="o">=</span> <span class="n">GradCheck</span><span class="p">()</span>
 <span class="n">gradcheck</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">mask_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/brain_dwi_mask.mif&#39;</span>
@@ -1082,8 +1071,7 @@ mrconvert: [100%] compressing image &#34;outputs/b0_mask.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage:</span>
 
 <span class="c1"># we will work with .nii.gz format for simpler visualization</span>
 <span class="n">denoise</span> <span class="o">=</span> <span class="n">dwidenoise</span><span class="p">()</span>
@@ -1178,8 +1166,7 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># # test if denoised file exists</span>
-<span class="c1">#from fastcore.test import *</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#from fastcore.test import *</span>
 <span class="c1">#</span>
 <span class="c1">#test_eq(os.path.exists(denoise.inputs.noise), True)</span>
 <span class="c1">#test_eq(os.path.exists(denoise.inputs.out_file), True)</span>
@@ -1206,8 +1193,7 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">DeGibbs</span> <span class="o">=</span> <span class="n">MRDeGibbs</span><span class="p">()</span>
 <span class="n">DeGibbs</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span>  <span class="o">=</span> <span class="s1">&#39;outputs/denoised.nii.gz&#39;</span>
@@ -1262,8 +1248,7 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="c1"># this example is for basic DWI acquisition</span>
 <span class="c1"># all image volumes are acquired in a single protocol with fixed phase encoding:</span>
@@ -1340,8 +1325,7 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">N4BiasCorrect</span> <span class="o">=</span> <span class="n">BiasCorrect</span><span class="p">()</span>
 <span class="n">N4BiasCorrect</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">use_ants</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1410,8 +1394,7 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="c1"># generate new gradient after bias correct</span>
 <span class="n">grad_info</span> <span class="o">=</span> <span class="n">MRInfo</span><span class="p">()</span>
@@ -1460,8 +1443,7 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 <span class="n">CheckNoise</span> <span class="o">=</span> <span class="n">CheckNIZ</span><span class="p">()</span>
 <span class="n">CheckNoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/lownoisemap.nii.gz&#39;</span>
 <span class="n">CheckNoise</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">isfinite</span> <span class="o">=</span> <span class="s1">&#39;outputs/noise.nii.gz&#39;</span>
@@ -1521,8 +1503,7 @@ mrconvert: [100%] compressing image &#34;outputs/cdwi.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">RCNRemoval</span> <span class="o">=</span> <span class="n">RicianNoise</span><span class="p">()</span>
 <span class="n">RCNRemoval</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="n">N4BiasCorrect</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">out_file</span>
@@ -1616,8 +1597,7 @@ mrconvert: [100%] compressing image &#34;outputs/rician_corrected_dwi.nii.gz&#34
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">createMask</span> <span class="o">=</span> <span class="n">BrainMask</span><span class="p">()</span>
 <span class="n">createMask</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/rician_corrected_dwi.mif&#39;</span>
@@ -1682,8 +1662,7 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_mask.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 <span class="n">makeDTI</span> <span class="o">=</span> <span class="n">FitTensor</span><span class="p">()</span>
 <span class="n">makeDTI</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/rician_corrected_dwi.mif&#39;</span>
 <span class="n">makeDTI</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_mask</span> <span class="o">=</span> <span class="s1">&#39;outputs/dwi_mask.mif&#39;</span>
@@ -1765,8 +1744,7 @@ mrconvert: [100%] compressing image &#34;outputs/wm.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 <span class="n">normalize</span> <span class="o">=</span> <span class="n">DWINormalize</span><span class="p">()</span>
 <span class="n">normalize</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">opt_intensity</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">normalize</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">in_file</span> <span class="o">=</span> <span class="s1">&#39;outputs/rician_corrected_dwi.mif&#39;</span>
@@ -1833,8 +1811,7 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_norm.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="c1"># extract B0 volume</span>
 <span class="n">B0Extract</span> <span class="o">=</span> <span class="n">DWIExtract</span><span class="p">()</span>
@@ -1883,8 +1860,7 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_norm.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage:</span>
 
 <span class="c1"># visualize B0 DWI:</span>
 <span class="n">b0dwi</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;outputs/b0_dwi_brain.nii.gz&#39;</span><span class="p">)</span>  <span class="c1"># display dwi</span>
@@ -1931,8 +1907,7 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_norm.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="c1"># first we extract the brain with FSL:</span>
 <span class="n">FSL_BET</span> <span class="o">=</span> <span class="n">fsl</span><span class="o">.</span><span class="n">preprocess</span><span class="o">.</span><span class="n">BET</span><span class="p">()</span>
@@ -2048,8 +2023,7 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_acpc.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="n">temp_ref</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expandvars</span><span class="p">(</span><span class="s1">&#39;$FSLDIR/data/standard/MNI152_T1_1mm.nii.gz&#39;</span><span class="p">)</span>
 <span class="n">reslice</span> <span class="o">=</span> <span class="n">MRRegrid</span><span class="p">()</span>
@@ -2105,8 +2079,7 @@ mrconvert: [100%] compressing image &#34;outputs/dwi_acpc.nii.gz&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#example</span>
-<span class="c1">#usage</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#usage</span>
 
 <span class="c1"># extract B0 volume</span>
 <span class="n">mniB0Extract</span> <span class="o">=</span> <span class="n">DWIExtract</span><span class="p">()</span>
