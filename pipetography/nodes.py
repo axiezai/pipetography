@@ -515,6 +515,7 @@ class ACPCNodes:
         self.apply_xfm.inputs.out_file = 'dwi_acpc.mif'
         self.regrid.inputs.out_file = 'dwi_acpc_1mm.mif'
         self.regrid.inputs.regrid = MNI_template
+        self.wm_extract.inputs.out_file = 'fs_wm_mask.nii.gz'
         self.wm_extract.inputs.all_wm = True
         self.wm_reduceFOV.inputs.out_transform='wm_roi2full.mat'
         self.wm_reduceFOV.inputs.out_roi='wm_robustfov.nii.gz'
