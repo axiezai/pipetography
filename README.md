@@ -21,7 +21,7 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `export SINGULARITY_CACHEDIR={YOUR DESTINATION DIR}`
      - `export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}`
      
- - Build the singularity image with the `singularity.def` file provided in Github, you will need to have sudo permissions to perform singularity build.
+ - Build the singularity image with the `singularity.def` file provided in Github, you will need to have sudo permissions to perform singularity build. If you run into memory problems, consider building as a sandbox at first with the `-s` flag. 
      - `sudo singularity build {image_file_name}.sif singularity.def`
      
  - OR pull the built singularity image from cloud library:

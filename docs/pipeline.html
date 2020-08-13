@@ -112,12 +112,17 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>derivatives folder found at ./derivatives
 Creating layout of data directory, might take a while if there are a lot of subjects
-Data sink (output folder) is set to ./derivatives
-Freesurfer output at ./derivatives/freesurfer
 derivatives folder found at ./derivatives
 Creating layout of data directory, might take a while if there are a lot of subjects
-Data sink (output folder) is set to ./derivatives
-Freesurfer output at ./derivatives/freesurfer
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/xxie/miniconda3/envs/tracts/lib/python3.8/site-packages/bids/layout/models.py:98: FutureWarning: The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). As of version 0.14.0, it will include the leading dot. To suppress this warning and include the leading dot, use `bids.config.set_option(&#39;extension_initial_dot&#39;, True)`.
+  warnings.warn(&#34;The &#39;extension&#39; entity currently excludes the leading dot (&#39;.&#39;). &#34;
 </pre>
 </div>
 </div>
@@ -148,7 +153,7 @@ Freesurfer output at ./derivatives/freesurfer
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">BIDS_dir</span><span class="o">=</span><span class="s1">&#39;/Users/xxie/sample_data/rpe_all/tinnitus2/&#39;</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;nii&#39;</span><span class="p">,</span> <span class="n">RPE_design</span><span class="o">=</span><span class="s1">&#39;-rpe_all&#39;</span><span class="p">,</span> <span class="n">Regrid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mrtrix_nthreads</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preproc_dwi</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="n">BIDS_dir</span><span class="o">=</span><span class="s1">&#39;/Users/xxie/sample_data/rpe_all/tinnitus2/&#39;</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="s1">&#39;nii&#39;</span><span class="p">,</span> <span class="n">RPE_design</span><span class="o">=</span><span class="s1">&#39;-rpe_all&#39;</span><span class="p">,</span> <span class="n">Regrid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mrtrix_nthreads</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -249,7 +254,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
  &#39;RPE_design&#39;: &#39;-rpe_all&#39;,
  &#39;Regrid&#39;: True,
  &#39;recon&#39;: True,
- &#39;mrtrix_nthreads&#39;: 8,
+ &#39;mrtrix_nthreads&#39;: 12,
  &#39;ext&#39;: &#39;nii&#39;,
  &#39;excludes&#39;: [()],
  &#39;MNI_template&#39;: &#39;/usr/local/fsl/data/standard/MNI152_T1_1mm.nii.gz&#39;,
@@ -321,7 +326,7 @@ Freesurfer output at /Users/xxie/sample_data/rpe_all/derivatives/freesurfer
  &#39;RPE_design&#39;: &#39;-rpe_all&#39;,
  &#39;Regrid&#39;: True,
  &#39;recon&#39;: True,
- &#39;mrtrix_nthreads&#39;: 8,
+ &#39;mrtrix_nthreads&#39;: 12,
  &#39;ext&#39;: &#39;nii&#39;,
  &#39;excludes&#39;: [()],
  &#39;MNI_template&#39;: &#39;/usr/local/fsl/data/standard/MNI152_T1_1mm.nii.gz&#39;,
@@ -338,8 +343,8 @@ Freesurfer output at /Users/xxie/sample_data/rpe_all/derivatives/freesurfer
   &#39;bfiles&#39;: &#39;sub-{subject_id}/ses-{session_id}/dwi/sub-{subject_id}_ses-{session_id}_run-1_dwi.bv*&#39;,
   &#39;rdwi&#39;: &#39;sub-{subject_id}/ses-{session_id}/dwi/sub-{subject_id}_ses-{session_id}_run-2_dwi.nii&#39;,
   &#39;rbfiles&#39;: &#39;sub-{subject_id}/ses-{session_id}/dwi/sub-{subject_id}_ses-{session_id}_run-2_dwi.bv*&#39;},
- &#39;PreProcNodes&#39;: &lt;pipetography.nodes.PreProcNodes at 0x7f91b0abfc10&gt;,
- &#39;ACPCNodes&#39;: &lt;pipetography.nodes.ACPCNodes at 0x7f91940102e0&gt;,
+ &#39;PreProcNodes&#39;: &lt;pipetography.nodes.PreProcNodes at 0x7fa59b3ecc70&gt;,
+ &#39;ACPCNodes&#39;: &lt;pipetography.nodes.ACPCNodes at 0x7fa59b3d7a00&gt;,
  &#39;workflow&#39;: None}</pre>
 </div>
 
@@ -405,7 +410,7 @@ Freesurfer output at /Users/xxie/sample_data/rpe_all/derivatives/freesurfer
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>200811-16:04:12,178 nipype.workflow INFO:
+<pre>200811-17:01:57,669 nipype.workflow INFO:
 	 Generated workflow graph: /Users/xxie/sample_data/rpe_all/derivatives/pipetography/pipetography.png (graph2use=orig, simple_form=True).
 </pre>
 </div>
@@ -488,545 +493,177 @@ Freesurfer output at /Users/xxie/sample_data/rpe_all/derivatives/freesurfer
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running workflow with 4 parallel processes
-200702-10:48:04,707 nipype.workflow INFO:
+200813-12:08:57,59 nipype.workflow INFO:
 	 Workflow pipetography settings: [&#39;check&#39;, &#39;execution&#39;, &#39;logging&#39;, &#39;monitoring&#39;]
-200702-10:48:04,762 nipype.workflow INFO:
+200813-12:08:57,122 nipype.workflow INFO:
 	 Running in parallel.
-200702-10:48:04,767 nipype.workflow INFO:
+200813-12:08:57,128 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200702-10:48:04,868 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.select_files&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/select_files&#34;.
-200702-10:48:04,881 nipype.workflow INFO:
-	 [Node] Running &#34;select_files&#34; (&#34;nipype.interfaces.io.SelectFiles&#34;)
-200702-10:48:04,902 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.select_files&#34;.
-200702-10:48:06,770 nipype.workflow INFO:
+200813-12:08:59,132 nipype.workflow INFO:
 	 [Job 0] Completed (pipetography.select_files).
-200702-10:48:06,774 nipype.workflow INFO:
+200813-12:08:59,135 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 5 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200702-10:48:07,765 nipype.workflow INFO:
+200813-12:09:00,86 nipype.workflow INFO:
 	 [Job 1] Cached (pipetography.sub_grad_files2).
-200702-10:48:08,637 nipype.workflow INFO:
+200813-12:09:00,964 nipype.workflow INFO:
 	 [Job 3] Cached (pipetography.sub_grad_files1).
-200702-10:48:08,791 nipype.workflow INFO:
+200813-12:09:01,111 nipype.workflow INFO:
 	 [Job 13] Cached (pipetography.freesurfer_sub_id).
-200702-10:48:09,613 nipype.workflow INFO:
+200813-12:09:01,875 nipype.workflow INFO:
 	 [Job 14] Cached (pipetography.get_metadata).
-200702-10:48:09,616 nipype.workflow INFO:
+200813-12:09:01,877 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 3 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200702-10:48:10,523 nipype.workflow INFO:
+200813-12:09:02,880 nipype.workflow INFO:
 	 [Job 2] Cached (pipetography.mrtrix_image2).
-200702-10:48:11,353 nipype.workflow INFO:
+200813-12:09:03,716 nipype.workflow INFO:
 	 [Job 4] Cached (pipetography.mrtrix_image1).
-200702-10:48:11,503 nipype.workflow INFO:
+200813-12:09:03,853 nipype.workflow INFO:
 	 [Job 36] Cached (pipetography.reduce_FOV).
-200702-10:48:11,619 nipype.workflow INFO:
+200813-12:09:03,881 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 4 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200702-10:48:11,687 nipype.workflow INFO:
+200813-12:09:03,955 nipype.workflow INFO:
 	 [Job 5] Cached (pipetography.concat_grad).
-200702-10:48:13,470 nipype.workflow INFO:
+200813-12:09:05,590 nipype.workflow INFO:
 	 [Job 6] Cached (pipetography.concat_dwi).
-200702-10:48:13,607 nipype.workflow INFO:
+200813-12:09:05,711 nipype.workflow INFO:
 	 [Job 37] Cached (pipetography.FLIRT).
-200702-10:48:13,610 nipype.workflow INFO:
+200813-12:09:05,714 nipype.workflow INFO:
 	 [Job 38] Cached (pipetography.transform_inverse).
-200702-10:48:13,618 nipype.workflow INFO:
+200813-12:09:05,887 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200702-10:48:15,813 nipype.workflow INFO:
+200813-12:09:07,729 nipype.workflow INFO:
 	 [Job 7] Cached (pipetography.raw_dwi2mask).
-200702-10:48:15,819 nipype.workflow INFO:
+200813-12:09:07,735 nipype.workflow INFO:
 	 [Job 39] Cached (pipetography.concat_transform).
-200702-10:48:17,581 nipype.workflow INFO:
+200813-12:09:09,494 nipype.workflow INFO:
 	 [Job 8] Cached (pipetography.dwigradcheck).
-200702-10:48:17,585 nipype.workflow INFO:
+200813-12:09:09,497 nipype.workflow INFO:
 	 [Job 40] Cached (pipetography.aff2rigid).
-200702-10:48:19,571 nipype.workflow INFO:
+200813-12:09:11,480 nipype.workflow INFO:
 	 [Job 9] Cached (pipetography.mrconvert).
-200702-10:48:19,772 nipype.workflow INFO:
+200813-12:09:11,652 nipype.workflow INFO:
 	 [Job 41] Cached (pipetography.apply_warp).
-200702-10:48:19,827 nipype.workflow INFO:
+200813-12:09:11,888 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 3 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200702-10:48:21,740 nipype.workflow INFO:
+200813-12:09:13,633 nipype.workflow INFO:
 	 [Job 10] Cached (pipetography.denoise).
-200702-10:48:21,860 nipype.workflow INFO:
+200813-12:09:13,745 nipype.workflow INFO:
 	 [Job 42] Cached (pipetography.FSrecon).
-200702-10:48:21,972 nipype.workflow INFO:
-	 [Job 43] Cached (pipetography.fsl_bet).
-200702-10:48:21,975 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200702-10:48:22,89 nipype.workflow INFO:
+200813-12:09:13,845 nipype.workflow INFO:
+	 [Job 51] Cached (pipetography.fsl_bet).
+200813-12:09:14,8 nipype.workflow INFO:
 	 [Job 11] Cached (pipetography.LowNoiseMap).
-200702-10:48:25,613 nipype.workflow INFO:
+200813-12:09:17,431 nipype.workflow INFO:
 	 [Job 12] Cached (pipetography.ringing_removal).
-200702-10:48:25,617 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200702-10:48:29,715 nipype.workflow INFO:
-	 [Node] Outdated cache found for &#34;pipetography.dwifslpreproc&#34;.
-200702-10:48:29,719 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.dwifslpreproc
-200702-10:48:29,721 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.dwifslpreproc&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwifslpreproc&#34;.
-200702-10:48:29,727 nipype.workflow INFO:
-	 [Node] Outdated cache found for &#34;pipetography.dwifslpreproc&#34;.
-200702-10:48:29,829 nipype.workflow INFO:
-	 [Node] Running &#34;dwifslpreproc&#34; (&#34;pipetography.core.dwipreproc&#34;), a CommandLine Interface with command:
-dwifslpreproc /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/ringing_removal/unring.mif preproc.mif -eddy_options &#34;--slm=linear --repol &#34; -rpe_all -pe_dir j- -force -grad /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwigradcheck/corrected.b -nthreads 8 -quiet -export_grad_mrtrix eddy_dwi.b -readout_time 0.077397
-200703-04:48:22,304 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.dwifslpreproc&#34;.
-200703-04:48:22,911 nipype.workflow INFO:
-	 [Job 15] Completed (pipetography.dwifslpreproc).
-200703-04:48:22,914 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:48:22,980 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.alter_gradient&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/alter_gradient&#34;.
-200703-04:48:24,487 nipype.workflow INFO:
-	 [Node] Running &#34;alter_gradient&#34; (&#34;pipetography.core.GradCheck&#34;), a CommandLine Interface with command:
-dwigradcheck /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwifslpreproc/preproc.mif -grad /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrtrix_image1/raw_dwi1.b -export_grad_mrtrix tmp.b
-200703-04:48:24,917 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.alter_gradient
-200703-04:50:04,869 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.alter_gradient&#34;.
-200703-04:50:05,77 nipype.workflow INFO:
-	 [Job 16] Completed (pipetography.alter_gradient).
-200703-04:50:05,79 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:50:05,132 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.modify_gradient&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/modify_gradient&#34;.
-200703-04:50:06,696 nipype.workflow INFO:
-	 [Node] Running &#34;modify_gradient&#34; (&#34;pipetography.core.MRInfo&#34;), a CommandLine Interface with command:
-mrinfo /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwifslpreproc/preproc.mif -grad /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/alter_gradient/tmp.b -export_grad_mrtrix modified.b
-200703-04:50:06,890 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.modify_gradient&#34;.
-200703-04:50:07,88 nipype.workflow INFO:
-	 [Job 17] Completed (pipetography.modify_gradient).
-200703-04:50:07,91 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:50:07,146 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.update_image&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/update_image&#34;.
-200703-04:50:08,636 nipype.workflow INFO:
-	 [Node] Running &#34;update_image&#34; (&#34;pipetography.core.Convert&#34;), a CommandLine Interface with command:
-mrconvert /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwifslpreproc/preproc.mif dwi.mif -grad /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/modify_gradient/modified.b
-200703-04:50:09,92 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.update_image
-200703-04:50:10,82 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.update_image&#34;.
-200703-04:50:11,98 nipype.workflow INFO:
-	 [Job 18] Completed (pipetography.update_image).
-200703-04:50:11,102 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:50:12,630 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.recreate_mask&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/recreate_mask&#34;.
-200703-04:50:12,638 nipype.workflow INFO:
-	 [Node] Running &#34;recreate_mask&#34; (&#34;nipype.interfaces.mrtrix3.utils.BrainMask&#34;), a CommandLine Interface with command:
-dwi2mask -grad /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/modify_gradient/modified.b /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/update_image/dwi.mif brainmask.mif
-200703-04:50:13,103 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.recreate_mask
-200703-04:50:24,718 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.recreate_mask&#34;.
-200703-04:50:25,119 nipype.workflow INFO:
-	 [Job 19] Completed (pipetography.recreate_mask).
-200703-04:50:25,122 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:50:26,646 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.dwibiascorret&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwibiascorret&#34;.
-200703-04:50:26,655 nipype.workflow INFO:
-	 [Node] Running &#34;dwibiascorret&#34; (&#34;pipetography.core.BiasCorrect&#34;), a CommandLine Interface with command:
-dwibiascorrect ants /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/update_image/dwi.mif dwi_bias.mif -bias biasfield.mif -grad /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/modify_gradient/modified.b -mask /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/recreate_mask/brainmask.mif
-200703-04:50:27,121 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.dwibiascorret
-200703-04:50:39,750 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.dwibiascorret&#34;.
-200703-04:50:41,139 nipype.workflow INFO:
-	 [Job 20] Completed (pipetography.dwibiascorret).
-200703-04:50:41,142 nipype.workflow INFO:
+200813-12:09:17,447 nipype.workflow INFO:
+	 [Job 43] Cached (pipetography.wmbinarize_aseg).
+200813-12:09:17,450 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:50:41,196 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.RicianNoise&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/RicianNoise&#34;.
-200703-04:50:41,197 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.NewGradient&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/NewGradient&#34;.
-200703-04:50:42,726 nipype.workflow INFO:
-	 [Node] Running &#34;NewGradient&#34; (&#34;pipetography.core.MRInfo&#34;), a CommandLine Interface with command:
-mrinfo /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwibiascorret/dwi_bias.mif -force -grad /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/modify_gradient/modified.b -nthreads 8 -quiet -export_grad_mrtrix rician_tmp.b
-200703-04:50:42,751 nipype.workflow INFO:
-	 [Node] Running &#34;RicianNoise&#34; (&#34;pipetography.core.RicianNoise&#34;), a CommandLine Interface with command:
-mrcalc /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwibiascorret/dwi_bias.mif 2 -pow /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/LowNoiseMap/lownoisemap.mif 2 -pow -sub -abs -sqrt rician_removed_dwi.mif -force -nthreads 8 -quiet
-200703-04:50:42,871 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.NewGradient&#34;.
-200703-04:50:43,139 nipype.workflow INFO:
-	 [Job 23] Completed (pipetography.NewGradient).
-200703-04:50:43,142 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.RicianNoise
-200703-04:50:44,627 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.RicianNoise&#34;.
-200703-04:50:45,142 nipype.workflow INFO:
-	 [Job 21] Completed (pipetography.RicianNoise).
-200703-04:50:45,145 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:50:45,199 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.NoiseComparison&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/NoiseComparison&#34;.
-200703-04:50:47,141 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.NoiseComparison
-200703-04:50:48,162 nipype.workflow INFO:
-	 [Node] Running &#34;NoiseComparison&#34; (&#34;pipetography.core.CheckNIZ&#34;), a CommandLine Interface with command:
-mrcalc /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/RicianNoise/rician_removed_dwi.mif -finite /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/RicianNoise/rician_removed_dwi.mif 0 -if rician_tmp.mif -force -nthreads 8
-200703-04:50:49,655 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.NoiseComparison&#34;.
-200703-04:50:51,148 nipype.workflow INFO:
-	 [Job 22] Completed (pipetography.NoiseComparison).
-200703-04:50:51,151 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:50:51,208 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.ConvnertRician&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/ConvnertRician&#34;.
-200703-04:50:52,683 nipype.workflow INFO:
-	 [Node] Running &#34;ConvnertRician&#34; (&#34;pipetography.core.Convert&#34;), a CommandLine Interface with command:
-mrconvert /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/NoiseComparison/rician_tmp.mif rician_corrected_dwi.mif -force -grad /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/NewGradient/rician_tmp.b -nthreads 8
-200703-04:50:53,155 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.ConvnertRician
-200703-04:50:53,992 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.ConvnertRician&#34;.
-200703-04:50:55,165 nipype.workflow INFO:
-	 [Job 24] Completed (pipetography.ConvnertRician).
-200703-04:50:55,168 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:50:55,224 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.dwi2mask&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwi2mask&#34;.
-200703-04:50:56,712 nipype.workflow INFO:
-	 [Node] Running &#34;dwi2mask&#34; (&#34;nipype.interfaces.mrtrix3.utils.BrainMask&#34;), a CommandLine Interface with command:
-dwi2mask /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/ConvnertRician/rician_corrected_dwi.mif dwi_mask.mif
-200703-04:50:57,165 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.dwi2mask
-200703-04:51:08,782 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.dwi2mask&#34;.
-200703-04:51:09,206 nipype.workflow INFO:
-	 [Job 25] Completed (pipetography.dwi2mask).
-200703-04:51:09,210 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:51:09,264 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.dwi2tensor&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwi2tensor&#34;.
-200703-04:51:10,750 nipype.workflow INFO:
-	 [Node] Running &#34;dwi2tensor&#34; (&#34;nipype.interfaces.mrtrix3.reconst.FitTensor&#34;), a CommandLine Interface with command:
-dwi2tensor -mask /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwi2mask/dwi_mask.mif /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/ConvnertRician/rician_corrected_dwi.mif dti.mif
-200703-04:51:11,212 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.dwi2tensor
-200703-04:51:11,466 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.dwi2tensor&#34;.
-200703-04:51:13,215 nipype.workflow INFO:
-	 [Job 26] Completed (pipetography.dwi2tensor).
-200703-04:51:13,218 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:51:13,273 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.tensor2metrics&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/tensor2metrics&#34;.
-200703-04:51:13,404 nipype.workflow INFO:
-	 [Node] Running &#34;tensor2metrics&#34; (&#34;nipype.interfaces.mrtrix3.utils.TensorMetrics&#34;), a CommandLine Interface with command:
-tensor2metric -num 1 -fa fa.mif /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwi2tensor/dti.mif
-200703-04:51:13,558 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.tensor2metrics&#34;.
-200703-04:51:15,221 nipype.workflow INFO:
-	 [Job 27] Completed (pipetography.tensor2metrics).
-200703-04:51:15,224 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:51:15,279 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mrthreshold&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrthreshold&#34;.
-200703-04:51:15,313 nipype.workflow INFO:
-	 [Node] Running &#34;mrthreshold&#34; (&#34;pipetography.core.MRThreshold&#34;), a CommandLine Interface with command:
-mrthreshold -abs 0.500000 /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/tensor2metrics/fa.mif wm.mif -force -nthreads 8 -quiet
-200703-04:51:15,477 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mrthreshold&#34;.
-200703-04:51:17,227 nipype.workflow INFO:
-	 [Job 28] Completed (pipetography.mrthreshold).
-200703-04:51:17,230 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:51:17,285 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.dwinormalise&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwinormalise&#34;.
-200703-04:51:18,770 nipype.workflow INFO:
-	 [Node] Running &#34;dwinormalise&#34; (&#34;pipetography.core.DWINormalize&#34;), a CommandLine Interface with command:
-dwinormalise individual -intensity 1000.000000 /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/ConvnertRician/rician_corrected_dwi.mif /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrthreshold/wm.mif dwi_norm_intensity.mif -force -nthreads 8 -quiet
-200703-04:51:19,237 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.dwinormalise
-200703-04:51:21,731 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.dwinormalise&#34;.
-200703-04:51:23,243 nipype.workflow INFO:
-	 [Job 29] Completed (pipetography.dwinormalise).
-200703-04:51:23,247 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:51:23,303 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.sub_dwi2mask&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_dwi2mask&#34;.
-200703-04:51:23,303 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.sub_b0extract&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_b0extract&#34;.
-200703-04:51:24,837 nipype.workflow INFO:
-	 [Node] Running &#34;sub_dwi2mask&#34; (&#34;nipype.interfaces.mrtrix3.utils.BrainMask&#34;), a CommandLine Interface with command:
-dwi2mask /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwinormalise/dwi_norm_intensity.mif dwi_norm_mask.mif
-200703-04:51:24,837 nipype.workflow INFO:
-	 [Node] Running &#34;sub_b0extract&#34; (&#34;nipype.interfaces.mrtrix3.utils.DWIExtract&#34;), a CommandLine Interface with command:
-dwiextract -bzero -nthreads 8 /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwinormalise/dwi_norm_intensity.mif b0_volume.mif
-200703-04:51:25,244 nipype.workflow INFO:
-	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
-                     Currently running:
-                       * pipetography.sub_b0extract
-                       * pipetography.sub_dwi2mask
-200703-04:51:25,399 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.sub_b0extract&#34;.
-200703-04:51:27,253 nipype.workflow INFO:
-	 [Job 32] Completed (pipetography.sub_b0extract).
-200703-04:51:27,256 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.sub_dwi2mask
-200703-04:51:27,402 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.sub_mrmath_mean&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_mrmath_mean&#34;.
-200703-04:51:27,602 nipype.workflow INFO:
-	 [Node] Running &#34;sub_mrmath_mean&#34; (&#34;nipype.interfaces.mrtrix3.utils.MRMath&#34;), a CommandLine Interface with command:
-mrmath -axis 3 -nthreads 8 /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_b0extract/b0_volume.mif mean b0_dwi.mif
-200703-04:51:28,106 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.sub_mrmath_mean&#34;.
-200703-04:51:29,260 nipype.workflow INFO:
-	 [Job 33] Completed (pipetography.sub_mrmath_mean).
-200703-04:51:29,262 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.sub_dwi2mask
-200703-04:51:29,311 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.sub_dwi2nii&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_dwi2nii&#34;.
-200703-04:51:29,341 nipype.workflow INFO:
-	 [Node] Running &#34;sub_dwi2nii&#34; (&#34;pipetography.core.Convert&#34;), a CommandLine Interface with command:
-mrconvert /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_mrmath_mean/b0_dwi.mif b0_dwi.nii.gz -force
-200703-04:51:29,678 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.sub_dwi2nii&#34;.
-200703-04:51:31,263 nipype.workflow INFO:
-	 [Job 34] Completed (pipetography.sub_dwi2nii).
-200703-04:51:31,265 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.sub_dwi2mask
-200703-04:51:36,950 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.sub_dwi2mask&#34;.
-200703-04:51:37,271 nipype.workflow INFO:
-	 [Job 30] Completed (pipetography.sub_dwi2mask).
-200703-04:51:37,274 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:51:37,329 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.sub_mask2nii&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_mask2nii&#34;.
-200703-04:51:37,339 nipype.workflow INFO:
-	 [Node] Running &#34;sub_mask2nii&#34; (&#34;pipetography.core.Convert&#34;), a CommandLine Interface with command:
-mrconvert /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_dwi2mask/dwi_norm_mask.mif dwi_norm_mask.nii.gz -force
-200703-04:51:37,512 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.sub_mask2nii&#34;.
-200703-04:51:39,277 nipype.workflow INFO:
-	 [Job 31] Completed (pipetography.sub_mask2nii).
-200703-04:51:39,280 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:51:39,335 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.sub_ApplyMask&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_ApplyMask&#34;.
-200703-04:51:39,367 nipype.workflow INFO:
-	 [Node] Running &#34;sub_ApplyMask&#34; (&#34;nipype.interfaces.fsl.maths.ApplyMask&#34;), a CommandLine Interface with command:
-fslmaths /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_dwi2nii/b0_dwi.nii.gz -mas /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_mask2nii/dwi_norm_mask.nii.gz b0_dwi_brain.nii.gz
-200703-04:51:39,602 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.sub_ApplyMask&#34;.
-200703-04:51:41,281 nipype.workflow INFO:
-	 [Job 35] Completed (pipetography.sub_ApplyMask).
-200703-04:51:41,285 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:51:41,341 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.fsl_epireg&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/fsl_epireg&#34;.
-200703-04:51:41,484 nipype.workflow INFO:
-	 [Node] Running &#34;fsl_epireg&#34; (&#34;nipype.interfaces.fsl.epi.EpiReg&#34;), a CommandLine Interface with command:
-epi_reg --noclean --epi=/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_ApplyMask/b0_dwi_brain.nii.gz --t1=/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/apply_warp/acpc_t1.nii --t1brain=/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/fsl_bet/acpc_t1_brain.nii.gz --out=dwi2acpc
-200703-04:51:43,288 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.fsl_epireg
-200703-04:54:31,107 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.fsl_epireg&#34;.
-200703-04:54:31,678 nipype.workflow INFO:
-	 [Job 44] Completed (pipetography.fsl_epireg).
-200703-04:54:31,681 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:54:31,735 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.transformconvert&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/transformconvert&#34;.
-200703-04:54:31,771 nipype.workflow INFO:
-	 [Node] Running &#34;transformconvert&#34; (&#34;pipetography.core.TransConvert&#34;), a CommandLine Interface with command:
-transformconvert /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/fsl_epireg/dwi2acpc.mat /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/sub_ApplyMask/b0_dwi_brain.nii.gz /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/fsl_bet/acpc_t1_brain.nii.gz flirt_import dwi2acpc_xfm.mat -force
-200703-04:54:31,911 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.transformconvert&#34;.
-200703-04:54:33,681 nipype.workflow INFO:
-	 [Job 45] Completed (pipetography.transformconvert).
-200703-04:54:33,684 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:54:33,738 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mrtransform&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrtransform&#34;.
-200703-04:54:35,215 nipype.workflow INFO:
-	 [Node] Running &#34;mrtransform&#34; (&#34;pipetography.core.MRTransform&#34;), a CommandLine Interface with command:
-mrtransform -linear /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/transformconvert/dwi2acpc_xfm.mat /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/dwinormalise/dwi_norm_intensity.mif dwi_acpc.mif
-200703-04:54:35,690 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.mrtransform
-200703-04:54:36,450 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mrtransform&#34;.
-200703-04:54:37,697 nipype.workflow INFO:
-	 [Job 46] Completed (pipetography.mrtransform).
-200703-04:54:37,700 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:54:37,759 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mrgrid&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrgrid&#34;.
-200703-04:54:39,277 nipype.workflow INFO:
-	 [Node] Running &#34;mrgrid&#34; (&#34;pipetography.core.MRRegrid&#34;), a CommandLine Interface with command:
-mrgrid /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrtransform/dwi_acpc.mif regrid -template /usr/local/fsl/data/standard/MNI152_T1_1mm.nii.gz dwi_acpc_1mm.mif
-200703-04:54:39,697 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.mrgrid
-200703-04:55:00,972 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mrgrid&#34;.
-200703-04:55:01,735 nipype.workflow INFO:
-	 [Job 47] Completed (pipetography.mrgrid).
-200703-04:55:01,738 nipype.workflow INFO:
+200813-12:09:21,678 nipype.workflow INFO:
+	 [Job 15] Cached (pipetography.dwifslpreproc).
+200813-12:09:21,697 nipype.workflow INFO:
+	 [Job 44] Cached (pipetography.wm_reduce_FOV).
+200813-12:09:21,713 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 3 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:55:01,795 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mni_dwi2mask&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_dwi2mask&#34;.
-200703-04:55:01,795 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.MNI_Outputs&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/MNI_Outputs&#34;.
-200703-04:55:01,795 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mni_b0extract&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_b0extract&#34;.
-200703-04:55:03,742 nipype.workflow INFO:
-	 [MultiProc] Running 3 tasks, and 0 jobs ready. Free memory (GB): 28.20/28.80, Free processors: 1/4.
+200813-12:09:23,572 nipype.workflow INFO:
+	 [Job 16] Cached (pipetography.alter_gradient).
+200813-12:09:23,612 nipype.workflow INFO:
+	 [Job 45] Cached (pipetography.wm_FLIRT).
+200813-12:09:23,616 nipype.workflow INFO:
+	 [Job 46] Cached (pipetography.wm_transform_inverse).
+200813-12:09:23,710 nipype.workflow INFO:
+	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
+200813-12:09:25,835 nipype.workflow INFO:
+	 [Job 17] Cached (pipetography.modify_gradient).
+200813-12:09:25,841 nipype.workflow INFO:
+	 [Job 47] Cached (pipetography.wm_concat_transform).
+200813-12:09:28,82 nipype.workflow INFO:
+	 [Job 18] Cached (pipetography.update_image).
+200813-12:09:28,87 nipype.workflow INFO:
+	 [Job 48] Cached (pipetography.wm_aff2rigid).
+200813-12:09:30,378 nipype.workflow INFO:
+	 [Job 19] Cached (pipetography.recreate_mask).
+200813-12:09:30,427 nipype.workflow INFO:
+	 [Job 49] Cached (pipetography.wm_apply_warp).
+200813-12:09:32,67 nipype.workflow INFO:
+	 [Job 20] Cached (pipetography.dwibiascorrect).
+200813-12:09:32,434 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 2 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
-                       * pipetography.mni_b0extract
-                       * pipetography.mni_dwi2mask
-                       * pipetography.MNI_Outputs
-200703-04:55:09,692 nipype.workflow INFO:
-	 [Node] Running &#34;mni_dwi2mask&#34; (&#34;nipype.interfaces.mrtrix3.utils.BrainMask&#34;), a CommandLine Interface with command:
-dwi2mask /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrgrid/dwi_acpc_1mm.mif dwi_acpc_1mm_mask.mif
-200703-04:55:09,692 nipype.workflow INFO:
-	 [Node] Running &#34;MNI_Outputs&#34; (&#34;pipetography.core.Convert&#34;), a CommandLine Interface with command:
-mrconvert /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrgrid/dwi_acpc_1mm.mif dwi_acpc_1mm.nii.gz -force -nthreads 8 -export_grad_fsl dwi_acpc.bvecs dwi_acpc.bvals -export_grad_mrtrix dwi_acpc_1mm.b -json_export dwi_acpc_1mm.json
-200703-04:55:09,692 nipype.workflow INFO:
-	 [Node] Running &#34;mni_b0extract&#34; (&#34;nipype.interfaces.mrtrix3.utils.DWIExtract&#34;), a CommandLine Interface with command:
-dwiextract -bzero -nthreads 8 /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mrgrid/dwi_acpc_1mm.mif dwi_acpc_1mm_b0.mif
-200703-04:55:10,852 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mni_b0extract&#34;.
-200703-04:55:11,757 nipype.workflow INFO:
-	 [Job 51] Completed (pipetography.mni_b0extract).
-200703-04:55:11,760 nipype.workflow INFO:
-	 [MultiProc] Running 2 tasks, and 1 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
-                     Currently running:
-                       * pipetography.mni_dwi2mask
-                       * pipetography.MNI_Outputs
-200703-04:55:11,825 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mni_mrmath_mean&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_mrmath_mean&#34;.
-200703-04:55:13,759 nipype.workflow INFO:
-	 [MultiProc] Running 3 tasks, and 0 jobs ready. Free memory (GB): 28.20/28.80, Free processors: 1/4.
-                     Currently running:
-                       * pipetography.mni_mrmath_mean
-                       * pipetography.mni_dwi2mask
-                       * pipetography.MNI_Outputs
-200703-04:55:13,796 nipype.workflow INFO:
-	 [Node] Running &#34;mni_mrmath_mean&#34; (&#34;nipype.interfaces.mrtrix3.utils.MRMath&#34;), a CommandLine Interface with command:
-mrmath -axis 3 -nthreads 8 /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_b0extract/dwi_acpc_1mm_b0.mif mean dwi_acpc_1mm_b0mean.mif
-200703-04:55:15,1 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mni_mrmath_mean&#34;.
-200703-04:55:15,758 nipype.workflow INFO:
-	 [Job 52] Completed (pipetography.mni_mrmath_mean).
-200703-04:55:15,762 nipype.workflow INFO:
-	 [MultiProc] Running 2 tasks, and 1 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
-                     Currently running:
-                       * pipetography.mni_dwi2mask
-                       * pipetography.MNI_Outputs
-200703-04:55:15,828 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mni_dwi2nii&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_dwi2nii&#34;.
-200703-04:55:15,972 nipype.workflow INFO:
-	 [Node] Running &#34;mni_dwi2nii&#34; (&#34;pipetography.core.Convert&#34;), a CommandLine Interface with command:
-mrconvert /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_mrmath_mean/dwi_acpc_1mm_b0mean.mif dwi_acpc_1mm_b0mean.nii.gz -force
-200703-04:55:17,764 nipype.workflow INFO:
-	 [MultiProc] Running 3 tasks, and 0 jobs ready. Free memory (GB): 28.20/28.80, Free processors: 1/4.
-                     Currently running:
-                       * pipetography.mni_dwi2nii
-                       * pipetography.mni_dwi2mask
-                       * pipetography.MNI_Outputs
-200703-04:55:18,257 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mni_dwi2nii&#34;.
-200703-04:55:19,763 nipype.workflow INFO:
-	 [Job 53] Completed (pipetography.mni_dwi2nii).
-200703-04:55:19,765 nipype.workflow INFO:
-	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
-                     Currently running:
-                       * pipetography.mni_dwi2mask
-                       * pipetography.MNI_Outputs
-200703-04:56:10,928 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mni_dwi2mask&#34;.
-200703-04:56:11,862 nipype.workflow INFO:
-	 [Job 49] Completed (pipetography.mni_dwi2mask).
-200703-04:56:11,864 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.MNI_Outputs
-200703-04:56:11,918 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mni_mask2nii&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_mask2nii&#34;.
-200703-04:56:11,929 nipype.workflow INFO:
-	 [Node] Running &#34;mni_mask2nii&#34; (&#34;pipetography.core.Convert&#34;), a CommandLine Interface with command:
-mrconvert /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_dwi2mask/dwi_acpc_1mm_mask.mif dwi_acpc_1mm_mask.nii.gz -force
-200703-04:56:12,207 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mni_mask2nii&#34;.
-200703-04:56:13,869 nipype.workflow INFO:
-	 [Job 50] Completed (pipetography.mni_mask2nii).
-200703-04:56:13,871 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.MNI_Outputs
-200703-04:56:13,922 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.mni_ApplyMask&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_ApplyMask&#34;.
-200703-04:56:14,8 nipype.workflow INFO:
-	 [Node] Running &#34;mni_ApplyMask&#34; (&#34;nipype.interfaces.fsl.maths.ApplyMask&#34;), a CommandLine Interface with command:
-fslmaths /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_dwi2nii/dwi_acpc_1mm_b0mean.nii.gz -mas /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mni_mask2nii/dwi_acpc_1mm_mask.nii.gz dwi_acpc_1mm_brain.nii.gz
-200703-04:56:14,636 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.mni_ApplyMask&#34;.
-200703-04:56:15,875 nipype.workflow INFO:
-	 [Job 54] Completed (pipetography.mni_ApplyMask).
-200703-04:56:15,877 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.MNI_Outputs
-200703-04:56:30,951 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.MNI_Outputs&#34;.
-200703-04:56:31,914 nipype.workflow INFO:
-	 [Job 48] Completed (pipetography.MNI_Outputs).
-200703-04:56:31,917 nipype.workflow INFO:
+                       * pipetography.binarize_wm
+200813-12:09:34,651 nipype.workflow INFO:
+	 [Job 21] Cached (pipetography.RicianNoise).
+200813-12:09:36,416 nipype.workflow INFO:
+	 [Job 23] Cached (pipetography.NewGradient).
+200813-12:09:36,418 nipype.workflow INFO:
+	 [Job 50] Completed (pipetography.binarize_wm).
+200813-12:09:36,420 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-200703-04:56:31,974 nipype.workflow INFO:
-	 [Node] Setting-up &#34;pipetography.datasink&#34; in &#34;/Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/datasink&#34;.
-200703-04:56:33,914 nipype.workflow INFO:
+200813-12:09:39,755 nipype.workflow INFO:
+	 [Job 22] Cached (pipetography.NoiseComparison).
+200813-12:09:41,574 nipype.workflow INFO:
+	 [Job 24] Cached (pipetography.ConvertRician).
+200813-12:09:43,387 nipype.workflow INFO:
+	 [Job 25] Cached (pipetography.dwi2mask).
+200813-12:09:45,461 nipype.workflow INFO:
+	 [Job 26] Cached (pipetography.dwi2tensor).
+200813-12:09:45,973 nipype.workflow INFO:
+	 [Job 27] Cached (pipetography.tensor2metrics).
+200813-12:09:47,863 nipype.workflow INFO:
+	 [Job 28] Cached (pipetography.mrthreshold).
+200813-12:09:51,388 nipype.workflow INFO:
+	 [Job 29] Cached (pipetography.dwinormalise).
+200813-12:09:51,775 nipype.workflow INFO:
+	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
+200813-12:09:53,445 nipype.workflow INFO:
+	 [Job 30] Cached (pipetography.sub_dwi2mask).
+200813-12:09:55,160 nipype.workflow INFO:
+	 [Job 32] Cached (pipetography.sub_b0extract).
+200813-12:09:55,244 nipype.workflow INFO:
+	 [Job 31] Cached (pipetography.sub_mask2nii).
+200813-12:09:55,522 nipype.workflow INFO:
+	 [Job 33] Cached (pipetography.sub_mrmath_mean).
+200813-12:09:57,169 nipype.workflow INFO:
+	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
+200813-12:09:57,262 nipype.workflow INFO:
+	 [Job 34] Cached (pipetography.sub_dwi2nii).
+200813-12:09:59,291 nipype.workflow INFO:
+	 [Job 35] Cached (pipetography.sub_ApplyMask).
+200813-12:10:01,412 nipype.workflow INFO:
+	 [Job 52] Cached (pipetography.fsl_epireg).
+200813-12:10:03,269 nipype.workflow INFO:
+	 [Job 53] Cached (pipetography.transformconvert).
+200813-12:10:06,898 nipype.workflow INFO:
+	 [Job 54] Cached (pipetography.mrtransform).
+200813-12:10:08,826 nipype.workflow INFO:
+	 [Job 55] Cached (pipetography.mrgrid).
+200813-12:10:09,178 nipype.workflow INFO:
+	 [MultiProc] Running 0 tasks, and 3 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
+200813-12:10:21,576 nipype.workflow INFO:
+	 [Job 56] Cached (pipetography.MNI_Outputs).
+200813-12:10:32,537 nipype.workflow INFO:
+	 [Job 57] Cached (pipetography.mni_dwi2mask).
+200813-12:10:42,986 nipype.workflow INFO:
+	 [Job 59] Cached (pipetography.mni_b0extract).
+200813-12:10:42,988 nipype.workflow INFO:
+	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
+200813-12:10:43,60 nipype.workflow INFO:
+	 [Job 58] Cached (pipetography.mni_mask2nii).
+200813-12:10:44,244 nipype.workflow INFO:
+	 [Job 60] Cached (pipetography.mni_mrmath_mean).
+200813-12:10:44,990 nipype.workflow INFO:
+	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
+200813-12:10:45,205 nipype.workflow INFO:
+	 [Job 61] Cached (pipetography.mni_dwi2nii).
+200813-12:10:47,167 nipype.workflow INFO:
+	 [Job 62] Cached (pipetography.mni_ApplyMask).
+200813-12:10:51,0 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.datasink
-200703-04:56:45,191 nipype.workflow INFO:
-	 [Node] Running &#34;datasink&#34; (&#34;nipype.interfaces.io.DataSink&#34;)
-200703-04:56:45,205 nipype.workflow INFO:
-	 [Node] Finished &#34;pipetography.datasink&#34;.
-200703-04:56:45,943 nipype.workflow INFO:
-	 [Job 55] Completed (pipetography.datasink).
-200703-04:56:45,946 nipype.workflow INFO:
+200813-12:11:11,25 nipype.workflow INFO:
+	 [Job 63] Completed (pipetography.datasink).
+200813-12:11:11,30 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 0 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
 </pre>
 </div>
@@ -1058,7 +695,7 @@ fslmaths /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>tree /Users/xxie/sample_data/derivatives/ -L <span class="m">2</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>tree /Users/xxie/sample_data/rpe_all/derivatives/ -L <span class="m">2</span>
 </pre></div>
 
     </div>
@@ -1071,14 +708,14 @@ fslmaths /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mn
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-blue-intense-fg ansi-bold">/Users/xxie/sample_data/derivatives/</span>
+<pre><span class="ansi-blue-intense-fg ansi-bold">/Users/xxie/sample_data/rpe_all/derivatives/</span>
 ├── <span class="ansi-blue-intense-fg ansi-bold">dwi_acpc_aligned_1mm</span>
-│   └── <span class="ansi-blue-intense-fg ansi-bold">_subject_id_MINN294</span>
+│   └── <span class="ansi-blue-intense-fg ansi-bold">_session_id_01_subject_id_MINN294</span>
 ├── <span class="ansi-blue-intense-fg ansi-bold">freesurfer</span>
 │   ├── <span class="ansi-cyan-intense-fg ansi-bold">fsaverage</span> -&gt; <span class="ansi-blue-intense-fg ansi-bold">/Applications/freesurfer/subjects/fsaverage</span>
 │   └── <span class="ansi-blue-intense-fg ansi-bold">sub-MINN294_ses-01</span>
 ├── <span class="ansi-blue-intense-fg ansi-bold">pipetography</span>
-│   ├── <span class="ansi-blue-intense-fg ansi-bold">_subject_id_MINN294</span>
+│   ├── <span class="ansi-blue-intense-fg ansi-bold">_session_id_01_subject_id_MINN294</span>
 │   ├── d3.js
 │   ├── graph.json
 │   ├── graph1.json
@@ -1088,9 +725,9 @@ fslmaths /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mn
 │   ├── pipetography_detailed.dot
 │   └── pipetography_detailed.png
 ├── <span class="ansi-blue-intense-fg ansi-bold">preproc_mni</span>
-│   └── <span class="ansi-blue-intense-fg ansi-bold">_subject_id_MINN294</span>
+│   └── <span class="ansi-blue-intense-fg ansi-bold">_session_id_01_subject_id_MINN294</span>
 └── <span class="ansi-blue-intense-fg ansi-bold">t1_acpc_aligned</span>
-    └── <span class="ansi-blue-intense-fg ansi-bold">_subject_id_MINN294</span>
+    └── <span class="ansi-blue-intense-fg ansi-bold">_session_id_01_subject_id_MINN294</span>
 
 11 directories, 8 files
 </pre>
@@ -1106,11 +743,11 @@ fslmaths /Users/xxie/sample_data/derivatives/pipetography/_subject_id_MINN294/mn
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><code>freesurfer</code>: this is the freesurfer <code>recon-all</code> outputs for each subject and session</li>
+<li><code>freesurfer</code>: this is the directory for freesurfer <code>recon-all</code> outputs for each subject and session</li>
 <li><code>pipetography</code>: this contains all workflow node's outputs, log files, and reports.</li>
-<li><code>dwi_acpc_alignned_1mm</code>: data sink output if <code>regrid</code> was set to <code>True</code>, this contains the DWI image that's been resampled to match the voxel grid of the MNI template.</li>
+<li><code>dwi_acpc_alignned_1mm</code>: data sink output if <code>regrid</code> was set to <code>True</code>, this contains the DWI image that's been resampled to match the voxel grid of the MNI template in <code>.mif</code> mrtrix3 format.</li>
 <li><code>t1_acpc_aligned</code>: T1 images that were aligned to the MNI template.</li>
-<li><code>preproc_mni</code>: Final DWI images including mean B0 volumes, B0 brain masks, B0 brain volumes, and preprocessed DWI in MNI space.</li>
+<li><code>preproc_mni</code>: Final DWI images including mean B0 volumes, B0 brain masks, B0 brain volumes, and preprocessed DWI in MNI space all in <code>.nii.gz</code> format.</li>
 </ul>
 
 </div>
