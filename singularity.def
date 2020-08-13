@@ -157,9 +157,9 @@ sync && conda clean -y --all && sync
 bash -c "source activate tracts
   pip install --no-cache-dir  \
       "pybids" \
-      "fastcore==0.1.11" \
+      "fastcore" \
       "nilearn" \
-      "pipetography==0.3.3""
+      "pipetography==0.3.4""
 rm -rf ~/.cache/pip/*
 sync
 
@@ -239,9 +239,9 @@ echo '{
 \n        ],
 \n        "pip_install": [
 \n          "pybids",
-\n          "fastcore==0.1.11",
+\n          "fastcore",
 \n          "nilearn",
-\n          "pipetography==0.3.3"
+\n          "pipetography==0.3.4"
 \n        ]
 \n      }
 \n    ],

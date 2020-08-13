@@ -123,8 +123,8 @@ RUN export TMPDIR="$(mktemp -d)" \
     && rm -rf "$TMPDIR" \
     && unset TMPDIR
 
-ENV FREESURFER_HOME="/opt/freesurfer-6.0.0-min" \
-    PATH="/opt/freesurfer-6.0.0-min/bin:$PATH"
+ENV FREESURFER_HOME="/opt/freesurfer-7.1.0" \
+    PATH="/opt/freesurfer-7.1.0/bin:$PATH"
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
            bc \
@@ -136,10 +136,10 @@ RUN apt-get update -qq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && echo "Downloading FreeSurfer ..." \
-    && mkdir -p /opt/freesurfer-6.0.0-min \
-    && curl -fsSL --retry 5 https://dl.dropbox.com/s/nnzcfttc41qvt31/recon-all-freesurfer6-3.min.tgz \
-    | tar -xz -C /opt/freesurfer-6.0.0-min --strip-components 1 \
-    && sed -i '$isource "/opt/freesurfer-6.0.0-min/SetUpFreeSurfer.sh"' "$ND_ENTRYPOINT"
+    && mkdir -p /opt/freesurfer-7.1.0 \
+    && curl -fsSL --retry 5 https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/7.1.0/freesurfer-linux-centos6_x86_64-7.1.0.tar.gz \
+    | tar -xz -C /opt/freesurfer-7.1.0 --strip-components 1 \
+    && sed -i '$isource "/opt/freesurfer-7.1.0/SetUpFreeSurfer.sh"' "$ND_ENTRYPOINT"
 
 ENV CONDA_DIR="/opt/miniconda-latest" \
     PATH="/opt/miniconda-latest/bin:$PATH"
@@ -167,9 +167,9 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
     && bash -c "source activate tracts \
     &&   pip install --no-cache-dir  \
              "pybids" \
-             "fastcore==0.1.11" \
+             "fastcore" \
              "nilearn" \
-	         "pipetography==0.3.2"" \
+	         "pipetography==0.3.4"" \
     && rm -rf ~/.cache/pip/* \
     && sync
 
@@ -185,7 +185,7 @@ RUN apt-get update -qq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN bash -c 'cd /opt/freesurfer-6.0.0-min && ln -s /opt/matlabmcr-2012b/v80 MCRv80 && mv /license.txt .'
+RUN bash -c 'cd /opt/freesurfer-7.1.0 && ln -s /opt/matlabmcr-2012b/v80 MCRv80 && mv /license.txt .'
 
 ENV FS_LICENSE="/license.txt"
 
@@ -223,7 +223,7 @@ RUN echo '{ \
     \n    [ \
     \n      "freesurfer", \
     \n      { \
-    \n        "version": "6.0.0-min" \
+    \n        "version": "7.1.0" \
     \n      } \
     \n    ], \
     \n    [ \
@@ -241,9 +241,9 @@ RUN echo '{ \
     \n        ], \
     \n        "pip_install": [ \
     \n          "pybids", \
-    \n          "fastcore==0.1.11", \
+    \n          "fastcore", \
     \n          "nilearn", \
-    \n          "pipetography==0.3.2" \
+    \n          "pipetography==0.3.4" \
     \n        ] \
     \n      } \
     \n    ], \
