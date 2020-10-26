@@ -468,8 +468,10 @@ class ACPCNodes:
         self.regrid.inputs.out_file = 'dwi_acpc_1mm.mif'
         self.regrid.inputs.regrid = MNI_template
         self.gen_5tt.inputs.algorithm = 'fsl'
+        self.gen_5tt.inputs.out_file = 'mrtrix3_5tt.mif'
         self.convert2wm.inputs.coord = [3, 2]
         self.convert2wm.inputs.axes = [0, 1, 2]
+        self.convert2wm.inputs.out_file = '5tt_wm.nii.gz'
 
 # Cell
 
