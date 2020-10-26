@@ -237,7 +237,7 @@ class ConvertInputSpec(PipetographyBaseInputSpec):
         desc="output image",
     )
     coord = traits.List(
-        traits.Float,
+        traits.Int,
         sep=" ",
         argstr="-coord %s",
         desc="extract data at the specified coordinates",
