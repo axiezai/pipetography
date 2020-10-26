@@ -480,11 +480,18 @@ class PostProcNodes:
         atlas_dir (str): string path to folder containing all parcellations.
         atlas_list (list): list of parcellation names as saved in `atlas_dir`.
         atlas_template (dict): template directory for parcellation files
-        data_dir (str): Path to directory containing "derivatives" and "cuda_tracking" output folders
+        BIDS_dir (str): Path to BIDS directory
         subj_template (dict): template directory for tck, dwi, T1, mask files
+        skip_tuples (tuple): [('subject', 'session')] string pair to skip
     """
 
-    def __init__(self, atlas_dir, atlas_list, atlas_template, data_dir, subj_template):
+    def __init__(self, atlas_dir, atlas_list, atlas_template, BIDS_dir, subj_template, skip_tuples):
+        sub_list, ses_list, layout = ppt.get_subs(BIDS_dir)  # BIDS directory for layout and iterables
+        data_dir = os.path.join(Path(BIDS_dir).parent)  # parent directory from BIDS folder containing derivatives and cuda tracking outputs
+        all_sub_ses_combos = set(product(sub_list, ses_list))
+        filtered_combos = list(all_sub_ses_combos - set(skip_tuples))
+        sub_iter = [tup[0] for tup in filtered_combos]
+        ses_iter = [tup[1] for tup in filtered_combos]
         # Atlas input:
         self.atlas_source = Node(
             IdentityInterface(fields=["atlas_name"]),
@@ -499,6 +506,8 @@ class PostProcNodes:
         # DWI input:
         self.subject_source = Node(
             IdentityInterface(fields=["subject_id", "session_id"]),
+            iterables=[('subject_id', sub_iter), ('session_id', 'ses_iter')],
+            synchronize=True,
             name = 'subj_source'
         )
         self.select_files = Node(
