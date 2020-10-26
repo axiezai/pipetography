@@ -8,7 +8,6 @@ from pathlib import Path
 from itertools import product
 
 import pipetography.core as ppt
-import pipetography.postprocessing as pptp
 
 from nipype import IdentityInterface, Function
 from nipype.interfaces.io import SelectFiles, DataSink
@@ -528,15 +527,15 @@ class PostProcNodes:
             name = 'dwiFOD'
         )
         self.sift2 = Node(
-            pptp.tckSIFT2(),
+            ppt.tckSIFT2(),
             name = 'sift2_filtering'
         )
         self.connectome = Node(
-            pptp.MakeConnectome(),
+            ppt.MakeConnectome(),
             name = 'weight_connectome'
         )
         self.distance = Node(
-            pptp.MakeConnectome(),
+            ppt.MakeConnectome(),
             name = 'weight_distance'
         )
         self.datasink = Node(
