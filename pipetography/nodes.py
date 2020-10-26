@@ -600,5 +600,5 @@ class PostProcNodes:
         self.distance.inputs.scale_length = True
         self.distance.inputs.stat_edge = 'mean'
         self.distance.inputs.symmetric = True
-        self.distance.inputts.zero_diag = True
+        self.distance.inputs.zero_diag = True
         self.distance.inputs.out_file = 'distances.csv'
