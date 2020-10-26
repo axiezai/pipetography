@@ -457,19 +457,6 @@ class ACPCNodes:
         self.ACPC_warp.inputs.output_type='NIFTI'
         self.ACPC_warp.inputs.interp='spline'
         self.ACPC_warp.inputs.ref_file=MNI_template
-        self.reconall.inputs.parallel=False
-        self.reconall.inputs.hippocampal_subfields_T1 = False
-        self.reconall.inputs.directive='all'
-        if not os.path.exists(os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer')):
-            print('No freesurfer subject folder (output folder) found, creating it at {}'.format(
-                os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer'))
-                 )
-            os.makedirs(os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer'))
-        elif os.path.exists(os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer')):
-            print('Freesurfer output at {}'.format(os.path.join(Path(bids_dir).parent, 'derivatives', 'freesurfer')))
-        self.reconall.inputs.subjects_dir = os.path.join(
-            Path(bids_dir).parent, 'derivatives', 'freesurfer'
-        )
         self.t1_bet.inputs.mask = True
         self.t1_bet.inputs.robust = True
         self.t1_bet.inputs.out_file = 'acpc_t1_brain.nii.gz'
