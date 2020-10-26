@@ -74,7 +74,8 @@ index = {"get_subs": "00_core.ipynb",
          "tckSIFT2": "03_postprocessing.ipynb",
          "MakeConnectomeInputSpec": "03_postprocessing.ipynb",
          "MakeConnectomeOutputSpec": "03_postprocessing.ipynb",
-         "MakeConnectome": "03_postprocessing.ipynb"}
+         "MakeConnectome": "03_postprocessing.ipynb",
+         "PostProcNodes": "02_nodes.ipynb"}
 
 modules = ["core.py",
            "pipeline.py",
