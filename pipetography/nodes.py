@@ -577,7 +577,7 @@ class PostProcNodes:
         self.nonlinear_reg.inputs.convergence_window_size = [10]
         self.nonlinear_reg.inputs.smoothing_sigmas = [[4,2,1,0]]  # -s
         self.nonlinear_reg.inputs.sigma_units = ['vox']
-        self.nonlinear_reg.inputs.shrink_factor = [[8,4,2,1]]  # -f
+        self.nonlinear_reg.inputs.shrink_factors = [[8,4,2,1]]  # -f
         self.nonlinear_reg.inputs.use_histogram_matching = [True]  # -u
         self.nonlinear_reg.inputs.output_warped_image = 'atlas_in_dwi_syn.nii.gz'
         self.round_atlas.inputs.args = '-round'
