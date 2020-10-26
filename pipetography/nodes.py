@@ -506,7 +506,7 @@ class PostProcNodes:
         # DWI input:
         self.subject_source = Node(
             IdentityInterface(fields=["subject_id", "session_id"]),
-            iterables=[('subject_id', sub_iter), ('session_id', 'ses_iter')],
+            iterables=[('subject_id', sub_iter), ('session_id', ses_iter)],
             synchronize=True,
             name = 'subj_source'
         )
