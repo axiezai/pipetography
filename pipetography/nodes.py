@@ -434,6 +434,14 @@ class ACPCNodes:
             Generate5tt(),
             name='mrtrix_5ttgen',
         )
+        self.gmwmi = Node(
+            ppt.gmwmi(),
+            name='5tt2gmwmi'
+        )
+        self.binarize_gmwmi = Node(
+            ppt.MRThreshold(),
+            name='binarize_gmwmi'
+        )
         self.convert2wm = Node(
             ppt.Convert(),
             name='5tt2wm',
@@ -468,6 +476,11 @@ class ACPCNodes:
         self.regrid.inputs.regrid = MNI_template
         self.gen_5tt.inputs.algorithm = 'fsl'
         self.gen_5tt.inputs.out_file = 'mrtrix3_5tt.mif'
+        self.gmwmi.inputs.out_file = 'gmwmi.nii.gz'
+        self.binarize_gmwmi.inputs.opt_abs = 0.05
+        self.binarize_gmwmi.inputs.force = True
+        self.binarize_gmwmi.inputs.quiet = True
+        self.binarize_gmwmi.inputs.out_file = 'gmwmi_mask.nii.gz'
         self.convert2wm.inputs.coord = [3, 2]
         self.convert2wm.inputs.axes = [0, 1, 2]
         self.convert2wm.inputs.out_file = '5tt_wm.nii.gz'

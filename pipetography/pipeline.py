@@ -176,7 +176,11 @@ class pipeline:
                 ## Adding WM mask extraction to replace original recon all section
                 (self.ACPCNodes.ACPC_warp, self.ACPCNodes.gen_5tt, [("out_file", "in_file")]),
                 (self.ACPCNodes.gen_5tt, self.ACPCNodes.convert2wm, [("out_file", "in_file")]),
-                (self.ACPCNodes.convert2wm, self.PreProcNodes.datasink, [("out_file", "wm_mask")]),
+                (self.ACPCNodes.gen_5tt, self.ACPCNodes.gmwmi, [("out_file", "in_file")]),
+                (self.ACPCNodes.gmwmi, self.ACPCNodes.binarize_gmwmi, [("out_file", "in_file")]),
+                (self.ACPCNodes.gen_5tt, self.PreProcNodes.datasink, [("out_file", "wm_mask.@mr5tt")]),
+                (self.ACPCNodes.binarize_gmwmi, self.PreProcNodes.datasink, [("out_file", "wm_mask.@gmwmi")]),
+                (self.ACPCNodes.convert2wm, self.PreProcNodes.datasink, [("out_file", "wm_mask.@wm")]),
                 ## WM Mask extraction section
                 (self.ACPCNodes.ACPC_warp, self.ACPCNodes.t1_bet, [("out_file", "in_file")]),
                 (self.ACPCNodes.ACPC_warp, self.ACPCNodes.epi_reg, [("out_file", "t1_head")]),

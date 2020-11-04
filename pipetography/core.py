@@ -933,6 +933,53 @@ def mask2seedtuple(mask_file, grid_size):
     return seed_grid_tuple
 
 # Internal Cell
+class gmwmiInputSpec(CommandLineInputSpec):
+    in_file = File(
+        exists=True,
+        mandatory=True,
+        argstr="%s",
+        position=-3,
+        desc="Input 5 tissue type segmented anatomical file"
+    )
+    out_file = File(
+        mandatory=True,
+        argstr="%s",
+        position=-2,
+        desc="output mask image for the gm-wm interface",
+    )
+    in_mask = File(
+        exists=True,
+        argstr="-mask_in %s",
+        position=1,
+        desc="filtered mask, if not provided, the algorithm will use in_file only"
+    )
+    nthreads = traits.Int(
+        argstr="-nthreads %d",
+        desc="number of threads. if zero, the number" " of available cpus will be used",
+        nohash=True,
+    )
+    force = traits.Bool(
+        argstr="-force",
+        desc="overwrite existing output file"
+    )
+
+class gmwmiOutputSpec(TraitedSpec):
+    out_file=File(argstr="%s", desc="output mask image")
+
+class gmwmi(CommandLine):
+    """
+    Interface with mrtrix3's 5tt2gmwmi command
+    """
+    _cmd="5tt2gmwmi"
+    input_spec=gmwmiInputSpec
+    output_spec=gmwmiOutputSpec
+
+    def _list_outputs(self):
+        outputs=self.output_spec().get()
+        outputs["out_file"] = os.path.abspath(self.inputs.out_file)
+        return outputs
+
+# Internal Cell
 class tckSIFT2InputSpec(CommandLineInputSpec):
     in_file = File(
         exists=True,
@@ -980,6 +1027,7 @@ class tckSIFT2InputSpec(CommandLineInputSpec):
 
 class tckSIFT2OutputSpec(TraitedSpec):
     out_file=File(argstr="%s", desc="output text file containing the weighting factor for each streamline")
+
 
 class tckSIFT2(CommandLine):
     """
