@@ -490,32 +490,19 @@ class ACPCNodes:
 class PostProcNodes:
     """
     Inputs:
-        atlas_dir (str): string path to folder containing all parcellations.
-        atlas_list (list): list of parcellation names as saved in `atlas_dir`.
-        atlas_template (dict): template directory for parcellation files
         BIDS_dir (str): Path to BIDS directory
         subj_template (dict): template directory for tck, dwi, T1, mask files
         skip_tuples (tuple): [('subject', 'session')] string pair to skip
     """
 
-    def __init__(self, atlas_dir, atlas_list, atlas_template, BIDS_dir, subj_template, skip_tuples):
+    def __init__(self, BIDS_dir, subj_template, skip_tuples):
         sub_list, ses_list, layout = ppt.get_subs(BIDS_dir)  # BIDS directory for layout and iterables
         data_dir = os.path.join(Path(BIDS_dir).parent)  # parent directory from BIDS folder containing derivatives and cuda tracking outputs
         all_sub_ses_combos = set(product(sub_list, ses_list))
         filtered_combos = list(all_sub_ses_combos - set(skip_tuples))
         sub_iter = [tup[0] for tup in filtered_combos]
         ses_iter = [tup[1] for tup in filtered_combos]
-        # Atlas input:
-        self.atlas_source = Node(
-            IdentityInterface(fields=["atlas_name"]),
-            iterables=[("atlas_name", atlas_list)],
-            name="atlas_source",
-        )
-        self.select_atlases = Node(
-            SelectFiles(atlas_template),
-            base_directory = atlas_dir,
-            name = 'select_atlases'
-        )
+        # Atlas input: replace with list input on MapNodes
         # DWI input:
         self.subject_source = Node(
             IdentityInterface(fields=["subject_id", "session_id"]),
@@ -529,35 +516,79 @@ class PostProcNodes:
             name = 'select_subjects'
         )
         self.linear_reg = Node(
-            ants.Registration(),
+            ants.Registration(output_transform_prefix = 'atlas_in_dwi_affine',
+                              dimension = 3,
+                              collapse_output_transforms = True,
+                              transforms = ['Affine'],
+                              transform_parameters = [(0.1,)],
+                              metric = ['MI'],
+                              metric_weight = [1],
+                              radius_or_number_of_bins = [64],
+                              number_of_iterations = [[500, 200, 200, 100]],
+                              convergence_threshold = [1e-6],
+                              convergence_window_size = [10],
+                              smoothing_sigmas = [[4,2,1,0]],
+                              sigma_units = ['vox'],
+                              shrink_factors = [[8,4,2,1]],
+                              use_histogram_matching = [True],
+                              output_warped_image = 'atlas_in_dwi_affine.nii.gz'
+                             ),
             name = 'linear_registration'
         )
         self.nonlinear_reg = Node(
-            ants.Registration(),
+            ants.Registration(output_transform_prefix = 'atlas_in_dwi_syn',
+                              dimension = 3,
+                              collapse_output_transforms = True,
+                              transforms = ['SyN'],
+                              transform_parameters=[(0.1,)],
+                              metric = ['MI'],
+                              metric_weight = [1],
+                              radius_or_number_of_bins = [64],
+                              number_of_iterations = [[500,200,200,100]],
+                              convergence_threshold = [1e-06],
+                              convergence_window_size = [10],
+                              smoothing_sigmas = [[4,2,1,0]],
+                              sigma_units = ['vox'],
+                              shrink_factors = [[8,4,2,1]],
+                              use_histogram_matching = [True],
+                              output_warped_image = 'atlas_in_dwi_syn.nii.gz'
+            ),
             name = 'nonlinear_registration'
         )
         self.round_atlas = Node(
-            ppt.CheckNIZ(),
+            ppt.CheckNIZ(args = '-round', out_file = 'nodes.mif'),
             name = 'round_parcellation'
         )
         self.response = Node(
-            ResponseSD(),
+            ResponseSD(algorithm = 'dhollander',
+                       wm_file = 'wm.txt',
+                       gm_file = 'gm.txt',
+                       csf_file = 'csf.txt'),
             name = 'SDResponse'
         )
         self.fod = Node(
-            ConstrainedSphericalDeconvolution(),
+            ConstrainedSphericalDeconvolution(algorithm = 'msmt_csd',
+                                              wm_txt = 'wm.txt',
+                                              gm_txt = 'gm.txt',
+                                              gm_odf = 'gm.mif',
+                                              csf_txt = 'csf.txt',
+                                              csf_odf = 'csf.mif'),
             name = 'dwiFOD'
         )
         self.sift2 = Node(
-            ppt.tckSIFT2(),
+            ppt.tckSIFT2(fd_scale_gm = True, out_file = 'sift2.txt'),
             name = 'sift2_filtering'
         )
         self.connectome = Node(
-            ppt.MakeConnectome(),
+            ppt.MakeConnectome(out_file = 'connectome.csv', symmetric = True, zero_diag = True),
             name = 'weight_connectome'
         )
         self.distance = Node(
-            ppt.MakeConnectome(),
+            ppt.MakeConnectome(scale_length = True,
+                               stat_edge = 'mean',
+                               symmetric = True,
+                               zero_diag = True,
+                               out_file = 'distances.csv'),
             name = 'weight_distance'
         )
         self.datasink = Node(
@@ -567,60 +598,3 @@ class PostProcNodes:
             name="datasink"
         )
         print('Data sink (output folder) is set to {}'.format(os.path.join(Path(data_dir), 'derivatives')))
-
-    def set_inputs(self):
-        # ANTS Registration
-        self.linear_reg.inputs.output_transform_prefix = 'atlas_in_dwi_affine'
-        self.linear_reg.inputs.dimension = 3
-        self.linear_reg.inputs.collapse_output_transforms = True # -z flag
-        self.linear_reg.inputs.transforms = ['Affine']
-        self.linear_reg.inputs.transform_parameters = [(0.1,)]
-        self.linear_reg.inputs.metric = ['MI']  # -metric
-        self.linear_reg.inputs.metric_weight = [1]  # default
-        self.linear_reg.inputs.radius_or_number_of_bins = [64]
-        self.linear_reg.inputs.number_of_iterations = [[500, 200, 200, 100]]
-        self.linear_reg.inputs.convergence_threshold = [1e-6]
-        self.linear_reg.inputs.convergence_window_size = [10]
-        self.linear_reg.inputs.smoothing_sigmas = [[4,2,1,0]]  # -s
-        self.linear_reg.inputs.sigma_units = ['vox']
-        self.linear_reg.inputs.shrink_factors = [[8,4,2,1]]  # -f
-        self.linear_reg.inputs.use_histogram_matching = [True]  # -u
-        self.linear_reg.inputs.output_warped_image = 'atlas_in_dwi_affine.nii.gz'
-        self.nonlinear_reg.inputs.output_transform_prefix = 'atlas_in_dwi_syn'
-        self.nonlinear_reg.inputs.dimension = 3  # -d
-        self.nonlinear_reg.inputs.collapse_output_transforms = True  # -z flag
-        self.nonlinear_reg.inputs.transforms = ['SyN']
-        self.nonlinear_reg.inputs.transform_parameters=[(0.1,)]
-        self.nonlinear_reg.inputs.metric = ['MI']
-        self.nonlinear_reg.inputs.metric_weight = [1] #default
-        self.nonlinear_reg.inputs.radius_or_number_of_bins = [64]
-        self.nonlinear_reg.inputs.number_of_iterations = [[500,200,200,100]]  # -convergence
-        self.nonlinear_reg.inputs.convergence_threshold = [1e-06]
-        self.nonlinear_reg.inputs.convergence_window_size = [10]
-        self.nonlinear_reg.inputs.smoothing_sigmas = [[4,2,1,0]]  # -s
-        self.nonlinear_reg.inputs.sigma_units = ['vox']
-        self.nonlinear_reg.inputs.shrink_factors = [[8,4,2,1]]  # -f
-        self.nonlinear_reg.inputs.use_histogram_matching = [True]  # -u
-        self.nonlinear_reg.inputs.output_warped_image = 'atlas_in_dwi_syn.nii.gz'
-        self.round_atlas.inputs.args = '-round'
-        self.round_atlas.inputs.out_file = 'nodes.mif'
-        self.response.inputs.algorithm = 'dhollander'
-        self.response.inputs.wm_file = 'wm.txt'
-        self.response.inputs.gm_file = 'gm.txt'
-        self.response.inputs.csf_file = 'csf.txt'
-        self.fod.inputs.algorithm = 'msmt_csd'
-        self.fod.inputs.wm_txt = 'wm.txt'
-        self.fod.inputs.gm_txt = 'gm.txt'
-        self.fod.inputs.gm_odf = 'gm.mif'
-        self.fod.inputs.csf_txt = 'csf.txt'
-        self.fod.inputs.csf_odf = 'csf.mif'
-        self.sift2.inputs.fd_scale_gm = True
-        self.sift2.inputs.out_file = 'sift2.txt'
-        self.connectome.inputs.out_file = 'connectome.csv'
-        self.connectome.inputs.symmetric = True
-        self.connectome.inputs.zero_diag = True
-        self.distance.inputs.scale_length = True
-        self.distance.inputs.stat_edge = 'mean'
-        self.distance.inputs.symmetric = True
-        self.distance.inputs.zero_diag = True
-        self.distance.inputs.out_file = 'distances.csv'

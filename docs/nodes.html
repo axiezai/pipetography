@@ -30,7 +30,7 @@ description: "Classes containing all Nodes used in workflows."
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>201026-15:08:24,725 nipype.utils WARNING:
+<pre>201109-11:24:58,783 nipype.utils WARNING:
 	 A newer version (1.5.1) of nipy/nipype is available. You are using 1.5.0
 </pre>
 </div>
@@ -143,12 +143,9 @@ Inputs:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="PostProcNodes" class="doc_header"><code>class</code> <code>PostProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L477" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PostProcNodes</code>(<strong><code>atlas_dir</code></strong>, <strong><code>atlas_list</code></strong>, <strong><code>atlas_template</code></strong>, <strong><code>BIDS_dir</code></strong>, <strong><code>subj_template</code></strong>, <strong><code>skip_tuples</code></strong>)</p>
+<h2 id="PostProcNodes" class="doc_header"><code>class</code> <code>PostProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L490" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PostProcNodes</code>(<strong><code>BIDS_dir</code></strong>, <strong><code>subj_template</code></strong>, <strong><code>skip_tuples</code></strong>)</p>
 </blockquote>
 <p>Inputs:
-    atlas_dir (str): string path to folder containing all parcellations.
-    atlas_list (list): list of parcellation names as saved in <code>atlas_dir</code>.
-    atlas_template (dict): template directory for parcellation files
     BIDS_dir (str): Path to BIDS directory
     subj_template (dict): template directory for tck, dwi, T1, mask files
     skip_tuples (tuple): [('subject', 'session')] string pair to skip</p>
@@ -184,9 +181,7 @@ Inputs:</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>atlas_source
-select_atlases
-subj_source
+<pre>subj_source
 select_subjects
 linear_registration
 nonlinear_registration
