@@ -5,9 +5,9 @@
 ![CI](https://github.com/axiezai/pipetography/workflows/CI/badge.svg)
 ![docker](https://img.shields.io/docker/v/axiezai/pipetography)
 
-This repo currently only has pre-processing capabilities! More will be added in the near future.
-
 The pre-processing workflow has been updated to reflect what's seen in the optimal [DESIGNER pipeline](http://www.sciencedirect.com/science/article/pii/S1053811918306827) and on [mrtrix3 cloud apps on brainlife.io](https://brainlife.io). 
+
+The post-processing pipeline, including co-registration of atlases and connectome generation has been added.
 
 ## Install
 
