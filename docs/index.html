@@ -61,7 +61,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><code>export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}</code></li>
 </ul>
 </li>
-<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, you will need to have sudo permissions to perform singularity build.</p>
+<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, you will need to have sudo permissions to perform singularity build. If you run into memory problems, consider building as a sandbox at first with the <code>-s</code> flag.</p>
 <ul>
 <li><code>sudo singularity build {image_file_name}.sif singularity.def</code></li>
 </ul>

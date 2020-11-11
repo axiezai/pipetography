@@ -2,8 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"connectome": "04_connectomes.ipynb",
-         "get_subs": "00_core.ipynb",
+index = {"get_subs": "00_core.ipynb",
          "get_bfiles_tuple": "00_core.ipynb",
          "get_sub_gradfiles": "00_core.ipynb",
          "anat2id": "00_core.ipynb",
@@ -67,7 +66,7 @@ index = {"connectome": "04_connectomes.ipynb",
          "MRRegridOutputSpec": "00_core.ipynb",
          "MRRegrid": "00_core.ipynb",
          "mask2seedtuple": "00_core.ipynb",
-         "gmwmiInputspec": "00_core.ipynb",
+         "gmwmiInputSpec": "00_core.ipynb",
          "gmwmiOutputSpec": "00_core.ipynb",
          "gmwmi": "00_core.ipynb",
          "tckSIFT2InputSpec": "00_core.ipynb",
@@ -76,16 +75,16 @@ index = {"connectome": "04_connectomes.ipynb",
          "MakeConnectomeInputSpec": "00_core.ipynb",
          "MakeConnectomeOutputSpec": "00_core.ipynb",
          "MakeConnectome": "00_core.ipynb",
-         "gmwmiInputSpec": "00_core.ipynb",
+         "pipeline": "01_pipeline.ipynb",
          "PreProcNodes": "02_nodes.ipynb",
          "ACPCNodes": "02_nodes.ipynb",
          "PostProcNodes": "02_nodes.ipynb",
-         "pipeline": "01_pipeline.ipynb"}
+         "connectome": "03_connectomes.ipynb"}
 
-modules = ["connectomes.py",
-           "core.py",
+modules = ["core.py",
+           "pipeline.py",
            "nodes.py",
-           "pipeline.py"]
+           "connectomes.py"]
 
 doc_url = "https://axiezai.github.io/pipetography/"
 
