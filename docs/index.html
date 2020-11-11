@@ -37,8 +37,8 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This repo currently only has pre-processing capabilities! More will be added in the near future.</p>
 <p>The pre-processing workflow has been updated to reflect what's seen in the optimal <a href="http://www.sciencedirect.com/science/article/pii/S1053811918306827">DESIGNER pipeline</a> and on <a href="https://brainlife.io">mrtrix3 cloud apps on brainlife.io</a>.</p>
+<p>The post-processing pipeline, including co-registration of atlases and connectome generation has been added.</p>
 
 </div>
 </div>
@@ -61,7 +61,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><code>export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}</code></li>
 </ul>
 </li>
-<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, you will need to have sudo permissions to perform singularity build.</p>
+<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, you will need to have sudo permissions to perform singularity build. If you run into memory problems, consider building as a sandbox at first with the <code>-s</code> flag.</p>
 <ul>
 <li><code>sudo singularity build {image_file_name}.sif singularity.def</code></li>
 </ul>

@@ -66,13 +66,25 @@ index = {"get_subs": "00_core.ipynb",
          "MRRegridOutputSpec": "00_core.ipynb",
          "MRRegrid": "00_core.ipynb",
          "mask2seedtuple": "00_core.ipynb",
+         "gmwmiInputSpec": "00_core.ipynb",
+         "gmwmiOutputSpec": "00_core.ipynb",
+         "gmwmi": "00_core.ipynb",
+         "tckSIFT2InputSpec": "00_core.ipynb",
+         "tckSIFT2OutputSpec": "00_core.ipynb",
+         "tckSIFT2": "00_core.ipynb",
+         "MakeConnectomeInputSpec": "00_core.ipynb",
+         "MakeConnectomeOutputSpec": "00_core.ipynb",
+         "MakeConnectome": "00_core.ipynb",
          "pipeline": "01_pipeline.ipynb",
          "PreProcNodes": "02_nodes.ipynb",
-         "ACPCNodes": "02_nodes.ipynb"}
+         "ACPCNodes": "02_nodes.ipynb",
+         "PostProcNodes": "02_nodes.ipynb",
+         "connectome": "03_connectomes.ipynb"}
 
 modules = ["core.py",
            "pipeline.py",
-           "nodes.py"]
+           "nodes.py",
+           "connectomes.py"]
 
 doc_url = "https://axiezai.github.io/pipetography/"
 

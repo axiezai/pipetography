@@ -18,6 +18,9 @@ entries:
     - output: web,pdf
       title: Module nodes
       url: /nodes
+    - output: web,pdf
+      title: Title
+      url: /connectomes
     output: web
     title: pipetography
   output: web

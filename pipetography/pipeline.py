@@ -13,7 +13,6 @@ import pipetography.nodes as nodes
 from nipype import IdentityInterface, Function
 from nipype.interfaces.io import SelectFiles, DataSink
 from nipype.pipeline import Node, MapNode, Workflow
-from nipype.interfaces.freesurfer.preprocess import ReconAll
 from nipype.interfaces.mrtrix3.utils import BrainMask, TensorMetrics, DWIExtract, MRMath
 from nipype.interfaces.mrtrix3.preprocess import MRDeGibbs, DWIBiasCorrect
 from nipype.interfaces.mrtrix3.reconst import FitTensor
@@ -30,12 +29,11 @@ class pipeline:
         - ext (str): extension of your images. Default is set to "nii.gz"
         - RPE_design (str): default is "-rpe_none", reverse phase encoding design for your DWI acquisition. Also supports '-rpe_all'
         - Regrid (bool): whether  to resample DWI to  1mm MNI template
-        - recon (bool): whether to include Freesurfer's reconall as an additional preprocessing step. This generates a white matter mask which may be useful for tractograms.
         - mrtrix_nthreads (int): how many threads for mrtrix3 algorithms. Disable multithreading by setting to 0. Default is 6.
         - skip_tuples (tuple): [('subject', 'session')] ID pair to skip.
     """
 
-    def __init__(self, BIDS_dir="data", ext = "nii.gz", RPE_design = "-rpe_none", Regrid = True, recon = True, mrtrix_nthreads = 6, skip_tuples = [()]):
+    def __init__(self, BIDS_dir="data", ext = "nii.gz", RPE_design = "-rpe_none", Regrid = True, mrtrix_nthreads = 6, skip_tuples = [()]):
         """
         Nodes are initialized with the bare minimum of inputs or default parameters
         Remaining inputs are either connected in the Nipype workflow or are user inputs
@@ -50,7 +48,6 @@ class pipeline:
         self.bids_dir = BIDS_dir
         self.RPE_design = RPE_design
         self.Regrid = Regrid
-        self.recon = recon
         self.mrtrix_nthreads = mrtrix_nthreads
         self.ext = ext
         self.excludes = skip_tuples
@@ -176,6 +173,15 @@ class pipeline:
                 (self.ACPCNodes.concatxfm, self.ACPCNodes.alignxfm, [("out_file", "in_file")]),
                 (self.ACPCNodes.alignxfm, self.ACPCNodes.ACPC_warp, [("out_file", "premat")]),
                 (self.ACPCNodes.ACPC_warp, self.PreProcNodes.datasink, [("out_file", "t1_acpc_aligned")]),
+                ## Adding WM mask extraction to replace original recon all section
+                (self.ACPCNodes.ACPC_warp, self.ACPCNodes.gen_5tt, [("out_file", "in_file")]),
+                (self.ACPCNodes.gen_5tt, self.ACPCNodes.convert2wm, [("out_file", "in_file")]),
+                (self.ACPCNodes.gen_5tt, self.ACPCNodes.gmwmi, [("out_file", "in_file")]),
+                (self.ACPCNodes.gmwmi, self.ACPCNodes.binarize_gmwmi, [("out_file", "in_file")]),
+                (self.ACPCNodes.gen_5tt, self.PreProcNodes.datasink, [("out_file", "wm_mask.@mr5tt")]),
+                (self.ACPCNodes.binarize_gmwmi, self.PreProcNodes.datasink, [("out_file", "wm_mask.@gmwmi")]),
+                (self.ACPCNodes.convert2wm, self.PreProcNodes.datasink, [("out_file", "wm_mask.@wm")]),
+                ## WM Mask extraction section
                 (self.ACPCNodes.ACPC_warp, self.ACPCNodes.t1_bet, [("out_file", "in_file")]),
                 (self.ACPCNodes.ACPC_warp, self.ACPCNodes.epi_reg, [("out_file", "t1_head")]),
                 (self.ACPCNodes.t1_bet, self.ACPCNodes.epi_reg, [("out_file", "t1_brain")]),
@@ -243,26 +249,8 @@ class pipeline:
                 (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_json", "preproc_mni.@json")])
             ]
         )
-        if recon == True:
-            self.workflow.connect(
-                [
-                    (self.PreProcNodes.select_files, self.ACPCNodes.get_fs_id,  [("anat", "anat_files")]),
-                    (self.ACPCNodes.ACPC_warp, self.ACPCNodes.reconall, [("out_file", "T1_files")]),
-                    (self.ACPCNodes.get_fs_id, self.ACPCNodes.reconall, [("fs_id_list", "subject_id")]),
-                    (self.ACPCNodes.reconall, self.ACPCNodes.wm_extract, [("aseg", "in_file")]),
-                    (self.ACPCNodes.wm_extract, self.ACPCNodes.wm_reduceFOV, [("out_file", "in_file")]),
-                    (self.ACPCNodes.wm_extract, self.ACPCNodes.wm_ACPC_warp, [("out_file", "in_file")]),
-                    (self.ACPCNodes.wm_reduceFOV, self.ACPCNodes.wm_xfminverse, [("out_transform", "in_file")]),
-                    (self.ACPCNodes.wm_xfminverse, self.ACPCNodes.wm_concatxfm, [("out_file", "in_file")]),
-                    (self.ACPCNodes.wm_reduceFOV, self.ACPCNodes.wm_flirt, [("out_roi", "in_file")]),
-                    (self.ACPCNodes.wm_flirt, self.ACPCNodes.wm_concatxfm, [("out_matrix_file", "in_file2")]),
-                    (self.ACPCNodes.wm_concatxfm, self.ACPCNodes.wm_alignxfm, [("out_file", "in_file")]),
-                    (self.ACPCNodes.wm_alignxfm, self.ACPCNodes.wm_ACPC_warp, [("out_file", "premat")]),
-                    (self.ACPCNodes.wm_ACPC_warp, self.ACPCNodes.wm_threshold, [("out_file", "in_file")]),
-                    (self.ACPCNodes.wm_threshold, self.PreProcNodes.datasink, [("out_file", "preproc_mni.@wm_mask")])
-                ]
-            )
-
+        ## Removed recon == True connections ##
+        ## ##
         if RPE_design == '-rpe_none':
             self.workflow.connect(
                 [
@@ -321,8 +309,8 @@ class pipeline:
                                             }
 
 
-    def draw_pipeline(self):
-        self.workflow.write_graph(graph2use='orig', dotfilename = 'pipetography.dot')
+    def draw_pipeline(self, graph_type='orig'):
+        self.workflow.write_graph(graph2use=graph_type, dotfilename = 'pipetography.dot')
 
 
     def run_pipeline(self, parallel = None):

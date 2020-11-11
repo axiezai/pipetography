@@ -3,6 +3,7 @@
     "Overview": "/",
     "Module core": "/core",
     "Module pipeline": "/pipeline",
-    "Module nodes": "/nodes"
+    "Module nodes": "/nodes",
+    "Title": "/connectomes"
   }
 }
