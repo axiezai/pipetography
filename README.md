@@ -25,17 +25,13 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `sudo singularity build {image_file_name}.sif singularity.def`
      
  - OR pull the built singularity image from cloud library:
-    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.4`
+    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.5`
  
  - To run interactively or as a job execution, you will need a few flags:
      - `-e` for a clean environnment
      - `-B` to bind your freesurfer license file to the image, as well as data/code directories.
-     - `singularity shell -e -B <freesurfer_license_path>:/license.txt -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
-     - Once inside the singularity shell, confirm the license file is recognized as a environment variable. Or declare it with:
-         - `export FS_LICENSE="/license.txt"`
-     - Sometimes Freesurfer set-up doesn't run as container entry-point. 
-         - Fix with `source /opt/freesurfer-7.1.0/SetUpFreeSurfer.sh`
-      
+     - `singularity shell -e -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
+
 #### Creating your own environment and install `pipetography` as a Python module:
 
 `pip install pipetography`
@@ -46,11 +42,7 @@ Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, 
  - [ANTs](https://github.com/ANTsX/ANTs/wiki/Compiling-ANTs-on-Linux-and-Mac-OS)
      
  - [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
- 
- - [Freesurfer v7.1.0](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall)
- 
- - [Matlab Run Time Compiler for freesurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime)
- 
+  
 Everything listed in this section is included in the singularity container.
 
 ## The pipeline:

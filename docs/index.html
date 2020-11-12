@@ -68,22 +68,14 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </li>
 <li><p>OR pull the built singularity image from cloud library:</p>
 <ul>
-<li><code>singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.4</code></li>
+<li><code>singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.5</code></li>
 </ul>
 </li>
 <li><p>To run interactively or as a job execution, you will need a few flags:</p>
 <ul>
 <li><code>-e</code> for a clean environnment</li>
 <li><code>-B</code> to bind your freesurfer license file to the image, as well as data/code directories.</li>
-<li><code>singularity shell -e -B &lt;freesurfer_license_path&gt;:/license.txt -B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code></li>
-<li>Once inside the singularity shell, confirm the license file is recognized as a environment variable. Or declare it with:<ul>
-<li><code>export FS_LICENSE="/license.txt"</code></li>
-</ul>
-</li>
-<li>Sometimes Freesurfer set-up doesn't run as container entry-point. <ul>
-<li>Fix with <code>source /opt/freesurfer-7.1.0/SetUpFreeSurfer.sh</code></li>
-</ul>
-</li>
+<li><code>singularity shell -e -B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code></li>
 </ul>
 </li>
 </ul>
@@ -95,10 +87,6 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><p><a href="https://github.com/ANTsX/ANTs/wiki/Compiling-ANTs-on-Linux-and-Mac-OS">ANTs</a></p>
 </li>
 <li><p><a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation">FSL</a></p>
-</li>
-<li><p><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">Freesurfer v7.1.0</a></p>
-</li>
-<li><p><a href="https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime">Matlab Run Time Compiler for freesurfer</a></p>
 </li>
 </ul>
 <p>Everything listed in this section is included in the singularity container.</p>
