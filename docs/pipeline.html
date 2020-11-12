@@ -2,11 +2,13 @@
 
 title: Module pipeline
 
+
 keywords: fastai
 sidebar: home_sidebar
 
 summary: "Here we have the Nodes wrapping around our core functions, which can be added to a Nipype workflow to process your input images. These definitions here are our custom functions and Nipype Nodes knotted together, which creates a working pipeline."
 description: "Here we have the Nodes wrapping around our core functions, which can be added to a Nipype workflow to process your input images. These definitions here are our custom functions and Nipype Nodes knotted together, which creates a working pipeline."
+nb_path: "01_pipeline.ipynb"
 ---
 <!--
 
@@ -29,18 +31,11 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Preprocessing-pipeline-module:">Preprocessing <a href="/pipetography/pipeline"><code>pipeline</code></a> module:<a class="anchor-link" href="#Preprocessing-pipeline-module:"> </a></h2><p>A class containing <a href="/pipetography/core"><code>core</code></a> functionalities wrapped in a <code>Nipype</code> workflow, assuming your input data is in valid BIDS format. This pipeline will follow the [DESIGNER] protocol and align your T1 &amp; DWI to MNI template space (ACPC HCP procedure), perform all denoising &amp; artifact removal steps, and correct the DWI gradients accordingly.</p>
+<h2 id="Preprocessing-pipeline-module:">Preprocessing <a href="/pipetography/pipeline.html"><code>pipeline</code></a> module:<a class="anchor-link" href="#Preprocessing-pipeline-module:"> </a></h2><p>A class containing <a href="/pipetography/core.html"><code>core</code></a> functionalities wrapped in a <code>Nipype</code> workflow, assuming your input data is in valid BIDS format. This pipeline will follow the [DESIGNER] protocol and align your T1 &amp; DWI to MNI template space (ACPC HCP procedure), perform all denoising &amp; artifact removal steps, and correct the DWI gradients accordingly.</p>
 
 </div>
 </div>
 </div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -74,6 +69,13 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Example:">Example:<a class="anchor-link" href="#Example:"> </a></h3>
@@ -82,7 +84,7 @@ description: "Here we have the Nodes wrapping around our core functions, which c
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Create a <a href="/pipetography/pipeline"><code>pipeline</code></a>:</p>
+<p>Create a <a href="/pipetography/pipeline.html"><code>pipeline</code></a>:</p>
 
 </div>
 </div>
@@ -164,7 +166,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Take a look at what's in the <a href="/pipetography/pipeline"><code>pipeline</code></a>:</p>
+<p>Take a look at what's in the <a href="/pipetography/pipeline.html"><code>pipeline</code></a>:</p>
 
 </div>
 </div>

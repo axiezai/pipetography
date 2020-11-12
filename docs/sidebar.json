@@ -1,9 +1,9 @@
 {
   "pipetography": {
     "Overview": "/",
-    "Module core": "/core",
-    "Module pipeline": "/pipeline",
-    "Module nodes": "/nodes",
-    "Title": "/connectomes"
+    "Module core": "core.html",
+    "Module pipeline": "pipeline.html",
+    "Module nodes": "nodes.html",
+    "Title": "connectomes.html"
   }
 }

@@ -11,16 +11,16 @@ entries:
       url: /
     - output: web,pdf
       title: Module core
-      url: /core
+      url: core.html
     - output: web,pdf
       title: Module pipeline
-      url: /pipeline
+      url: pipeline.html
     - output: web,pdf
       title: Module nodes
-      url: /nodes
+      url: nodes.html
     - output: web,pdf
       title: Title
-      url: /connectomes
+      url: connectomes.html
     output: web
     title: pipetography
   output: web
