@@ -103,44 +103,6 @@ RUN apt-get update -qq \
     && echo "Removing bundled with FSLeyes libz likely incompatible with the one from OS" \
     && rm -f /opt/fsl-6.0.1/bin/FSLeyes/libz.so.1
 
-ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/opt/matlabmcr-2012b/v80/runtime/glnxa64:/opt/matlabmcr-2012b/v80/bin/glnxa64:/opt/matlabmcr-2012b/v80/sys/os/glnxa64:/opt/matlabmcr-2012b/v80/extern/bin/glnxa64:/opt/miniconda-latest/envs/tracts/lib/" \
-    MATLABCMD="/opt/matlabmcr-2012b/v80/toolbox/matlab"
-RUN export TMPDIR="$(mktemp -d)" \
-    && apt-get update -qq \
-    && apt-get install -y -q --no-install-recommends \
-           bc \
-           libncurses5 \
-           libxext6 \
-           libxmu6 \
-           libxpm-dev \
-           libxt6 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && echo "Downloading MATLAB Compiler Runtime ..." \
-    && curl -fsSL --retry 5 -o "$TMPDIR/mcr.zip" https://ssd.mathworks.com/supportfiles/MCR_Runtime/R2012b/MCR_R2012b_glnxa64_installer.zip \
-    && unzip -q "$TMPDIR/mcr.zip" -d "$TMPDIR/mcrtmp" \
-    && "$TMPDIR/mcrtmp/install" -destinationFolder /opt/matlabmcr-2012b -mode silent -agreeToLicense yes \
-    && rm -rf "$TMPDIR" \
-    && unset TMPDIR
-
-ENV FREESURFER_HOME="/opt/freesurfer-7.1.0" \
-    PATH="/opt/freesurfer-7.1.0/bin:$PATH"
-RUN apt-get update -qq \
-    && apt-get install -y -q --no-install-recommends \
-           bc \
-           libgomp1 \
-           libxmu6 \
-           libxt6 \
-           perl \
-           tcsh \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && echo "Downloading FreeSurfer ..." \
-    && mkdir -p /opt/freesurfer-7.1.0 \
-    && curl -fsSL --retry 5 https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/7.1.0/freesurfer-linux-centos6_x86_64-7.1.0.tar.gz \
-    | tar -xz -C /opt/freesurfer-7.1.0 --strip-components 1 \
-    && sed -i '$isource "/opt/freesurfer-7.1.0/SetUpFreeSurfer.sh"' "$ND_ENTRYPOINT"
-
 ENV CONDA_DIR="/opt/miniconda-latest" \
     PATH="/opt/miniconda-latest/bin:$PATH"
 RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
@@ -173,8 +135,6 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
     && rm -rf ~/.cache/pip/* \
     && sync
 
-COPY ["license.txt", "/license.txt"]
-
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
            git \
@@ -185,9 +145,6 @@ RUN apt-get update -qq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN bash -c 'cd /opt/freesurfer-7.1.0 && ln -s /opt/matlabmcr-2012b/v80 MCRv80 && mv /license.txt .'
-
-ENV FS_LICENSE="/license.txt"
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \
@@ -215,18 +172,6 @@ RUN echo '{ \
     \n      } \
     \n    ], \
     \n    [ \
-    \n      "matlabmcr", \
-    \n      { \
-    \n        "version": "2012b" \
-    \n      } \
-    \n    ], \
-    \n    [ \
-    \n      "freesurfer", \
-    \n      { \
-    \n        "version": "7.1.0" \
-    \n      } \
-    \n    ], \
-    \n    [ \
     \n      "miniconda", \
     \n      { \
     \n        "create_env": "tracts", \
@@ -248,13 +193,6 @@ RUN echo '{ \
     \n      } \
     \n    ], \
     \n    [ \
-    \n      "copy", \
-    \n      [ \
-    \n        "license.txt", \
-    \n        "/license.txt" \
-    \n      ] \
-    \n    ], \
-    \n    [ \
     \n      "install", \
     \n      [ \
     \n        "git", \
@@ -263,16 +201,6 @@ RUN echo '{ \
     \n        "gzip", \
     \n        "ca-certificates" \
     \n      ] \
-    \n    ], \
-    \n    [ \
-    \n      "run_bash", \
-    \n      "cd $FREESURFER_HOME && ln -s /opt/matlabmcr-2012b MCRv80 && mv /license.txt ." \
-    \n    ], \
-    \n    [ \
-    \n      "env", \
-    \n      { \
-    \n        "FS_LICENSE": "/license.txt" \
-    \n      } \
     \n    ] \
     \n  ] \
     \n}' > /neurodocker/neurodocker_specs.json
