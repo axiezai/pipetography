@@ -114,7 +114,7 @@ bash -c "source activate tracts
       "pipetography==0.3.5""
 rm -rf ~/.cache/pip/*
 sync
-sed -i '$source activate tracts' $ND_ENTRYPOINT
+sed -i '$isource activate tracts' $ND_ENTRYPOINT
 
 
 apt-get update -qq

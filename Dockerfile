@@ -134,7 +134,7 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
 	         "pipetography==0.3.5"" \
     && rm -rf ~/.cache/pip/* \
     && sync \
-    && sed -i '$source activate tracts' $ND_ENTRYPOINT
+    && sed -i '$isource activate tracts' $ND_ENTRYPOINT
 
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
