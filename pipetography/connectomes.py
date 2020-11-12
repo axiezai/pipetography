@@ -18,9 +18,9 @@ class connectome:
     Create a workflow that produces connectomes based on input atlases and streamlines
 
     Inputs:
-    atlas_dir (str): base directory of folder containing atlases
-    BIDS_dir (str): base BIDS directory path
-    atlas_list (List of strings): names of atlases: aal, brainnectome, desikan-killiany, default is set to brainnectome for now.
+         - atlas_dir (str): base directory of folder containing atlases
+         - BIDS_dir (str): base BIDS directory path
+         - atlas_list (List of strings): names of atlases: aal, brainnectome, desikan-killiany, default is set to brainnectome for now.
     """
 
     def __init__(self, BIDS_dir, atlas_list, skip_tuples=[()]):
