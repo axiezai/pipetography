@@ -96,8 +96,7 @@ conda config --system --prepend channels conda-forge
 conda config --system --set auto_update_conda false
 conda config --system --set show_channel_urls true
 sync && conda clean -y --all && sync
-conda create -y -q --name tracts
-conda install -y -q --name tracts \
+conda install -y -q --name base \
     "python=3.7.3" \
     "pip=20.0.2" \
     "dipy" \
@@ -106,7 +105,7 @@ conda install -y -q --name tracts \
     "pytest" \
     "matplotlib"
 sync && conda clean -y --all && sync
-bash -c "source activate tracts
+bash -c "source activate base
   pip install --no-cache-dir  \
       "pybids" \
       "fastcore" \
@@ -114,7 +113,6 @@ bash -c "source activate tracts
       "pipetography==0.3.5""
 rm -rf ~/.cache/pip/*
 sync
-sed -i '$isource activate tracts' $ND_ENTRYPOINT
 
 
 apt-get update -qq
@@ -166,7 +164,7 @@ echo '{
 \n    [
 \n      "miniconda",
 \n      {
-\n        "create_env": "tracts",
+\n        "use_env": "base",
 \n        "conda_install": [
 \n          "python=3.7.3",
 \n          "pip=20.0.2",
@@ -181,8 +179,7 @@ echo '{
 \n          "fastcore",
 \n          "nilearn",
 \n          "pipetography==0.3.5"
-\n        ],
-\n        "activate": true
+\n        ]
 \n      }
 \n    ],
 \n    [
