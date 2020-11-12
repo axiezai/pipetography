@@ -4,6 +4,6 @@
     "Module core": "core.html",
     "Module pipeline": "pipeline.html",
     "Module nodes": "nodes.html",
-    "Title": "connectomes.html"
+    "Module connectomes": "connectomes.html"
   }
 }
