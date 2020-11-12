@@ -133,7 +133,8 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
              "nilearn" \
 	         "pipetography==0.3.5"" \
     && rm -rf ~/.cache/pip/* \
-    && sync
+    && sync \
+    && sed -i '$source activate tracts' $ND_ENTRYPOINT
 
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
@@ -189,7 +190,8 @@ RUN echo '{ \
     \n          "fastcore", \
     \n          "nilearn", \
     \n          "pipetography==0.3.5" \
-    \n        ] \
+    \n        ], \
+    \n        "activate": true \
     \n      } \
     \n    ], \
     \n    [ \
