@@ -131,7 +131,7 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
              "pybids" \
              "fastcore" \
              "nilearn" \
-	         "pipetography==0.3.4"" \
+	         "pipetography==0.3.5"" \
     && rm -rf ~/.cache/pip/* \
     && sync
 
@@ -188,7 +188,7 @@ RUN echo '{ \
     \n          "pybids", \
     \n          "fastcore", \
     \n          "nilearn", \
-    \n          "pipetography==0.3.4" \
+    \n          "pipetography==0.3.5" \
     \n        ] \
     \n      } \
     \n    ], \

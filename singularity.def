@@ -111,7 +111,7 @@ bash -c "source activate tracts
       "pybids" \
       "fastcore" \
       "nilearn" \
-      "pipetography==0.3.4""
+      "pipetography==0.3.5""
 rm -rf ~/.cache/pip/*
 sync
 
