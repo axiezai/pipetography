@@ -7,7 +7,7 @@
 
 The pre-processing workflow has been updated to reflect what's seen in the optimal [DESIGNER pipeline](http://www.sciencedirect.com/science/article/pii/S1053811918306827) and on [mrtrix3 cloud apps on brainlife.io](https://brainlife.io). 
 
-The post-processing pipeline, including co-registration of atlases and connectome generation has been added.
+The post-processing pipeline, including co-registration of atlases and connectome generation is now included in the [connectomes] module
 
 ## Install
 
@@ -21,16 +21,16 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `export SINGULARITY_CACHEDIR={YOUR DESTINATION DIR}`
      - `export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}`
      
- - Build the singularity image with the `singularity.def` file provided in Github, you will need to have sudo permissions to perform singularity build. If you run into memory problems, consider building as a sandbox at first with the `-s` flag. 
+ - Build the singularity image with the `singularity.def` file provided in Github, you will need to have `sudo` permissions to perform singularity build. If you run into memory problems, consider building as a sandbox at first with the `-s` flag. 
      - `sudo singularity build {image_file_name}.sif singularity.def`
      
  - OR pull the built singularity image from cloud library:
     - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.5`
  
  - To run interactively or as a job execution, you will need a few flags:
-     - `-e` for a clean environnment
-     - `-B` to bind your freesurfer license file to the image, as well as data/code directories.
-     - `singularity shell -e -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
+     - `-e -c` flags for a clean environnment upon container start
+     - `-B` to bind your data & code directories.
+     - Example: `singularity shell -e -c -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
 
 #### Creating your own environment and install `pipetography` as a Python module:
 
@@ -43,8 +43,8 @@ Since `pipetography` is a `Nipype` wrapper around `mrtrix3`, `ANTs`, and `FSL`, 
      
  - [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
   
-Everything listed in this section is included in the singularity container.
+Everything listed in this section is included in the Singularity and Docker containers.
 
 ## The pipeline:
 
-Currently supports acquisitions with no reverse phase encoding (`-rpe_none`)  and reverse phase encoding in all DWI directions (`-rpe_all`) options.
+Currently supports acquisitions with no reverse phase encoding (`-rpe_none`)  and reverse phase encoding in all DWI directions (`-rpe_all`) options. See [pipeline] for preprocessing details, and [connectomes] for postprocessing details.

@@ -2,11 +2,13 @@
 
 title: Pipetography
 
+
 keywords: fastai
 sidebar: home_sidebar
 
 summary: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain."
 description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain diffusion-MRI and generation of structural connectomes of the brain."
+nb_path: "index.ipynb"
 ---
 <!--
 
@@ -38,7 +40,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The pre-processing workflow has been updated to reflect what's seen in the optimal <a href="http://www.sciencedirect.com/science/article/pii/S1053811918306827">DESIGNER pipeline</a> and on <a href="https://brainlife.io">mrtrix3 cloud apps on brainlife.io</a>.</p>
-<p>The post-processing pipeline, including co-registration of atlases and connectome generation has been added.</p>
+<p>The post-processing pipeline, including co-registration of atlases and connectome generation is now included in the [connectomes] module</p>
 
 </div>
 </div>
@@ -61,7 +63,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><code>export SINGULARITY_PULLFOLDER={YOUR DESTINATION DIR}</code></li>
 </ul>
 </li>
-<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, you will need to have sudo permissions to perform singularity build. If you run into memory problems, consider building as a sandbox at first with the <code>-s</code> flag.</p>
+<li><p>Build the singularity image with the <code>singularity.def</code> file provided in Github, you will need to have <code>sudo</code> permissions to perform singularity build. If you run into memory problems, consider building as a sandbox at first with the <code>-s</code> flag.</p>
 <ul>
 <li><code>sudo singularity build {image_file_name}.sif singularity.def</code></li>
 </ul>
@@ -73,9 +75,9 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </li>
 <li><p>To run interactively or as a job execution, you will need a few flags:</p>
 <ul>
-<li><code>-e</code> for a clean environnment</li>
-<li><code>-B</code> to bind your freesurfer license file to the image, as well as data/code directories.</li>
-<li><code>singularity shell -e -B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code></li>
+<li><code>-e -c</code> flags for a clean environnment upon container start</li>
+<li><code>-B</code> to bind your data &amp; code directories.</li>
+<li>Example: <code>singularity shell -e -c -B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code></li>
 </ul>
 </li>
 </ul>
@@ -89,7 +91,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 <li><p><a href="https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation">FSL</a></p>
 </li>
 </ul>
-<p>Everything listed in this section is included in the singularity container.</p>
+<p>Everything listed in this section is included in the Singularity and Docker containers.</p>
 
 </div>
 </div>
@@ -102,7 +104,7 @@ description: "Nipype and mrtrix3 based pre-/post- processing pipeline for brain 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Currently supports acquisitions with no reverse phase encoding (<code>-rpe_none</code>)  and reverse phase encoding in all DWI directions (<code>-rpe_all</code>) options.</p>
+<p>Currently supports acquisitions with no reverse phase encoding (<code>-rpe_none</code>)  and reverse phase encoding in all DWI directions (<code>-rpe_all</code>) options. See [pipeline] for preprocessing details, and [connectomes] for postprocessing details.</p>
 
 </div>
 </div>
