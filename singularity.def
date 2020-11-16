@@ -212,7 +212,7 @@ export FSLLOCKDIR=""
 export FSLMACHINELIST=""
 export FSLREMOTECALL=""
 export FSLGECUDAQ="cuda.q"
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/opt/miniconda-latest/envs/tracts/lib/"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/opt/miniconda-latest/lib/"
 export CONDA_DIR="/opt/miniconda-latest"
 export PATH="/opt/miniconda-latest/bin:$PATH"
 
