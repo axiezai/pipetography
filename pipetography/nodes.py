@@ -62,7 +62,7 @@ class PreProcNodes:
                 name = 'sub_grad_files',
             )
             self.mrconvert = Node(
-                ppt.Convert(out_file='raw_dwi.mif', export_grad=True, out_bfile='raw_dwi.b', nthreads=mrtrix_nthreads),
+                ppt.Convert(out_file='raw_dwi.mif', export_grad='raw_dwi.b', nthreads=mrtrix_nthreads),
                 name='mrtrix_image',
             )
         elif rpe_design == '-rpe_all':
@@ -87,11 +87,11 @@ class PreProcNodes:
                 name = "sub_grad_files2",
             )
             self.mrconvert1 = Node(
-                ppt.Convert(out_file='raw_dwi1.mif', export_grad=True, out_bfile='raw_dwi1.b', nthreads=mrtrix_nthreads),
+                ppt.Convert(out_file='raw_dwi1.mif', export_grad='raw_dwi1.b', nthreads=mrtrix_nthreads),
                 name='mrtrix_image1',
             )
             self.mrconvert2 = Node(
-                ppt.Convert(out_file='raw_dwi2.mif', export_grad=True, out_bfile='raw_dwi2.b', nthreads=mrtrix_nthreads),
+                ppt.Convert(out_file='raw_dwi2.mif', export_grad='raw_dwi2.b', nthreads=mrtrix_nthreads),
                 name='mrtrix_image2',
             )
             # concatenate the two images and their gradient files.
@@ -121,7 +121,7 @@ class PreProcNodes:
             name='raw_dwi2mask',
         )
         self.GradCheck = Node(
-            ppt.GradCheck(export_grad=True, out_bfile='corrected.b', nthreads=mrtrix_nthreads),
+            ppt.GradCheck(export_grad='corrected.b', nthreads=mrtrix_nthreads),
             name='dwigradcheck',
         )
         self.NewGradMR = Node(
@@ -137,15 +137,15 @@ class PreProcNodes:
             name='ringing_removal',
         )
         self.fslpreproc = Node(
-            ppt.dwipreproc(out_file='preproc.mif', rpe_options=rpe_design, eddy_options='"--slm=linear --repol "', nthreads=mrtrix_nthreads, export_grad=True, out_bfile='eddy_dwi.b'),
+            ppt.dwipreproc(out_file='preproc.mif', rpe_options=rpe_design, eddy_options='"--slm=linear --repol "', nthreads=mrtrix_nthreads, export_grad='eddy_dwi.b'),
             name = "dwifslpreproc",
         )
         self.GradUpdate = Node(
-            ppt.GradCheck(export_grad=True, out_bfile='tmp.b'),
+            ppt.GradCheck(export_grad='tmp.b'),
             name = 'alter_gradient'
         )
         self.ModGrad = Node(
-            ppt.MRInfo(export_grad=True, out_bfile='modified.b'),
+            ppt.MRInfo(export_grad='modified.b'),
             name = 'modify_gradient'
         )
         self.UpdateMif = Node(
@@ -161,7 +161,7 @@ class PreProcNodes:
             name = 'dwibiascorrect',
         )
         self.grad_info = Node(
-            ppt.MRInfo(export_grad=True, out_bfile = 'rician_tmp.b', nthreads = mrtrix_nthreads),
+            ppt.MRInfo(export_grad='rician_tmp.b', nthreads = mrtrix_nthreads),
             name = 'NewGradient',
         )
         self.low_noise_map = Node(
@@ -250,12 +250,10 @@ class PreProcNodes:
         )
         self.mni_dwi = Node(
             ppt.Convert(out_file = 'dwi_acpc_1mm.nii.gz',
-                        export_grad = True,
-                        export_fslgrad = True,
+                        export_grad = 'dwi_acpc_1mm.b',
+                        export_fslgrad = ('dwi_acpc.bvecs', 'dwi_acpc.bvals'),
                         export_json = True,
                         nthreads = mrtrix_nthreads,
-                        out_bfile = 'dwi_acpc_1mm.b',
-                        out_fslgrad = ('dwi_acpc.bvecs', 'dwi_acpc.bvals'),
                         out_json = 'dwi_acpc_1mm.json'),
             name='MNI_Outputs',
         )

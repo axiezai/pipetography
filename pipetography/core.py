@@ -78,36 +78,25 @@ def BIDS_metadata(path, bids_dir):
 
 # Internal Cell
 class PipetographyBaseInputSpec(CommandLineInputSpec):
-    export_grad = traits.Bool(
-        argstr="-export_grad_mrtrix",
+    export_grad = traits.Str(
+        argstr="-export_grad_mrtrix %s",
         desc="export new gradient files in mrtrix format",
     )
-    export_fslgrad = traits.Bool(
-        argstr="-export_grad_fsl",
+    export_fslgrad = traits.Str(
+        argstr="-export_grad_fsl %s %s",
         desc="export gradient files in fsl format",
-    )
-    out_fslgrad = traits.Tuple(
-        File(desc="bvecs"),
-        File(desc="bvals"),
-        argstr="%s %s",
-        desc="Output (bvecs, bvals) dw gradient scheme (FSL format)",
-    )
-    out_bfile = File(
-        "dwi.b",
-        argstr="%s",
-        desc="name of new gradient file",
     )
     grad_fsl = traits.Tuple(
         (traits.Str, traits.Str),
         argstr="-fslgrad %s %s",
         desc="provide gradient table in fsl format",
-        xor=["grad_fsl"]
+        xor=["grad_file"]
     )
     grad_file = File(
         exists=True,
         argstr="-grad %s",
         desc="dw gradient scheme (MRTrix format)",
-        xor=["grad_file"],
+        xor=["grad_fsl"],
     )
     nthreads = traits.Int(
         argstr="-nthreads %d",
@@ -268,12 +257,12 @@ class Convert(CommandLine):
         outputs = self.output_spec().get()
         inputs = self.input_spec().get()
         outputs["out_file"] = os.path.abspath(self.inputs.out_file)
-        if self.inputs.export_grad == True:
-            outputs["out_bfile"] = os.path.abspath(self.inputs.out_bfile)
-        if self.inputs.export_fslgrad == True:
-            outputs["out_fslbvec"] = os.path.abspath(self.inputs.out_fslgrad[0])
-            outputs["out_fslbval"] = os.path.abspath(self.inputs.out_fslgrad[1])
-        if self.inputs.export_json == True:
+        if self.inputs.export_grad:
+            outputs["out_bfile"] = os.path.abspath(self.inputs.export_grad)
+        if self.inputs.export_fslgrad:
+            outputs["out_fslbvec"] = os.path.abspath(self.inputs.export_fslgrad[0])
+            outputs["out_fslbval"] = os.path.abspath(self.inputs.export_fslgrad[1])
+        if self.inputs.export_json
             outputs["out_json"] = os.path.abspath(self.inputs.out_json)
 
         return outputs
