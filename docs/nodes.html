@@ -40,7 +40,7 @@ nb_path: "02_nodes.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="PreProcNodes" class="doc_header"><code>class</code> <code>PreProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L25" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PreProcNodes</code>(<strong><code>bids_dir</code></strong>, <strong><code>bids_path_template</code></strong>, <strong><code>bids_ext</code></strong>, <strong><code>rpe_design</code></strong>, <strong><code>mrtrix_nthreads</code></strong>, <strong><code>sub_list</code></strong>, <strong><code>ses_list</code></strong>, <strong><code>exclude_list</code></strong>=<em><code>[()]</code></em>)</p>
+<h2 id="PreProcNodes" class="doc_header"><code>class</code> <code>PreProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L25" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PreProcNodes</code>(<strong><code>bids_dir</code></strong>, <strong><code>bids_path_template</code></strong>, <strong><code>bids_ext</code></strong>, <strong><code>rpe_design</code></strong>, <strong><code>mrtrix_nthreads</code></strong>, <strong><code>regrid</code></strong>, <strong><code>sub_list</code></strong>, <strong><code>ses_list</code></strong>, <strong><code>exclude_list</code></strong>=<em><code>[()]</code></em>)</p>
 </blockquote>
 <p>Initiate DWI preprocessing pipeline nodes.</p>
 <p>Inputs:</p>
@@ -81,7 +81,7 @@ nb_path: "02_nodes.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ACPCNodes" class="doc_header"><code>class</code> <code>ACPCNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L277" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ACPCNodes</code>(<strong><code>MNI_template</code></strong>)</p>
+<h2 id="ACPCNodes" class="doc_header"><code>class</code> <code>ACPCNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L279" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ACPCNodes</code>(<strong><code>MNI_template</code></strong>)</p>
 </blockquote>
 <p>T1 anatomy image related nodes. Mainly ACPC alignment of T1 and DWI and extraction of white matter mask.
 Inputs:</p>
@@ -123,7 +123,7 @@ Inputs:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="PostProcNodes" class="doc_header"><code>class</code> <code>PostProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L349" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PostProcNodes</code>(<strong><code>BIDS_dir</code></strong>, <strong><code>subj_template</code></strong>, <strong><code>skip_tuples</code></strong>)</p>
+<h2 id="PostProcNodes" class="doc_header"><code>class</code> <code>PostProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L351" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PostProcNodes</code>(<strong><code>BIDS_dir</code></strong>, <strong><code>subj_template</code></strong>, <strong><code>skip_tuples</code></strong>)</p>
 </blockquote>
 <p>Inputs:
     BIDS_dir (str): Path to BIDS directory

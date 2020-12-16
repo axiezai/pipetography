@@ -31,11 +31,13 @@ class PreProcNodes:
         - bids_path_template (dict) - template for file naming conventions
         - bids_ext (str) -
         - rpe_design (str)
+        - mrtrix_nthreads (int)
+        - regrid (bool)
         - sub_list (List)
         - ses_list (List)
         - exclude_list (tuple)
     """
-    def __init__(self, bids_dir, bids_path_template, bids_ext, rpe_design, mrtrix_nthreads, sub_list, ses_list, exclude_list = [()]):
+    def __init__(self, bids_dir, bids_path_template, bids_ext, rpe_design, mrtrix_nthreads, regrid, sub_list, ses_list, exclude_list = [()]):
         # create sub-graphs for subjects and sessions combos
         all_sub_ses_combos = set(product(sub_list, ses_list))
         # Create BIDS output folder list
@@ -45,6 +47,11 @@ class PreProcNodes:
         filtered_sub_ses_list = list(all_sub_ses_combos - set(exclude_list))
         sub_iter = [tup[0] for tup in filtered_sub_ses_list]
         ses_iter = [tup[1] for tup in filtered_sub_ses_list]
+        # if regrid, output name has 1mm resolution, or name has orig resolution tag
+        if regrid:
+            resol = '1mm'
+        else:
+            resol = 'orig'
         self.subject_source = Node(IdentityInterface(fields=["subject_id", "session_id"]),
                                    iterables=[("subject_id", sub_iter), ("session_id", ses_iter)],
                                    synchronize=True,
@@ -225,36 +232,36 @@ class PreProcNodes:
             name='sub_ApplyMask',
         )
         self.mni_b0extract = Node(
-            DWIExtract(bzero = True, out_file = 'dwi_acpc_1mm_b0.mif', nthreads = mrtrix_nthreads),
+            DWIExtract(bzero = True, out_file = 'dwi_space-acpc_res-{}_b0.mif'.format(resol), nthreads = mrtrix_nthreads),
             name='mni_b0extract',
         )
         self.mni_b0mean = Node(
-            MRMath(operation = 'mean', axis = 3, out_file = 'dwi_acpc_1mm_b0mean.mif', nthreads = mrtrix_nthreads),
+            MRMath(operation = 'mean', axis = 3, out_file = 'dwi_space-acpc_res-{}_b0mean.mif'.format(resol), nthreads = mrtrix_nthreads),
             name='mni_mrmath_mean',
         )
         self.mni_b0mask = Node(
-            BrainMask(out_file = 'dwi_acpc_1mm_mask.mif', nthreads = mrtrix_nthreads),
+            BrainMask(out_file = 'dwi_space-acpc_res-{}_mask.mif'.format(resol), nthreads = mrtrix_nthreads),
             name='mni_dwi2mask',
         )
         self.mni_convert_dwi = Node(
-            ppt.Convert(out_file = 'dwi_acpc_1mm_b0mean.nii.gz'),
+            ppt.Convert(out_file = 'dwi_space-acpc_res-{}_b0mean.nii.gz'.format(resol)),
             name='mni_dwi2nii',
         )
         self.mni_convert_mask  = Node(
-            ppt.Convert(out_file = 'dwi_acpc_1mm_mask.nii.gz'),
+            ppt.Convert(out_file = 'dwi_space-acpc_res-{}_seg-brain_mask.nii.gz'.format(resol)),
             name='mni_mask2nii',
         )
         self.mni_apply_mask = Node(
-            fsl.ApplyMask(out_file = 'dwi_acpc_1mm_brain.nii.gz'),
+            fsl.ApplyMask(out_file = 'dwi_space-acpc_res-{}_seg-brain.nii.gz'.format(resol)),
             name='mni_ApplyMask',
         )
         self.mni_dwi = Node(
-            ppt.Convert(out_file = 'dwi_acpc_1mm.nii.gz',
-                        export_grad = 'dwi_acpc_1mm.b',
-                        export_fslgrad = ('dwi_acpc.bvecs', 'dwi_acpc.bvals'),
+            ppt.Convert(out_file = 'dwi_space-acpc_res-{}.nii.gz'.format(resol),
+                        export_grad = 'dwi_space-acpc_res-{}.b'.format(resol),
+                        export_fslgrad = ('dwi_space-acpc_res-{}.bvecs'.format(resol), 'dwi_space-acpc_res-{}.bvals'.format(resol)),
                         export_json = True,
                         nthreads = mrtrix_nthreads,
-                        out_json = 'dwi_acpc_1mm.json'),
+                        out_json = 'dwi_space-acpc_res-{}.json'.format(resol)),
             name='MNI_Outputs',
         )
 
@@ -300,7 +307,7 @@ class ACPCNodes:
             name='aff2rigid',
         )
         self.ACPC_warp = Node(
-            fsl.preprocess.ApplyWarp(out_file='acpc_t1.nii', relwarp=True, output_type='NIFTI', interp='spline', ref_file=MNI_template),
+            fsl.preprocess.ApplyWarp(out_file='T1w_space-acpc.nii.gz', relwarp=True, output_type='NIFTI', interp='spline', ref_file=MNI_template),
             name='apply_warp',
         )
         ## removed reconall
@@ -321,11 +328,11 @@ class ACPCNodes:
             name='mrtransform',
         )
         self.regrid = Node(
-            ppt.MRRegrid(out_file = 'dwi_acpc_1mm.mif', regrid = MNI_template),
+            ppt.MRRegrid(out_file = 'dwi_space-acpc_res-{}.mif'.format(resol), regrid = MNI_template),
             name = 'mrgrid',
         )
         self.gen_5tt = Node(
-            Generate5tt(algorithm = 'fsl', out_file = 'mrtrix3_5tt.mif'),
+            Generate5tt(algorithm = 'fsl', out_file = 'T1w_space-acpc_seg-5tt.mif'),
             name='mrtrix_5ttgen',
         )
         self.gmwmi = Node(
@@ -333,11 +340,11 @@ class ACPCNodes:
             name='5tt2gmwmi'
         )
         self.binarize_gmwmi = Node(
-            ppt.MRThreshold(opt_abs = 0.05, out_file = 'gmwmi_mask.nii.gz'),
+            ppt.MRThreshold(opt_abs = 0.05, out_file = 'T1w_space-acpc_seg-gmwmi_mask.nii.gz'),
             name='binarize_gmwmi'
         )
         self.convert2wm = Node(
-            ppt.Convert(coord = [3, 2], axes = [0, 1, 2], out_file = '5tt_wm.nii.gz'),
+            ppt.Convert(coord = [3, 2], axes = [0, 1, 2], out_file = 'T1w_space-acpc_seg-wm_mask.nii.gz'),
             name='5tt2wm',
         )
 
