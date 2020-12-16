@@ -262,7 +262,7 @@ class Convert(CommandLine):
         if self.inputs.export_fslgrad:
             outputs["out_fslbvec"] = os.path.abspath(self.inputs.export_fslgrad[0])
             outputs["out_fslbval"] = os.path.abspath(self.inputs.export_fslgrad[1])
-        if self.inputs.export_json
+        if self.inputs.export_json:
             outputs["out_json"] = os.path.abspath(self.inputs.out_json)
 
         return outputs
