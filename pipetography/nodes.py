@@ -49,7 +49,7 @@ class PreProcNodes:
                                    iterables=[("subject_id", sub_iter), ("session_id", ses_iter)],
                                    synchronize=True,
                                    name = "sub_source")
-        self.subject_source.inputs.ext=bids_ext # <- Check if IdentityInterface accepts as above first...
+        self.subject_source.inputs.ext=bids_ext
         # reverse phase encoding design selection
         if rpe_design == '-rpe_none':
             # self.sub_grad_files.inputs.ext = bids_ext
@@ -107,16 +107,15 @@ class PreProcNodes:
             SelectFiles(bids_path_template, base_directory=bids_dir),
             name='select_files'
         )
-        # self.get_metadata.inputs.bids_dir=bids_dir <<---- Check before deleting
         self.get_metadata = Node(
             Function(
                 input_names=['path', 'bids_dir'],
                 output_names=['ReadoutTime', 'PE_DIR'],
                 function=ppt.BIDS_metadata,
-                bids_dir=bids_dir,
             ),
             name='get_metadata',
         )
+        self.get_metadata.inputs.bids_dir=bids_dir
         self.createMask = Node(
             BrainMask(out_file='b0_brain_mask.mif', nthreads=mrtrix_nthreads),
             name='raw_dwi2mask',
