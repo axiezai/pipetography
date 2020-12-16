@@ -141,3 +141,4 @@ checklink/cookies.txt
 # testing outputs
 outputs/
 license.txt
+BIDS_dir/derivatives
