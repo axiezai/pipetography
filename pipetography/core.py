@@ -82,7 +82,8 @@ class PipetographyBaseInputSpec(CommandLineInputSpec):
         argstr="-export_grad_mrtrix %s",
         desc="export new gradient files in mrtrix format",
     )
-    export_fslgrad = traits.Str(
+    export_fslgrad = traits.Tuple(
+        (traits.Str, traits.Str)
         argstr="-export_grad_fsl %s %s",
         desc="export gradient files in fsl format",
     )
