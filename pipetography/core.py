@@ -268,16 +268,6 @@ class Convert(CommandLine):
 
         return outputs
 
-#         try:
-#             outputs["out_file"] = os.path.abspath(self.inputs.out_file)
-#             outputs["out_bfile"] = os.path.abspath(self.inputs.out_bfile)
-#             outputs["out_fslgrad"] = os.path.abspath(self.inputs.out_fslgrad)
-#         except:
-#             print('There is no output gradient file')
-#         else:
-#             outputs["out_file"] = os.path.abspath(self.inputs.out_file)
-#         return outputs
-
 # Internal Cell
 class GradCheckInputSpec(PipetographyBaseInputSpec):
     in_file = File(
@@ -314,7 +304,7 @@ class GradCheck(CommandLine):
 
     def _list_outputs(self):
         outputs = self.output_spec().get()
-        outputs["out_bfile"] = os.path.abspath(self.inputs.out_bfile)
+        outputs["out_bfile"] = os.path.abspath(self.inputs.export_grad)
         return outputs
 
 # Internal Cell
@@ -428,8 +418,8 @@ class dwipreproc(CommandLine):
     def _list_outputs(self):
         outputs = self.output_spec().get()
         outputs["out_file"] = os.path.abspath(self.inputs.out_file)
-        if self.inputs.export_grad == True:
-            outputs["out_bfile"] = os.path.abspath(self.inputs.out_bfile)
+        if self.inputs.export_grad:
+            outputs["out_bfile"] = os.path.abspath(self.inputs.export_grad)
         return outputs
 
 # Internal Cell
@@ -509,7 +499,7 @@ class MRInfo(CommandLine):
     def _list_outputs(self):
         outputs = self.output_spec().get()
         try:
-            outputs["out_bfile"] = os.path.abspath(self.inputs.out_bfile)
+            outputs["out_bfile"] = os.path.abspath(self.inputs.export_grad)
         except:
             print('There is no output gradient file')
         return outputs
