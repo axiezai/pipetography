@@ -49,9 +49,9 @@ class PreProcNodes:
         ses_iter = [tup[1] for tup in filtered_sub_ses_list]
         # if regrid, output name has 1mm resolution, or name has orig resolution tag
         if regrid:
-            resol = '1mm'
+            self.img_resol = '1mm'
         else:
-            resol = 'orig'
+            self.img_resol = 'orig'
         self.subject_source = Node(IdentityInterface(fields=["subject_id", "session_id"]),
                                    iterables=[("subject_id", sub_iter), ("session_id", ses_iter)],
                                    synchronize=True,
@@ -232,36 +232,36 @@ class PreProcNodes:
             name='sub_ApplyMask',
         )
         self.mni_b0extract = Node(
-            DWIExtract(bzero = True, out_file = 'dwi_space-acpc_res-{}_b0.mif'.format(resol), nthreads = mrtrix_nthreads),
+            DWIExtract(bzero = True, out_file = 'dwi_space-acpc_res-{}_b0.mif'.format(self.img_resol), nthreads = mrtrix_nthreads),
             name='mni_b0extract',
         )
         self.mni_b0mean = Node(
-            MRMath(operation = 'mean', axis = 3, out_file = 'dwi_space-acpc_res-{}_b0mean.mif'.format(resol), nthreads = mrtrix_nthreads),
+            MRMath(operation = 'mean', axis = 3, out_file = 'dwi_space-acpc_res-{}_b0mean.mif'.format(self.img_resol), nthreads = mrtrix_nthreads),
             name='mni_mrmath_mean',
         )
         self.mni_b0mask = Node(
-            BrainMask(out_file = 'dwi_space-acpc_res-{}_mask.mif'.format(resol), nthreads = mrtrix_nthreads),
+            BrainMask(out_file = 'dwi_space-acpc_res-{}_mask.mif'.format(self.img_resol), nthreads = mrtrix_nthreads),
             name='mni_dwi2mask',
         )
         self.mni_convert_dwi = Node(
-            ppt.Convert(out_file = 'dwi_space-acpc_res-{}_b0mean.nii.gz'.format(resol)),
+            ppt.Convert(out_file = 'dwi_space-acpc_res-{}_b0mean.nii.gz'.format(self.img_resol)),
             name='mni_dwi2nii',
         )
         self.mni_convert_mask  = Node(
-            ppt.Convert(out_file = 'dwi_space-acpc_res-{}_seg-brain_mask.nii.gz'.format(resol)),
+            ppt.Convert(out_file = 'dwi_space-acpc_res-{}_seg-brain_mask.nii.gz'.format(self.img_resol)),
             name='mni_mask2nii',
         )
         self.mni_apply_mask = Node(
-            fsl.ApplyMask(out_file = 'dwi_space-acpc_res-{}_seg-brain.nii.gz'.format(resol)),
+            fsl.ApplyMask(out_file = 'dwi_space-acpc_res-{}_seg-brain.nii.gz'.format(self.img_resol)),
             name='mni_ApplyMask',
         )
         self.mni_dwi = Node(
-            ppt.Convert(out_file = 'dwi_space-acpc_res-{}.nii.gz'.format(resol),
-                        export_grad = 'dwi_space-acpc_res-{}.b'.format(resol),
-                        export_fslgrad = ('dwi_space-acpc_res-{}.bvecs'.format(resol), 'dwi_space-acpc_res-{}.bvals'.format(resol)),
+            ppt.Convert(out_file = 'dwi_space-acpc_res-{}.nii.gz'.format(self.img_resol),
+                        export_grad = 'dwi_space-acpc_res-{}.b'.format(self.img_resol),
+                        export_fslgrad = ('dwi_space-acpc_res-{}.bvecs'.format(self.img_resol), 'dwi_space-acpc_res-{}.bvals'.format(self.img_resol)),
                         export_json = True,
                         nthreads = mrtrix_nthreads,
-                        out_json = 'dwi_space-acpc_res-{}.json'.format(resol)),
+                        out_json = 'dwi_space-acpc_res-{}.json'.format(self.img_resol)),
             name='MNI_Outputs',
         )
 
@@ -328,7 +328,7 @@ class ACPCNodes:
             name='mrtransform',
         )
         self.regrid = Node(
-            ppt.MRRegrid(out_file = 'dwi_space-acpc_res-{}.mif'.format(resol), regrid = MNI_template),
+            ppt.MRRegrid(out_file = 'dwi_space-acpc_res-{}.mif'.format(self.img_resol), regrid = MNI_template),
             name = 'mrgrid',
         )
         self.gen_5tt = Node(
