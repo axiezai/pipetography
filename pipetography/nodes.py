@@ -4,6 +4,9 @@ __all__ = ['PreProcNodes', 'ACPCNodes', 'PostProcNodes']
 
 # Internal Cell
 import os
+import bids
+bids.config.set_option('extension_initial_dot', True)
+
 from pathlib import Path
 from itertools import product
 
@@ -21,20 +24,24 @@ from nipype.interfaces import fsl
 # Cell
 class PreProcNodes:
     """
-    All nodes in DWI preprocessing pipeline. All inputs are set during `pipeline.create_nodes()` call.
+    Initiate DWI preprocessing pipeline nodes.
 
     Inputs:
-        - bids_dir (str)
-        - bids_path_template (dict)
-        - bids_ext (str)
-        - RPE_design (str)
+        - bids_dir (str) -
+        - bids_path_template (dict) - template for file naming conventions
+        - bids_ext (str) -
+        - rpe_design (str)
         - sub_list (List)
         - ses_list (List)
         - exclude_list (tuple)
     """
-    def __init__(self, bids_dir, bids_path_template, bids_ext, RPE_design, sub_list, ses_list, exclude_list = [()]):
+    def __init__(self, bids_dir, bids_path_template, bids_ext, rpe_design, mrtrix_nthreads, sub_list, ses_list, exclude_list = [()]):
         # create sub-graphs for subjects and sessions combos
         all_sub_ses_combos = set(product(sub_list, ses_list))
+        # Create BIDS output folder list
+        BIDSFolders = [('preprocessed/ses-%ssub-%s' % (session, subject), 'sub-%s/ses-%s/preprocessed' % (subject,  session))
+                                 for session in ses_list
+                                 for subject in sub_list]
         filtered_sub_ses_list = list(all_sub_ses_combos - set(exclude_list))
         sub_iter = [tup[0] for tup in filtered_sub_ses_list]
         ses_iter = [tup[1] for tup in filtered_sub_ses_list]
@@ -42,25 +49,31 @@ class PreProcNodes:
                                    iterables=[("subject_id", sub_iter), ("session_id", ses_iter)],
                                    synchronize=True,
                                    name = "sub_source")
+        self.subject_source.inputs.ext=bids_ext # <- Check if IdentityInterface accepts as above first...
         # reverse phase encoding design selection
-        if RPE_design == '-rpe_none':
+        if rpe_design == '-rpe_none':
+            # self.sub_grad_files.inputs.ext = bids_ext
             self.sub_grad_files = Node(
                 Function(input_names=['sub_dwi', 'ext'],
-                    output_names=["fslgrad"],
-                    function=ppt.get_sub_gradfiles
+                        output_names=["fslgrad"],
+                        function=ppt.get_sub_gradfiles,
+                        ext = bids_ext
                 ),
                 name = 'sub_grad_files',
             )
             self.mrconvert = Node(
-                ppt.Convert(),
+                ppt.Convert(out_file='raw_dwi.mif', export_grad=True, out_bfile='raw_dwi.b', nthreads=mrtrix_nthreads),
                 name='mrtrix_image',
             )
-        elif RPE_design == '-rpe_all':
+        elif rpe_design == '-rpe_all':
+            # self.sub_grad_files1.inputs.ext = bids_ext
+            # self.sub_grad_files2.inputs.ext = bids_ext
             self.sub_grad_files1 = Node(
                 Function(
                     input_names=["sub_dwi", "ext"],
                     output_names=["fslgrad"],
-                    function=ppt.get_sub_gradfiles
+                    function=ppt.get_sub_gradfiles,
+                    ext = bids_ext
                 ),
                 name = "sub_grad_files1",
             )
@@ -68,69 +81,72 @@ class PreProcNodes:
                 Function(
                     input_names=["sub_dwi", "ext"],
                     output_names=["fslgrad"],
-                    function=ppt.get_sub_gradfiles
+                    function=ppt.get_sub_gradfiles,
+                    ext = bids_ext
                 ),
                 name = "sub_grad_files2",
             )
             self.mrconvert1 = Node(
-                ppt.Convert(),
+                ppt.Convert(out_file='raw_dwi1.mif', export_grad=True, out_bfile='raw_dwi1.b', nthreads=mrtrix_nthreads),
                 name='mrtrix_image1',
             )
             self.mrconvert2 = Node(
-                ppt.Convert(),
+                ppt.Convert(out_file='raw_dwi2.mif', export_grad=True, out_bfile='raw_dwi2.b', nthreads=mrtrix_nthreads),
                 name='mrtrix_image2',
             )
             # concatenate the two images and their gradient files.
             self.mrconcat = Node(
-                ppt.MRCat(),
+                ppt.MRCat(out_file = 'raw_dwi.mif'),
                 name='concat_dwi',
             )
             self.gradcat = Node(
-                ppt.GradCat(),
+                ppt.GradCat(out_file = 'raw_dwi.b'),
                 name='concat_grad',
             )
         self.select_files = Node(
             SelectFiles(bids_path_template, base_directory=bids_dir),
             name='select_files'
         )
+        # self.get_metadata.inputs.bids_dir=bids_dir <<---- Check before deleting
         self.get_metadata = Node(
             Function(
                 input_names=['path', 'bids_dir'],
                 output_names=['ReadoutTime', 'PE_DIR'],
-                function=ppt.BIDS_metadata
+                function=ppt.BIDS_metadata,
+                bids_dir=bids_dir,
             ),
             name='get_metadata',
         )
         self.createMask = Node(
-            BrainMask(),
+            BrainMask(out_file='b0_brain_mask.mif', nthreads=mrtrix_nthreads),
             name='raw_dwi2mask',
         )
         self.GradCheck = Node(
-            ppt.GradCheck(),
+            ppt.GradCheck(export_grad=True, out_bfile='corrected.b', nthreads=mrtrix_nthreads),
             name='dwigradcheck',
         )
         self.NewGradMR = Node(
-            ppt.Convert(),
+            ppt.Convert(out_file='corrected_dwi.mif', nthreads=mrtrix_nthreads),
             name='mrconvert',
         )
         self.denoise = Node(
-            ppt.dwidenoise(),
+            ppt.dwidenoise(out_file='denoised.mif', noise = 'noise_map.mif', nthreads=mrtrix_nthreads),
             name='denoise',
         )
         self.degibbs = Node(
-            MRDeGibbs(),
+            MRDeGibbs(out_file='unring.mif', nthreads = mrtrix_nthreads),
             name='ringing_removal',
         )
         self.fslpreproc = Node(
-            ppt.dwipreproc(),
+            ppt.dwipreproc(out_file='preproc.mif', rpe_options=rpe_design, eddy_options='"--slm=linear --repol "', nthreads=mrtrix_nthreads, export_grad=True, out_bfile='eddy_dwi.b'),
             name = "dwifslpreproc",
         )
         self.GradUpdate = Node(
-            ppt.GradCheck(),
+            ppt.GradCheck(export_grad=True, out_bfile='tmp.b'),
             name = 'alter_gradient'
         )
         self.ModGrad = Node(
-            ppt.MRInfo(),
+            ppt.MRInfo(export_grad=True, out_bfile='modified.b'),
             name = 'modify_gradient'
         )
         self.UpdateMif = Node(
@@ -142,348 +158,191 @@ class PreProcNodes:
                 name='recreate_mask'
         )
         self.biascorrect = Node(
-            ppt.BiasCorrect(),
+            ppt.BiasCorrect(use_ants=True, out_file='dwi_bias.mif', bias='biasfield.mif', nthreads = mrtrix_nthreads),
             name = 'dwibiascorrect',
         )
         self.grad_info = Node(
-            ppt.MRInfo(),
+            ppt.MRInfo(export_grad=True, out_bfile = 'rician_tmp.b', nthreads = mrtrix_nthreads),
             name = 'NewGradient',
         )
         self.low_noise_map = Node(
-            ppt.CheckNIZ(),
+            ppt.CheckNIZ(out_file = 'lownoisemap.mif', nthreads = mrtrix_nthreads),
             name = 'LowNoiseMap',
         )
         self.rician_noise = Node(
-            ppt.RicianNoise(),
+            ppt.RicianNoise(power = 2, denoise = 2, out_file = 'rician_removed_dwi.mif', nthreads=mrtrix_nthreads),
             name = 'RicianNoise',
         )
         self.check_rician = Node(
-            ppt.CheckNIZ(),
+            ppt.CheckNIZ(out_file = 'rician_tmp.mif', nthreads = mrtrix_nthreads),
             name = 'NoiseComparison',
         )
         self.convert_rician = Node(
-            ppt.Convert(),
+            ppt.Convert(out_file = 'rician_corrected_dwi.mif', nthreads = mrtrix_nthreads),
             name = "ConvertRician",
         )
         self.dwi_mask = Node(
-            BrainMask(),
+            BrainMask(out_file = 'dwi_mask.mif'),
             name='dwi2mask',
         )
         self.fit_tensor = Node(
-            FitTensor(),
+            FitTensor(out_file = 'dti.mif'),
             name='dwi2tensor',
         )
         self.tensor_FA = Node(
-            TensorMetrics(),
+            TensorMetrics(out_fa = 'fa.mif'),
             name='tensor2metrics',
         )
         self.wm_mask = Node(
-            ppt.MRThreshold(),
+            ppt.MRThreshold(opt_abs = 0.5, out_file = 'wm.mif', nthreads = mrtrix_nthreads),
             name = 'mrthreshold',
         )
         self.norm_intensity = Node(
-            ppt.DWINormalize(),
+            ppt.DWINormalize(opt_intensity = 1000, out_file = 'dwi_norm_intensity.mif', nthreads = mrtrix_nthreads),
             name='dwinormalise',
         )
         self.sub_b0extract = Node(
-            DWIExtract(),
+            DWIExtract(bzero = True, out_file = 'b0_volume.mif', nthreads = mrtrix_nthreads),
             name='sub_b0extract',
         )
         self.sub_b0mean = Node(
-            MRMath(),
+            MRMath(operation = 'mean', axis = 3, out_file = 'b0_dwi.mif', nthreads = mrtrix_nthreads),
             name='sub_mrmath_mean',
         )
         self.sub_b0mask = Node(
-            BrainMask(),
+            BrainMask(out_file = 'dwi_norm_mask.mif', nthreads = mrtrix_nthreads),
             name='sub_dwi2mask',
         )
         self.sub_convert_dwi = Node(
-            ppt.Convert(),
+            ppt.Convert(out_file = 'b0_dwi.nii.gz'),
             name="sub_dwi2nii",
         )
         self.sub_convert_mask = Node(
-            ppt.Convert(),
+            ppt.Convert(out_file = 'dwi_norm_mask.nii.gz'),
             name="sub_mask2nii",
         )
         self.sub_apply_mask = Node(
-            fsl.ApplyMask(),
+            fsl.ApplyMask(out_file = 'b0_dwi_brain.nii.gz'),
             name='sub_ApplyMask',
         )
         self.mni_b0extract = Node(
-            DWIExtract(),
+            DWIExtract(bzero = True, out_file = 'dwi_acpc_1mm_b0.mif', nthreads = mrtrix_nthreads),
             name='mni_b0extract',
         )
         self.mni_b0mean = Node(
-            MRMath(),
+            MRMath(operation = 'mean', axis = 3, out_file = 'dwi_acpc_1mm_b0mean.mif', nthreads = mrtrix_nthreads),
             name='mni_mrmath_mean',
         )
         self.mni_b0mask = Node(
-            BrainMask(),
+            BrainMask(out_file = 'dwi_acpc_1mm_mask.mif', nthreads = mrtrix_nthreads),
             name='mni_dwi2mask',
         )
         self.mni_convert_dwi = Node(
-            ppt.Convert(),
+            ppt.Convert(out_file = 'dwi_acpc_1mm_b0mean.nii.gz'),
             name='mni_dwi2nii',
         )
         self.mni_convert_mask  = Node(
-            ppt.Convert(),
+            ppt.Convert(out_file = 'dwi_acpc_1mm_mask.nii.gz'),
             name='mni_mask2nii',
         )
         self.mni_apply_mask = Node(
-            fsl.ApplyMask(),
+            fsl.ApplyMask(out_file = 'dwi_acpc_1mm_brain.nii.gz'),
             name='mni_ApplyMask',
         )
         self.mni_dwi = Node(
-            ppt.Convert(),
+            ppt.Convert(out_file = 'dwi_acpc_1mm.nii.gz',
+                        export_grad = True,
+                        export_fslgrad = True,
+                        export_json = True,
+                        nthreads = mrtrix_nthreads,
+                        out_bfile = 'dwi_acpc_1mm.b',
+                        out_fslgrad = ('dwi_acpc.bvecs', 'dwi_acpc.bvals'),
+                        out_json = 'dwi_acpc_1mm.json'),
             name='MNI_Outputs',
         )
 
         self.datasink = Node(
             DataSink(
-                base_directory=os.path.join(Path(bids_dir).parent, 'derivatives')
+                base_directory=os.path.join(bids_dir, 'derivatives', 'pipetography')
             ),
             name="datasink"
         )
-        print('Data sink (output folder) is set to {}'.format(os.path.join(Path(bids_dir).parent, 'derivatives')))
-
-    def set_inputs(self, bids_dir, bids_ext, RPE_design, mrtrix_nthreads):
-        self.subject_source.inputs.ext=bids_ext
-        if RPE_design == '-rpe_none':
-            self.sub_grad_files.inputs.ext = bids_ext
-            self.mrconvert.inputs.out_file='raw_dwi.mif'
-            self.mrconvert.inputs.export_grad=True
-            self.mrconvert.inputs.out_bfile='raw_dwi.b'
-            self.mrconvert.force=True
-            self.mrconvert.quiet=True
-            self.mrconvert.inputs.nthreads=mrtrix_nthreads
-        elif RPE_design == '-rpe_all':
-            self.sub_grad_files1.inputs.ext = bids_ext
-            self.sub_grad_files2.inputs.ext = bids_ext
-            self.mrconvert1.inputs.out_file='raw_dwi1.mif'
-            self.mrconvert1.inputs.export_grad=True
-            self.mrconvert1.inputs.out_bfile='raw_dwi1.b'
-            self.mrconvert1.inputs.force=True
-            self.mrconvert1.inputs.quiet=True
-            self.mrconvert1.inputs.nthreads=mrtrix_nthreads
-            self.mrconvert2.inputs.out_file='raw_dwi2.mif'
-            self.mrconvert2.inputs.export_grad=True
-            self.mrconvert2.inputs.out_bfile='raw_dwi2.b'
-            self.mrconvert2.inputs.force=True
-            self.mrconvert2.inputs.quiet=True
-            self.mrconvert2.inputs.nthreads=mrtrix_nthreads
-            self.mrconcat.inputs.out_file = 'raw_dwi.mif'
-            self.gradcat.inputs.out_file = 'raw_dwi.b'
-        self.createMask.inputs.out_file='b0_brain_mask.mif'
-        self.createMask.inputs.nthreads=mrtrix_nthreads
-        self.GradCheck.inputs.export_grad=True
-        self.GradCheck.inputs.out_bfile='corrected.b'
-        self.GradCheck.inputs.force=True
-        self.GradCheck.inputs.quiet=True
-        self.GradCheck.inputs.nthreads=mrtrix_nthreads
-        self.NewGradMR.inputs.out_file='corrected_dwi.mif'
-        self.NewGradMR.inputs.force=True
-        self.NewGradMR.inputs.quiet=True
-        self.NewGradMR.inputs.nthreads=mrtrix_nthreads
-        self.denoise.inputs.out_file='denoised.mif'
-        self.denoise.inputs.noise = 'noise_map.mif'
-        self.denoise.inputs.force=True
-        self.denoise.inputs.quiet=True
-        self.denoise.inputs.nthreads=mrtrix_nthreads
-        self.degibbs.inputs.out_file='unring.mif'
-        self.get_metadata.inputs.bids_dir=bids_dir
-        self.fslpreproc.inputs.out_file='preproc.mif'
-        self.fslpreproc.inputs.rpe_options=RPE_design
-        self.fslpreproc.inputs.eddy_options='"--slm=linear --repol "'
-        self.fslpreproc.inputs.force=True
-        self.fslpreproc.inputs.quiet=True
-        self.fslpreproc.inputs.nthreads=mrtrix_nthreads
-        self.fslpreproc.inputs.export_grad=True
-        self.fslpreproc.inputs.out_bfile='eddy_dwi.b'
-        self.GradUpdate.inputs.export_grad=True
-        self.GradUpdate.inputs.out_bfile='tmp.b'
-        self.ModGrad.inputs.export_grad=True
-        self.ModGrad.inputs.out_bfile='modified.b'
-        self.biascorrect.inputs.use_ants=True
-        self.biascorrect.inputs.out_file='dwi_bias.mif'
-        self.biascorrect.inputs.bias='biasfield.mif'
-        self.grad_info.inputs.export_grad=True
-        self.grad_info.inputs.out_bfile = 'rician_tmp.b'
-        self.grad_info.inputs.force=True
-        self.grad_info.inputs.quiet=True
-        self.grad_info.inputs.nthreads = mrtrix_nthreads
-        self.low_noise_map.inputs.out_file = 'lownoisemap.mif'
-        self.low_noise_map.inputs.force = True
-        self.low_noise_map.inputs.quiet = True
-        self.low_noise_map.inputs.nthreads = mrtrix_nthreads
-        self.rician_noise.inputs.power = 2
-        self.rician_noise.inputs.denoise = 2
-        self.rician_noise.inputs.out_file = 'rician_removed_dwi.mif'
-        self.rician_noise.inputs.force=True
-        self.rician_noise.inputs.quiet=True
-        self.rician_noise.inputs.nthreads=mrtrix_nthreads
-        self.check_rician.inputs.out_file = 'rician_tmp.mif'
-        self.check_rician.inputs.force = True
-        self.check_rician.inputs.nthreads = mrtrix_nthreads
-        self.convert_rician.inputs.out_file = 'rician_corrected_dwi.mif'
-        self.convert_rician.inputs.force = True
-        self.convert_rician.inputs.nthreads = mrtrix_nthreads
-        self.wm_mask.inputs.opt_abs = 0.5
-        self.wm_mask.inputs.force = True
-        self.wm_mask.inputs.quiet = True
-        self.wm_mask.inputs.out_file = 'wm.mif'
-        self.wm_mask.inputs.nthreads = mrtrix_nthreads
-        self.norm_intensity.inputs.opt_intensity = 1000
-        self.norm_intensity.inputs.force = True
-        self.norm_intensity.inputs.quiet = True
-        self.norm_intensity.inputs.out_file = 'dwi_norm_intensity.mif'
-        self.norm_intensity.inputs.nthreads = mrtrix_nthreads
-        self.dwi_mask.inputs.out_file = 'dwi_mask.mif'
-        self.fit_tensor.inputs.out_file = 'dti.mif'
-        self.tensor_FA.inputs.out_fa = 'fa.mif'
-        self.sub_b0extract.inputs.bzero = True
-        self.sub_b0extract.inputs.out_file = 'b0_volume.mif'
-        self.sub_b0extract.inputs.nthreads = mrtrix_nthreads
-        self.sub_b0mean.inputs.operation = 'mean'
-        self.sub_b0mean.inputs.axis = 3
-        self.sub_b0mean.inputs.out_file = 'b0_dwi.mif'
-        self.sub_b0mean.inputs.nthreads = mrtrix_nthreads
-        self.sub_b0mask.inputs.out_file = 'dwi_norm_mask.mif'
-        self.sub_convert_dwi.inputs.out_file = 'b0_dwi.nii.gz'
-        self.sub_convert_dwi.inputs.force = True
-        self.sub_convert_mask.inputs.force = True
-        self.sub_convert_mask.inputs.out_file = 'dwi_norm_mask.nii.gz'
-        self.sub_apply_mask.inputs.out_file = 'b0_dwi_brain.nii.gz'
-        self.mni_b0extract.inputs.bzero = True
-        self.mni_b0extract.inputs.out_file = 'dwi_acpc_1mm_b0.mif'
-        self.mni_b0extract.inputs.nthreads = mrtrix_nthreads
-        self.mni_b0mean.inputs.operation = 'mean'
-        self.mni_b0mean.inputs.axis = 3
-        self.mni_b0mean.inputs.out_file = 'dwi_acpc_1mm_b0mean.mif'
-        self.mni_b0mean.inputs.nthreads = mrtrix_nthreads
-        self.mni_b0mask.inputs.out_file = 'dwi_acpc_1mm_mask.mif'
-        self.mni_convert_dwi.inputs.out_file = 'dwi_acpc_1mm_b0mean.nii.gz'
-        self.mni_convert_mask.inputs.out_file = 'dwi_acpc_1mm_mask.nii.gz'
-        self.mni_convert_dwi.inputs.force = True
-        self.mni_convert_mask.inputs.force = True
-        self.mni_apply_mask.inputs.out_file = 'dwi_acpc_1mm_brain.nii.gz'
-        self.mni_dwi.inputs.out_file = 'dwi_acpc_1mm.nii.gz'
-        self.mni_dwi.inputs.export_grad = True
-        self.mni_dwi.inputs.export_fslgrad = True
-        self.mni_dwi.inputs.export_json = True
-        self.mni_dwi.inputs.force = True
-        self.mni_dwi.inputs.nthreads = mrtrix_nthreads
-        self.mni_dwi.inputs.out_bfile = 'dwi_acpc_1mm.b'
-        self.mni_dwi.inputs.out_fslgrad = ('dwi_acpc.bvecs', 'dwi_acpc.bvals')
-        self.mni_dwi.inputs.out_json = 'dwi_acpc_1mm.json'
+        substitutions = [('_subject_id_', 'sub-'),
+                         ('_session_id_', 'ses-')]
+        substitutions.extend(BIDSFolders)
+        self.datasink.inputs.substitutions = substitutions
+        print('Data sink (output folder) is set to {}'.format(os.path.join(bids_dir, 'derivatives', 'pipetography')))
 
 # Cell
 class ACPCNodes:
     """
-    Anatomy related and Freesurfer nodes. Mainly ACPC alignment of T1 and DWI and extraction of white matter mask.
+    T1 anatomy image related nodes. Mainly ACPC alignment of T1 and DWI and extraction of white matter mask.
     Inputs:
-        - MNI_template: path to MNI template provided by FSL.
+        - MNI_template: path to MNI template provided by FSL. By default uses the environment variable FSLDIR to locate the reference templates for ACPC alignment.
     """
     def __init__(self, MNI_template):
-        ## removed get_fs_id
         self.reduceFOV = Node(
-            fsl.utils.RobustFOV(),
+            fsl.utils.RobustFOV(out_transform='roi2full.mat',
+                                out_roi='robustfov.nii.gz'),
             name="reduce_FOV",
         )
         self.xfminverse = Node(
-            fsl.utils.ConvertXFM(),
+            fsl.utils.ConvertXFM(out_file='full2roi.mat', invert_xfm=True),
             name="transform_inverse",
         )
         self.flirt = Node(
-            fsl.preprocess.FLIRT(),
+            fsl.preprocess.FLIRT(reference=MNI_template, interp='spline', out_matrix_file='roi2std.mat', out_file='acpc_mni.nii.gz'),
             name="FLIRT",
         )
         self.concatxfm = Node(
-            fsl.utils.ConvertXFM(),
+            fsl.utils.ConvertXFM(concat_xfm=True, out_file='full2std.mat'),
             name="concat_transform",
         )
         self.alignxfm = Node(
-            ppt.fslaff2rigid(),
+            ppt.fslaff2rigid(out_file='outputmatrix'),
             name='aff2rigid',
         )
         self.ACPC_warp = Node(
-            fsl.preprocess.ApplyWarp(),
+            fsl.preprocess.ApplyWarp(out_file='acpc_t1.nii', relwarp=True, output_type='NIFTI', interp='spline', ref_file=MNI_template),
             name='apply_warp',
         )
         ## removed reconall
         self.t1_bet = Node(
-            fsl.preprocess.BET(),
+            fsl.preprocess.BET(mask = True, robust = True, out_file = 'acpc_t1_brain.nii.gz'),
             name='fsl_bet',
         )
         self.epi_reg = Node(
-            fsl.epi.EpiReg(),
+            fsl.epi.EpiReg(out_base = 'dwi2acpc'),
             name='fsl_epireg',
         )
         self.acpc_xfm = Node(
-            ppt.TransConvert(),
+            ppt.TransConvert(flirt = True, out_file = 'dwi2acpc_xfm.mat', force = True),
             name='transformconvert',
         )
         self.apply_xfm = Node(
-            ppt.MRTransform(),
+            ppt.MRTransform(out_file = 'dwi_acpc.mif'),
             name='mrtransform',
         )
         self.regrid = Node(
-            ppt.MRRegrid(),
+            ppt.MRRegrid(out_file = 'dwi_acpc_1mm.mif', regrid = MNI_template),
             name = 'mrgrid',
         )
         self.gen_5tt = Node(
-            Generate5tt(),
+            Generate5tt(algorithm = 'fsl', out_file = 'mrtrix3_5tt.mif'),
             name='mrtrix_5ttgen',
         )
         self.gmwmi = Node(
-            ppt.gmwmi(),
+            ppt.gmwmi(out_file = 'gmwmi.nii.gz'),
             name='5tt2gmwmi'
         )
         self.binarize_gmwmi = Node(
-            ppt.MRThreshold(),
+            ppt.MRThreshold(opt_abs = 0.05, out_file = 'gmwmi_mask.nii.gz'),
             name='binarize_gmwmi'
         )
         self.convert2wm = Node(
-            ppt.Convert(),
+            ppt.Convert(coord = [3, 2], axes = [0, 1, 2], out_file = '5tt_wm.nii.gz'),
             name='5tt2wm',
         )
-
-    def set_inputs(self, bids_dir, MNI_template):
-        self.reduceFOV.inputs.out_transform='roi2full.mat'
-        self.reduceFOV.inputs.out_roi='robustfov.nii.gz'
-        self.flirt.inputs.reference=MNI_template
-        self.flirt.inputs.interp='spline'
-        self.flirt.inputs.out_matrix_file='roi2std.mat'
-        self.flirt.inputs.out_file='acpc_mni.nii.gz'
-        self.xfminverse.inputs.out_file='full2roi.mat'
-        self.xfminverse.inputs.invert_xfm=True
-        self.concatxfm.inputs.concat_xfm=True
-        self.concatxfm.inputs.out_file='full2std.mat'
-        self.alignxfm.inputs.out_file='outputmatrix'
-        self.ACPC_warp.inputs.out_file='acpc_t1.nii'
-        self.ACPC_warp.inputs.relwarp=True
-        self.ACPC_warp.inputs.output_type='NIFTI'
-        self.ACPC_warp.inputs.interp='spline'
-        self.ACPC_warp.inputs.ref_file=MNI_template
-        self.t1_bet.inputs.mask = True
-        self.t1_bet.inputs.robust = True
-        self.t1_bet.inputs.out_file = 'acpc_t1_brain.nii.gz'
-        self.epi_reg.inputs.out_base = 'dwi2acpc'
-        self.acpc_xfm.inputs.flirt = True
-        self.acpc_xfm.inputs.out_file = 'dwi2acpc_xfm.mat'
-        self.acpc_xfm.inputs.force = True
-        self.apply_xfm.inputs.out_file = 'dwi_acpc.mif'
-        self.regrid.inputs.out_file = 'dwi_acpc_1mm.mif'
-        self.regrid.inputs.regrid = MNI_template
-        self.gen_5tt.inputs.algorithm = 'fsl'
-        self.gen_5tt.inputs.out_file = 'mrtrix3_5tt.mif'
-        self.gmwmi.inputs.out_file = 'gmwmi.nii.gz'
-        self.binarize_gmwmi.inputs.opt_abs = 0.05
-        self.binarize_gmwmi.inputs.force = True
-        self.binarize_gmwmi.inputs.quiet = True
-        self.binarize_gmwmi.inputs.out_file = 'gmwmi_mask.nii.gz'
-        self.convert2wm.inputs.coord = [3, 2]
-        self.convert2wm.inputs.axes = [0, 1, 2]
-        self.convert2wm.inputs.out_file = '5tt_wm.nii.gz'
 
 # Cell
 
@@ -496,13 +355,16 @@ class PostProcNodes:
     """
 
     def __init__(self, BIDS_dir, subj_template, skip_tuples):
-        sub_list, ses_list, layout = ppt.get_subs(BIDS_dir)  # BIDS directory for layout and iterables
-        data_dir = os.path.join(Path(BIDS_dir).parent)  # parent directory from BIDS folder containing derivatives and cuda tracking outputs
+        sub_list, ses_list, layout = ppt.get_subs(BIDS_dir)                  # BIDS directory for layout and iterables
+        # Create BIDS output folder list
+        BIDSFolders = [('connectomes/ses-%ssub-%s' % (session, subject), 'sub-%s/ses-%s/connectomes' % (subject,  session))
+                                 for session in ses_list
+                                 for subject in sub_list]
+        preproc_dir = os.path.join(BIDS_dir, 'derivatives', 'pipetography')  # BIDS derivatives directory containing preprocessed outputs and streamline outputs
         all_sub_ses_combos = set(product(sub_list, ses_list))
         filtered_combos = list(all_sub_ses_combos - set(skip_tuples))
         sub_iter = [tup[0] for tup in filtered_combos]
         ses_iter = [tup[1] for tup in filtered_combos]
-        # Atlas input: replace with list input on MapNodes
         # DWI input:
         self.subject_source = Node(
             IdentityInterface(fields=["subject_id", "session_id"]),
@@ -512,7 +374,7 @@ class PostProcNodes:
         )
         self.select_files = Node(
             SelectFiles(subj_template),
-            base_directory = data_dir,
+            base_directory = BIDS_dir,
             name = 'select_subjects'
         )
         self.linear_reg = Node(
@@ -592,9 +454,13 @@ class PostProcNodes:
             name = 'weight_distance'
         )
         self.datasink = Node(
-            DataSink(
-                base_directory=os.path.join(Path(data_dir), 'derivatives')
-            ),
+            DataSink(base_directory = preproc_dir),
             name="datasink"
         )
-        print('Data sink (output folder) is set to {}'.format(os.path.join(Path(data_dir), 'derivatives')))
+        substitutions = [('_subject_id_', 'sub-'),
+                         ('_session_id_', 'ses-')]
+        substitutions.extend(BIDSFolders)
+        self.datasink.inputs.substitutions = substitutions
+        self.datasink.inputs.regexp_substitutions = [(r'(_moving_image_.*\.\.)', ''),
+                                                     (r'(\.nii|\.gz)', '')]
+        print('Data sink (output folder) is set to {}'.format(preproc_dir))

@@ -2,11 +2,13 @@
 
 title: Module nodes
 
+
 keywords: fastai
 sidebar: home_sidebar
 
-summary: "Classes containing all Nodes used in workflows."
-description: "Classes containing all Nodes used in workflows."
+summary: "Modules containing all Nodes used in workflows."
+description: "Modules containing all Nodes used in workflows."
+nb_path: "02_nodes.ipynb"
 ---
 <!--
 
@@ -31,13 +33,6 @@ description: "Classes containing all Nodes used in workflows."
     
 <div class="cell border-box-sizing code_cell rendered">
 
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
 <div class="output_wrapper">
 <div class="output">
 
@@ -45,15 +40,15 @@ description: "Classes containing all Nodes used in workflows."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="PreProcNodes" class="doc_header"><code>class</code> <code>PreProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PreProcNodes</code>(<strong><code>bids_dir</code></strong>, <strong><code>bids_path_template</code></strong>, <strong><code>bids_ext</code></strong>, <strong><code>RPE_design</code></strong>, <strong><code>sub_list</code></strong>, <strong><code>ses_list</code></strong>, <strong><code>exclude_list</code></strong>=<em><code>[()]</code></em>)</p>
+<h2 id="PreProcNodes" class="doc_header"><code>class</code> <code>PreProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L25" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PreProcNodes</code>(<strong><code>bids_dir</code></strong>, <strong><code>bids_path_template</code></strong>, <strong><code>bids_ext</code></strong>, <strong><code>rpe_design</code></strong>, <strong><code>mrtrix_nthreads</code></strong>, <strong><code>sub_list</code></strong>, <strong><code>ses_list</code></strong>, <strong><code>exclude_list</code></strong>=<em><code>[()]</code></em>)</p>
 </blockquote>
-<p>All nodes in DWI preprocessing pipeline. All inputs are set during <a href="/pipetography/pipeline#pipeline.create_nodes("><code>pipeline.create_nodes()</code></a>) call.</p>
+<p>Initiate DWI preprocessing pipeline nodes.</p>
 <p>Inputs:</p>
 
-<pre><code>- bids_dir (str)
-- bids_path_template (dict)
-- bids_ext (str)
-- RPE_design (str)
+<pre><code>- bids_dir (str) -
+- bids_path_template (dict) - template for file naming conventions
+- bids_ext (str) -
+- rpe_design (str)
 - sub_list (List)
 - ses_list (List)
 - exclude_list (tuple)</code></pre>
@@ -86,12 +81,12 @@ description: "Classes containing all Nodes used in workflows."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ACPCNodes" class="doc_header"><code>class</code> <code>ACPCNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L380" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ACPCNodes</code>(<strong><code>MNI_template</code></strong>)</p>
+<h2 id="ACPCNodes" class="doc_header"><code>class</code> <code>ACPCNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L277" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ACPCNodes</code>(<strong><code>MNI_template</code></strong>)</p>
 </blockquote>
-<p>Anatomy related and Freesurfer nodes. Mainly ACPC alignment of T1 and DWI and extraction of white matter mask.
+<p>T1 anatomy image related nodes. Mainly ACPC alignment of T1 and DWI and extraction of white matter mask.
 Inputs:</p>
 
-<pre><code>- MNI_template: path to MNI template provided by FSL.</code></pre>
+<pre><code>- MNI_template: path to MNI template provided by FSL. By default uses the environment variable FSLDIR to locate the reference templates for ACPC alignment.</code></pre>
 
 </div>
 
@@ -99,6 +94,13 @@ Inputs:</p>
 
 </div>
 </div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
@@ -114,13 +116,6 @@ Inputs:</p>
     
 <div class="cell border-box-sizing code_cell rendered">
 
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
 <div class="output_wrapper">
 <div class="output">
 
@@ -128,7 +123,7 @@ Inputs:</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="PostProcNodes" class="doc_header"><code>class</code> <code>PostProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L490" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PostProcNodes</code>(<strong><code>BIDS_dir</code></strong>, <strong><code>subj_template</code></strong>, <strong><code>skip_tuples</code></strong>)</p>
+<h2 id="PostProcNodes" class="doc_header"><code>class</code> <code>PostProcNodes</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/nodes.py#L349" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PostProcNodes</code>(<strong><code>BIDS_dir</code></strong>, <strong><code>subj_template</code></strong>, <strong><code>skip_tuples</code></strong>)</p>
 </blockquote>
 <p>Inputs:
     BIDS_dir (str): Path to BIDS directory
@@ -148,41 +143,6 @@ Inputs:</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">test_node</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>subj_source
-select_subjects
-linear_registration
-nonlinear_registration
-round_parcellation
-SDResponse
-dwiFOD
-sift2_filtering
-weight_connectome
-weight_distance
-datasink
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
     {% endraw %}

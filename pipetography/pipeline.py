@@ -4,68 +4,51 @@ __all__ = ['pipeline']
 
 # Internal Cell
 import os, sys
+import bids
+bids.config.set_option('extension_initial_dot', True)
+
 from shutil import which
 from pathlib import Path
+from nipype.pipeline import Workflow
 
 import pipetography.core as ppt
 import pipetography.nodes as nodes
 
-from nipype import IdentityInterface, Function
-from nipype.interfaces.io import SelectFiles, DataSink
-from nipype.pipeline import Node, MapNode, Workflow
-from nipype.interfaces.mrtrix3.utils import BrainMask, TensorMetrics, DWIExtract, MRMath
-from nipype.interfaces.mrtrix3.preprocess import MRDeGibbs, DWIBiasCorrect
-from nipype.interfaces.mrtrix3.reconst import FitTensor
-from nipype.interfaces import ants
-from nipype.interfaces import fsl
-
 # Cell
 class pipeline:
     """
-    Create a `Nipype` workflow that selects data inputs iteratively from `BIDS_dir` that has both `anat` and `dwi` modalities.
-
-    Inputs to specify:
-        - BIDS_dir (str): path to BIDS dataset
-        - ext (str): extension of your images. Default is set to "nii.gz"
-        - RPE_design (str): default is "-rpe_none", reverse phase encoding design for your DWI acquisition. Also supports '-rpe_all'
-        - Regrid (bool): whether  to resample DWI to  1mm MNI template
-        - mrtrix_nthreads (int): how many threads for mrtrix3 algorithms. Disable multithreading by setting to 0. Default is 6.
-        - skip_tuples (tuple): [('subject', 'session')] ID pair to skip.
+    Create a `Nipype` workflow, collects the layout of a BIDS directory, and branches the workflow into sub-graphs that can be ran in parallel per subject-session combination
+    Inputs:
+        - BIDS_dir (str): Path to BIDS dataset.
+        - ext (str): Extension of your BIDS image files. Default is set to "nii.gz"
+        - rpe_design (str): Reverse phase encoding design for your DWI acquisition. Also supports '-rpe_all', default is "-rpe_none"
+        - regrid (bool): Whether  to resample DWI to  1mm MNI template, defaults to True.
+        - mrtrix_nthreads (int): Number of threads for mrtrix3 algorithm. If zero, the number of available CPUs will be used. Default is 0.
+        - skip_tuples (tuple): A combination of [('subject #', 'session #')] tuples that you'd want the workflow to skip, example: [('01', '03')] will skip sub-01/ses-03.
     """
 
-    def __init__(self, BIDS_dir="data", ext = "nii.gz", RPE_design = "-rpe_none", Regrid = True, mrtrix_nthreads = 6, skip_tuples = [()]):
-        """
-        Nodes are initialized with the bare minimum of inputs or default parameters
-        Remaining inputs are either connected in the Nipype workflow or are user inputs
-        Args:
-            - BIDS_dir (str): Path to BIDS dataset
-            - RPE_design (str): see mrtrix3 docs for options, "-rpe_none" is default.
-            - Regrid (bool): whether to resample your dwi to MNI template 1mm voxel grids
-            - recon (bool): whether to perform freesurfer's recon-all
-            - mrtrix_nthreads (int): how many threads to use for mrtrix3 functions
-            - skip_tuples (tuple): [('sub_label', ' ses_label')] specify which subjects and sessions combos to exclude from pipeline
-        """
+    def __init__(self, BIDS_dir, ext = "nii.gz", rpe_design = "-rpe_none", regrid = True, mrtrix_nthreads = 0, skip_tuples = [()]):
         self.bids_dir = BIDS_dir
-        self.RPE_design = RPE_design
-        self.Regrid = Regrid
+        self.rpe_design = rpe_design
+        self.regrid = regrid
         self.mrtrix_nthreads = mrtrix_nthreads
         self.ext = ext
         self.excludes = skip_tuples
         self.MNI_template = os.path.expandvars('$FSLDIR/data/standard/MNI152_T1_1mm.nii.gz')
         # Create derivatives folder if it doesn't exist:
-        if not os.path.exists(os.path.join(Path(BIDS_dir).parent, 'derivatives')):
-            print('No derivatives folder, creating it at {}'.format(
-                os.path.join(Path(BIDS_dir).parent, 'derivatives'))
+        if not os.path.exists(os.path.join(BIDS_dir, 'derivatives')):
+            print('No derivatives folder found in BIDS dataset folder, creating it at {}'.format(
+                os.path.join(BIDS_dir, 'derivatives'))
                  )
-            os.makedirs(os.path.join(Path(BIDS_dir).parent, 'derivatives'))
-        elif os.path.exists(os.path.join(Path(BIDS_dir).parent, 'derivatives')):
-            print('derivatives folder found at {}'.format(os.path.join(Path(BIDS_dir).parent, 'derivatives')))
+            os.makedirs(os.path.join(BIDS_dir, 'derivatives'))
+        elif os.path.exists(os.path.join(BIDS_dir, 'derivatives')):
+            print('derivatives folder found at {}'.format(os.path.join(BIDS_dir, 'derivatives')))
         # Generate BIDS Layout, and create subject ID list:
         self.sub_list, self.ses_list, self.layout = ppt.get_subs(self.bids_dir)
         # string templates for images: the templates will depend on rpe_design:
         #  - rpe_none: anat_file, dwi_file, b_files
         #  - rpe_all/rpe_pair: anat_file, dwi_file, rdwi_file, b_files, rb_files
-        if RPE_design == '-rpe_none':
+        if rpe_design == '-rpe_none':
             self.anat_file = os.path.join(
                 'sub-{subject_id}', 'ses-{session_id}', 'anat', 'sub-{subject_id}_ses-{session_id}_T1w.' + ext
             )
@@ -75,7 +58,7 @@ class pipeline:
             self.b_files = os.path.join(
                 "sub-{subject_id}", "ses-{session_id}", "dwi", "sub-{subject_id}_ses-{session_id}_dwi.bv*"
             )
-        elif RPE_design == '-rpe_all':
+        elif rpe_design == '-rpe_all':
             # if all directions were acquired twice, with reverse phase encoding directions.
             self.anat_file = os.path.join(
                 'sub-{subject_id}', 'ses-{session_id}', 'anat', 'sub-{subject_id}_ses-{session_id}_T1w.' + ext
@@ -93,14 +76,15 @@ class pipeline:
                 "sub-{subject_id}", "ses-{session_id}", "dwi", "sub-{subject_id}_ses-{session_id}_pa_dwi.bv*"
             )
 
+
     def create_nodes(self):
-        if self.RPE_design == '-rpe_none':
+        if self.rpe_design == '-rpe_none':
             self.sub_template = {
                 "anat": self.anat_file,
                 "dwi": self.dwi_file,
                 "b_files": self.b_files
             }
-        elif self.RPE_design == '-rpe_all':
+        elif self.rpe_design == '-rpe_all':
             self.sub_template = {
                 "anat": self.anat_file,
                 "dwi": self.dwi_file,
@@ -108,14 +92,18 @@ class pipeline:
                 "rdwi": self.rdwi_file,
                 "rbfiles": self.rb_files
             }
-        self.PreProcNodes = nodes.PreProcNodes(bids_dir=self.bids_dir, bids_path_template=self.sub_template, bids_ext = self.ext, RPE_design=self.RPE_design, sub_list=self.sub_list, ses_list=self.ses_list, exclude_list = self.excludes)
-        self.PreProcNodes.set_inputs(bids_dir=self.bids_dir, bids_ext = self.ext, RPE_design=self.RPE_design, mrtrix_nthreads=self.mrtrix_nthreads)
+        self.PreProcNodes = nodes.PreProcNodes(bids_dir=self.bids_dir,
+                                               bids_path_template=self.sub_template,
+                                               bids_ext = self.ext,
+                                               rpe_design=self.rpe_design,
+                                               mrtrix_nthreads = self.mrtrix_nthreads,
+                                               sub_list=self.sub_list,
+                                               ses_list=self.ses_list,
+                                               exclude_list = self.excludes)
         self.ACPCNodes = nodes.ACPCNodes(MNI_template=self.MNI_template)
-        self.ACPCNodes.set_inputs(bids_dir=self.bids_dir, MNI_template=self.MNI_template)
         self.workflow = None
 
 
-    # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
     def check_environment(self):
         """
         Check your computing environment for FSL environment variables `FSLOUTPUTTYPE` and `FSLDIR`
@@ -152,7 +140,7 @@ class pipeline:
 
     # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
     # Connect the nodes we defined above into a workflow:
-    def connect_nodes(self, RPE_design, recon=True, Regrid=True, wf_name="pipetography"):
+    def connect_nodes(self, rpe_design, recon=True, regrid=True, wf_name="pipetography"):
         """
         Connect nodes one by one and create Nipype workflow
         Input: wfname (str): name your workflow, default is pipetography
@@ -172,15 +160,15 @@ class pipeline:
                 (self.ACPCNodes.flirt, self.ACPCNodes.concatxfm, [("out_matrix_file", "in_file2")]),
                 (self.ACPCNodes.concatxfm, self.ACPCNodes.alignxfm, [("out_file", "in_file")]),
                 (self.ACPCNodes.alignxfm, self.ACPCNodes.ACPC_warp, [("out_file", "premat")]),
-                (self.ACPCNodes.ACPC_warp, self.PreProcNodes.datasink, [("out_file", "t1_acpc_aligned")]),
+                (self.ACPCNodes.ACPC_warp, self.PreProcNodes.datasink, [("out_file", "preprocessed.@t1_acpc_aligned")]),
                 ## Adding WM mask extraction to replace original recon all section
                 (self.ACPCNodes.ACPC_warp, self.ACPCNodes.gen_5tt, [("out_file", "in_file")]),
                 (self.ACPCNodes.gen_5tt, self.ACPCNodes.convert2wm, [("out_file", "in_file")]),
                 (self.ACPCNodes.gen_5tt, self.ACPCNodes.gmwmi, [("out_file", "in_file")]),
                 (self.ACPCNodes.gmwmi, self.ACPCNodes.binarize_gmwmi, [("out_file", "in_file")]),
-                (self.ACPCNodes.gen_5tt, self.PreProcNodes.datasink, [("out_file", "wm_mask.@mr5tt")]),
-                (self.ACPCNodes.binarize_gmwmi, self.PreProcNodes.datasink, [("out_file", "wm_mask.@gmwmi")]),
-                (self.ACPCNodes.convert2wm, self.PreProcNodes.datasink, [("out_file", "wm_mask.@wm")]),
+                (self.ACPCNodes.gen_5tt, self.PreProcNodes.datasink, [("out_file", "preprocessed.@mr5tt")]),
+                (self.ACPCNodes.binarize_gmwmi, self.PreProcNodes.datasink, [("out_file", "preprocessed.@gmwmi")]),
+                (self.ACPCNodes.convert2wm, self.PreProcNodes.datasink, [("out_file", "preprocessed.@wm")]),
                 ## WM Mask extraction section
                 (self.ACPCNodes.ACPC_warp, self.ACPCNodes.t1_bet, [("out_file", "in_file")]),
                 (self.ACPCNodes.ACPC_warp, self.ACPCNodes.epi_reg, [("out_file", "t1_head")]),
@@ -239,19 +227,18 @@ class pipeline:
                 (self.PreProcNodes.mni_b0mean, self.PreProcNodes.mni_convert_dwi, [("out_file", "in_file")]),
                 (self.PreProcNodes.mni_convert_mask, self.PreProcNodes.mni_apply_mask, [("out_file", "mask_file")]),
                 (self.PreProcNodes.mni_convert_dwi, self.PreProcNodes.mni_apply_mask, [("out_file", "in_file")]),
-                (self.PreProcNodes.mni_apply_mask, self.PreProcNodes.datasink, [("out_file", "preproc_mni.@dwi_brain")]),
-                (self.PreProcNodes.mni_convert_mask, self.PreProcNodes.datasink, [("out_file", "preproc_mni.@dwi_b0_brainmask")]),
-                (self.PreProcNodes.mni_convert_dwi, self.PreProcNodes.datasink, [("out_file", "preproc_mni.@dwi_b0_meanvolume")]),
-                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_file", "preproc_mni.@dwi")]),
-                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_bfile", "preproc_mni.@b")]),
-                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_fslbvec", "preproc_mni.@fsl_bvec")]),
-                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_fslbval", "preproc_mni.@fsl_bval")]),
-                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_json", "preproc_mni.@json")])
+                (self.PreProcNodes.mni_apply_mask, self.PreProcNodes.datasink, [("out_file", "preprocessed.@dwi_brain")]),
+                (self.PreProcNodes.mni_convert_mask, self.PreProcNodes.datasink, [("out_file", "preprocessed.@dwi_b0_brainmask")]),
+                (self.PreProcNodes.mni_convert_dwi, self.PreProcNodes.datasink, [("out_file", "preprocessed.@dwi_b0_meanvolume")]),
+                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_file", "preprocessed.@dwi")]),
+                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_bfile", "preprocessed.@b")]),
+                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_fslbvec", "preprocessed.@fsl_bvec")]),
+                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_fslbval", "preprocessed.@fsl_bval")]),
+                (self.PreProcNodes.mni_dwi, self.PreProcNodes.datasink, [("out_json", "preprocessed.@json")])
             ]
         )
-        ## Removed recon == True connections ##
-        ## ##
-        if RPE_design == '-rpe_none':
+
+        if rpe_design == '-rpe_none':
             self.workflow.connect(
                 [
                     (self.PreProcNodes.select_files, self.PreProcNodes.mrconvert, [('dwi', 'in_file')]),
@@ -264,7 +251,7 @@ class pipeline:
                     (self.PreProcNodes.fslpreproc, self.PreProcNodes.GradUpdate, [('out_bfile', 'grad_file')])
                 ]
             )
-        elif RPE_design == '-rpe_all':
+        elif rpe_design == '-rpe_all':
             self.workflow.connect(
                 [
                     (self.PreProcNodes.select_files, self.PreProcNodes.sub_grad_files1, [('dwi', 'sub_dwi')]),
@@ -284,17 +271,17 @@ class pipeline:
                     (self.PreProcNodes.mrconvert1, self.PreProcNodes.GradUpdate, [('out_bfile', 'grad_file')])
                 ]
             )
-        if Regrid == True:
+        if regrid == True:
             self.workflow.connect(
                 [
                     (self.ACPCNodes.apply_xfm, self.ACPCNodes.regrid, [("out_file", "in_file")]),
-                    (self.ACPCNodes.regrid, self.PreProcNodes.datasink, [("out_file", "dwi_acpc_aligned_1mm")]),
+                    (self.ACPCNodes.regrid, self.PreProcNodes.datasink, [("out_file", "preprocessed.@dwi_acpc_aligned_1mm")]),
                     (self.ACPCNodes.regrid, self.PreProcNodes.mni_b0extract, [("out_file", "in_file")]),
                     (self.ACPCNodes.regrid, self.PreProcNodes.mni_b0mask, [("out_file", "in_file")]),
                     (self.ACPCNodes.regrid, self.PreProcNodes.mni_dwi, [("out_file", "in_file")])
                 ]
             )
-        elif Regrid == False:
+        elif regrid == False:
             self.workflow.connect(
                 [
                     (self.ACPCNodes.apply_xfm, self.PreProcNodes.mni_b0extract, [("out_file", "in_file")]),
@@ -310,7 +297,12 @@ class pipeline:
 
 
     def draw_pipeline(self, graph_type='orig'):
-        self.workflow.write_graph(graph2use=graph_type, dotfilename = 'pipetography.dot')
+        """
+        Writes a `.png` image visualizing the workflow.
+        Args:
+            graph_type (str): Select from `orig`, `flat`, `hierarchical`, `colored`, or `exec`. See Nipype documentation for details. Defaults to orig.
+        """
+        self.workflow.write_graph(graph2use=graph_type, dotfilename = os.path.join(self.bids_dir, 'derivatives', 'pipetography', 'preprocessing.dot'))
 
 
     def run_pipeline(self, parallel = None):

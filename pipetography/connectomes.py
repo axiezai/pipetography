@@ -4,10 +4,11 @@ __all__ = ['connectome']
 
 # Internal Cell
 import os
+import bids
+bids.config.set_option('extension_initial_dot', True)
+
 from pathlib import Path
-from nipype import IdentityInterface
 from nipype.pipeline import Node, Workflow
-from nipype.interfaces.io import SelectFiles, DataSink
 
 import pipetography.nodes as nodes
 
@@ -15,10 +16,9 @@ import pipetography.nodes as nodes
 
 class connectome:
     """
-    Create a workflow that produces connectomes based on input atlases and streamlines
+    Create a pipeline that produces connectomes based on input atlases and streamlines, the pipeline will create sub-graphs based on inputs BIDS directory subject & session combinations.
 
     Inputs:
-         - atlas_dir (str): base directory of folder containing atlases
          - BIDS_dir (str): base BIDS directory path
          - atlas_list (List of strings): names of atlases: aal, brainnectome, desikan-killiany, default is set to brainnectome for now.
     """
@@ -27,7 +27,7 @@ class connectome:
         """
         Initialize workflow nodes
         """
-        self.BIDS = BIDS_dir
+        self.bids_dir = BIDS_dir
         self.atlas_list = atlas_list
         data_dir = os.path.join(Path(BIDS_dir).parent)
         self.skip_combos = skip_tuples
@@ -43,12 +43,10 @@ class connectome:
 
     def create_nodes(self):
         """
-        Create postprocessing nodes
+        Create postprocessing nodes, and make output path substitutions so outputs are BIDS compliant.
         """
-        self.PostProcNodes = nodes.PostProcNodes(BIDS_dir=self.BIDS, subj_template = self.subject_template, skip_tuples = self.skip_combos)
+        self.PostProcNodes = nodes.PostProcNodes(BIDS_dir=self.bids_dir, subj_template = self.subject_template, skip_tuples = self.skip_combos)
         self.PostProcNodes.linear_reg.iterables = [('moving_image', self.atlas_list)]
-        self.PostProcNodes.datasink.inputs.regexp_substitutions = [(r'(_moving_image_.*\.\.)', ''),
-                                                                   (r'(\.nii|\.gz)', '')]
         self.workflow = None
 
 
@@ -56,7 +54,7 @@ class connectome:
         """
         Connect postprocessing nodes into workflow
         """
-        self.workflow = Workflow(name=wf_name, base_dir=os.path.join(Path(self.BIDS).parent, 'derivatives'))
+        self.workflow = Workflow(name=wf_name, base_dir=os.path.join(Path(self.bids_dir).parent, 'derivatives'))
         self.workflow.connect(
             [
                 (self.PostProcNodes.subject_source, self.PostProcNodes.select_files, [('subject_id', 'subject_id'),
@@ -79,8 +77,8 @@ class connectome:
                 (self.PostProcNodes.sift2, self.PostProcNodes.connectome, [('out_file', 'in_weights')]),
                 (self.PostProcNodes.select_files, self.PostProcNodes.connectome, [('tck', 'in_file')]),
                 (self.PostProcNodes.select_files, self.PostProcNodes.distance, [('tck', 'in_file')]),
-                (self.PostProcNodes.connectome, self.PostProcNodes.datasink, [('out_file', 'matrices.@connectome')]),
-                (self.PostProcNodes.distance, self.PostProcNodes.datasink, [('out_file', 'matrices.@distance')])
+                (self.PostProcNodes.connectome, self.PostProcNodes.datasink, [('out_file', 'connectomes.@connectome')]),
+                (self.PostProcNodes.distance, self.PostProcNodes.datasink, [('out_file', 'connectomes.@distance')])
             ])
         self.workflow.config['execution'] = {
                                             'use_relative_paths':'False',
@@ -92,7 +90,7 @@ class connectome:
         """
         Visualize workflow
         """
-        self.workflow.write_graph(graph2use=graph_type, dotfilename='postprocess.dot')
+        self.workflow.write_graph(graph2use=graph_type, dotfilename = os.path.join(self.bids_dir, 'derivatives', 'pipetography', 'postprocessing.dot'))
 
     def run_pipeline(self, parallel=None):
         """

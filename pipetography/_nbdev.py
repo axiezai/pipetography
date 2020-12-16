@@ -5,7 +5,6 @@ __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 index = {"get_subs": "00_core.ipynb",
          "get_bfiles_tuple": "00_core.ipynb",
          "get_sub_gradfiles": "00_core.ipynb",
-         "anat2id": "00_core.ipynb",
          "BIDS_metadata": "00_core.ipynb",
          "PipetographyBaseInputSpec": "00_core.ipynb",
          "MRCatInputSpec": "00_core.ipynb",
