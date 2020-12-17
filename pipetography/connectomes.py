@@ -29,15 +29,14 @@ class connectome:
         """
         self.bids_dir = BIDS_dir
         self.atlas_list = atlas_list
-        data_dir = os.path.join(Path(BIDS_dir).parent)
         self.skip_combos = skip_tuples
         self.subject_template = {
-            'tck': os.path.join(data_dir, 'cuda_tracking', '_session_id_{session_id}_subject_id_{subject_id}',  'sub-{subject_id}_ses-{session_id}_gmwmi2wm.tck'),
-            'brain': os.path.join(data_dir, 'derivatives', 'preproc_mni', '_session_id_{session_id}_subject_id_{subject_id}', 'dwi_acpc_1mm_brain.nii.gz'),
-            'dwi_mif': os.path.join(data_dir, 'derivatives', 'dwi_acpc_aligned_1mm', '_session_id_{session_id}_subject_id_{subject_id}', 'dwi_acpc_1mm.mif'),
-            'T1A': os.path.join(data_dir, 'derivatives', 't1_acpc_aligned', '_session_id_{session_id}_subject_id_{subject_id}', 'acpc_t1.nii'),
-            'mask': os.path.join(data_dir, 'derivatives', 'preproc_mni', '_session_id_{session_id}_subject_id_{subject_id}', 'dwi_acpc_1mm_mask.nii.gz'),
-            'mrtrix5tt': os.path.join(data_dir, 'derivatives', 'wm_mask', '_session_id_{session_id}_subject_id_{subject_id}', 'mrtrix3_5tt.mif')
+            'tck': os.path.join(self.bids_dir, 'derivatives', 'streamlines','sub-{subject_id}', 'ses-{session_id}', 'sub-{subject_id}_ses-{session_id}_gmwmi2wm.tck'),
+            'brain': os.path.join(self.bids_dir, 'derivatives', 'pipetography', 'sub-{subject_id}', 'ses-{session_id}', 'preprocessed', 'dwi_space-acpc_res-1mm_seg-brain.nii.gz'),
+            'dwi_mif': os.path.join(self.bids_dir, 'derivatives', 'pipetography', 'sub-{subject_id}', 'ses-{session_id}', 'preprocessed', 'dwi_space-acpc_res-1mm.mif'),
+            'T1A': os.path.join(self.bids_dir, 'derivatives', 'pipetography', 'sub-{subject_id}', 'ses-{session_id}', 'preprocessed', 'T1w_space-acpc.nii.gz'),
+            'mask': os.path.join(self.bids_dir, 'derivatives', 'pipetography', 'sub-{subject_id}', 'ses-{session_id}', 'preprocessed', 'dwi_space-acpc_res-1mm_seg-brain_mask.nii.gz'),
+            'mrtrix5tt': os.path.join(self.bids_dir, 'derivatives', 'pipetography', 'sub-{subject_id}', 'ses-{session_id}', 'preprocessed', 'T1w_space-acpc_seg-5tt.mif')
         }
 
 
@@ -81,7 +80,7 @@ class connectome:
                 (self.PostProcNodes.distance, self.PostProcNodes.datasink, [('out_file', 'connectomes.@distance')])
             ])
         self.workflow.config['execution'] = {
-                                            'use_relative_paths':'False',
+                                            'use_relative_paths':'True',
                                             'hash_method': 'content',
                                             'stop_on_first_crash': 'True',
                                             }
@@ -90,7 +89,12 @@ class connectome:
         """
         Visualize workflow
         """
-        self.workflow.write_graph(graph2use=graph_type, dotfilename = os.path.join(self.bids_dir, 'derivatives', 'pipetography', 'postprocessing.dot'))
+        self.workflow.write_graph(
+            graph2use=graph_type,
+            dotfilename = os.path.join(
+                self.bids_dir, 'derivatives', 'pipetography', 'graph', 'postprocessing.dot'
+            ),
+        )
 
     def run_pipeline(self, parallel=None):
         """
