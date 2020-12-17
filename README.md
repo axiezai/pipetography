@@ -7,7 +7,7 @@
 
 The pre-processing workflow has been updated to reflect what's seen in the optimal [DESIGNER pipeline](http://www.sciencedirect.com/science/article/pii/S1053811918306827) and on [mrtrix3 cloud apps on brainlife.io](https://brainlife.io). 
 
-The post-processing pipeline, including co-registration of atlases and connectome generation is now included in the [connectomes] module
+The post-processing pipeline, including co-registration of atlases and connectome generation is now included in the [connectomes](https://axiezai.github.io/pipetography/connectomes.html) module
 
 ## Install
 
@@ -25,7 +25,7 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `sudo singularity build {image_file_name}.sif singularity.def`
      
  - OR pull the built singularity image from cloud library:
-    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.5`
+    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.6`
  
  - To run interactively or as a job execution, you will need a few flags:
      - `-e -c` flags for a clean environnment upon container start
@@ -47,4 +47,4 @@ Everything listed in this section is included in the Singularity and Docker cont
 
 ## The pipeline:
 
-Currently supports acquisitions with no reverse phase encoding (`-rpe_none`)  and reverse phase encoding in all DWI directions (`-rpe_all`) options. See [pipeline] for preprocessing details, and [connectomes] for postprocessing details.
+Currently supports acquisitions with no reverse phase encoding (`-rpe_none`)  and reverse phase encoding in all DWI directions (`-rpe_all`) options. See [pipeline](https://axiezai.github.io/pipetography/pipeline.html) for preprocessing details, and [connectomes](https://axiezai.github.io/pipetography/connectomes.html) for postprocessing details.

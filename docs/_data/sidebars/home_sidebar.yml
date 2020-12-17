@@ -19,7 +19,7 @@ entries:
       title: Module nodes
       url: nodes.html
     - output: web,pdf
-      title: Module connectomes 
+      title: Module connectomes
       url: connectomes.html
     output: web
     title: pipetography
