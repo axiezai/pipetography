@@ -22,3 +22,4 @@ dependencies:
         - nipype
         - pandas
         - pybids
+        - graphviz
