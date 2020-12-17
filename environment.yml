@@ -23,3 +23,4 @@ dependencies:
         - pandas
         - pybids
         - graphviz
+        - pydot
