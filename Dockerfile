@@ -131,7 +131,7 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
              "pybids" \
              "fastcore" \
              "nilearn" \
-	         "pipetography==0.3.7"" \
+	         "pipetography==0.3.8"" \
     && rm -rf ~/.cache/pip/* \
     && sync \
     && sed -i '$isource activate tracts' $ND_ENTRYPOINT
@@ -189,7 +189,7 @@ RUN echo '{ \
     \n          "pybids", \
     \n          "fastcore", \
     \n          "nilearn", \
-    \n          "pipetography==0.3.7" \
+    \n          "pipetography==0.3.8" \
     \n        ], \
     \n        "activate": true \
     \n      } \
