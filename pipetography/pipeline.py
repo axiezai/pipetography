@@ -9,7 +9,6 @@ import bids
 bids.config.set_option("extension_initial_dot", True)
 
 from shutil import which
-from pathlib import Path
 from nipype.pipeline import Workflow
 
 import pipetography.core as ppt
@@ -195,7 +194,7 @@ class pipeline:
         # a workflow that will be filled in with connections:
         self.workflow = Workflow(
             name=wf_name,
-            base_dir=os.path.join(Path(self.bids_dir).parent, "derivatives"),
+            base_dir=os.path.join(self.bids_dir, "derivatives"),
         )
         # connections:
         self.workflow.connect(

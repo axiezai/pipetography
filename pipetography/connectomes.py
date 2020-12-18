@@ -7,7 +7,6 @@ import os
 import bids
 bids.config.set_option('extension_initial_dot', True)
 
-from pathlib import Path
 from nipype.pipeline import Node, Workflow
 
 import pipetography.nodes as nodes
@@ -53,7 +52,7 @@ class connectome:
         """
         Connect postprocessing nodes into workflow
         """
-        self.workflow = Workflow(name=wf_name, base_dir=os.path.join(Path(self.bids_dir).parent, 'derivatives'))
+        self.workflow = Workflow(name=wf_name, base_dir=os.path.join(self.bids_dir, 'derivatives'))
         self.workflow.connect(
             [
                 (self.PostProcNodes.subject_source, self.PostProcNodes.select_files, [('subject_id', 'subject_id'),
