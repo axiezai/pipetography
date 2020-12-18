@@ -8,7 +8,7 @@
     ["miniconda",
       {"use_env": "base",
         "conda_install": ["python=3.7.3", "pip=20.0.2", "dipy", "nipype", "nibabel", "pytest", "matplotlib"],
-        "pip_install": ["pybids", "fastcore", "nilearn", "pipetography==0.3.6"]
+        "pip_install": ["pybids", "fastcore", "nilearn", "pipetography==0.3.7"]
       }],
     ["install", ["git", "ssh", "tar", "gzip", "ca-certificates"]]
   ]
