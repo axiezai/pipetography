@@ -86,7 +86,6 @@ class PreProcNodes:
 
         # reverse phase encoding design selection
         if rpe_design == "-rpe_none":
-            # self.sub_grad_files.inputs.ext = bids_ext
             self.sub_grad_files = Node(
                 Function(
                     input_names=["sub_dwi", "ext"],
@@ -96,6 +95,7 @@ class PreProcNodes:
                 ),
                 name="sub_grad_files",
             )
+            self.sub_grad_files.inputs.ext = bids_ext
             self.mrconvert = Node(
                 ppt.Convert(
                     out_file="raw_dwi.mif",
@@ -105,8 +105,6 @@ class PreProcNodes:
                 name="mrtrix_image",
             )
         elif rpe_design == "-rpe_all":
-            # self.sub_grad_files1.inputs.ext = bids_ext
-            # self.sub_grad_files2.inputs.ext = bids_ext
             self.sub_grad_files1 = Node(
                 Function(
                     input_names=["sub_dwi", "ext"],
@@ -125,6 +123,8 @@ class PreProcNodes:
                 ),
                 name="sub_grad_files2",
             )
+            self.sub_grad_files1.inputs.ext = bids_ext
+            self.sub_grad_files2.inputs.ext = bids_ext
             self.mrconvert1 = Node(
                 ppt.Convert(
                     out_file="raw_dwi1.mif",
