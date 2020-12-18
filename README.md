@@ -13,7 +13,7 @@ The post-processing pipeline, including co-registration of atlases and connectom
 
 Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the `Singularity` definition file in the repository instead of installing the Python module.
 
-#### Singularity:
+### Singularity:
  
  - This is a large image, you will need to set the following environment variables to somewhere other than `/tmp` if you want to avoid memory errors:
      - `export SINGULARITY_TMPDIR={YOUR DESTINATION DIR}`
@@ -25,14 +25,19 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `sudo singularity build {image_file_name}.sif singularity.def`
      
  - OR pull the built singularity image from cloud library:
-    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.6`
+    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.7`
  
  - To run interactively or as a job execution, you will need a few flags:
      - `-e -c` flags for a clean environnment upon container start
      - `-B` to bind your data & code directories.
      - Example: `singularity shell -e -c -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
 
-#### Creating your own environment and install `pipetography` as a Python module:
+### Docker:
+
+ - Docker often encounters permission problems on HPC resources, using the docker container is only recommended if you have `sudo` permissions to the machine. 
+ - `docker pull axiezai/pipetography:0.3.7`
+
+### Creating your own environment and install `pipetography` as a Python module:
 
 `pip install pipetography`
 

@@ -54,7 +54,7 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Since most usages will be on HPC resources, I <em>highly recommend</em> that you use the <code>Singularity</code> definition file in the repository instead of installing the Python module.</p>
-<h4 id="Singularity:">Singularity:<a class="anchor-link" href="#Singularity:"> </a></h4><ul>
+<h3 id="Singularity:">Singularity:<a class="anchor-link" href="#Singularity:"> </a></h3><ul>
 <li><p>This is a large image, you will need to set the following environment variables to somewhere other than <code>/tmp</code> if you want to avoid memory errors:</p>
 <ul>
 <li><code>export SINGULARITY_TMPDIR={YOUR DESTINATION DIR}</code></li>
@@ -70,7 +70,7 @@ nb_path: "index.ipynb"
 </li>
 <li><p>OR pull the built singularity image from cloud library:</p>
 <ul>
-<li><code>singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.6</code></li>
+<li><code>singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.7</code></li>
 </ul>
 </li>
 <li><p>To run interactively or as a job execution, you will need a few flags:</p>
@@ -81,7 +81,11 @@ nb_path: "index.ipynb"
 </ul>
 </li>
 </ul>
-<h4 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h4><p><code>pip install pipetography</code></p>
+<h3 id="Docker:">Docker:<a class="anchor-link" href="#Docker:"> </a></h3><ul>
+<li>Docker often encounters permission problems on HPC resources, using the docker container is only recommended if you have <code>sudo</code> permissions to the machine. </li>
+<li><code>docker pull axiezai/pipetography:0.3.7</code></li>
+</ul>
+<h3 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h3><p><code>pip install pipetography</code></p>
 <p>Since <code>pipetography</code> is a <code>Nipype</code> wrapper around <code>mrtrix3</code>, <code>ANTs</code>, and <code>FSL</code>, you have to follow their installation instructions and set them up appropriately on your machine as well:</p>
 <ul>
 <li><p><a href="https://mrtrix.readthedocs.io/en/latest/installation/before_install.html">mrtrix3 v3.0.0</a></p>
