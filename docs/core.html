@@ -53,7 +53,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_subs" class="doc_header"><code>get_subs</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_subs</code>(<strong><code>BIDS_dir</code></strong>=<em><code>'BIDS_dir'</code></em>)</p>
+<h4 id="get_subs" class="doc_header"><code>get_subs</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L24" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_subs</code>(<strong><code>BIDS_dir</code></strong>=<em><code>'BIDS_dir'</code></em>)</p>
 </blockquote>
 <p>Gets list of subjects in a BIDS directory, by default it looks in "data" folder in your CWD
 Input str of path to BIDS dir otherwise</p>
@@ -82,9 +82,11 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sub_list</span><span class="p">,</span> <span class="n">ses_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ses_list</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="n">sub_list</span><span class="p">,</span> <span class="n">ses_list</span><span class="p">,</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_list</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span><span class="p">))</span>
+<span class="c1">#assert len(get_subs(data_dir)[1]) == len(glob(data_dir + &#39;/sub-*&#39; + &#39;/ses-*&#39;))</span>
 </pre></div>
 
     </div>
@@ -98,10 +100,39 @@ Input str of path to BIDS dir otherwise</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Creating layout of data directory, might take a while if there are a lot of subjects
-[&#39;11042&#39;]
-[&#39;01&#39;]
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Filter-missing-sessions:">Filter missing sessions:<a class="anchor-link" href="#Filter-missing-sessions:"> </a></h4><p>Function to filter out missing sessions to prevent creation of sub-workflows for sessions that doens't exist.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="filter_workflow" class="doc_header"><code>filter_workflow</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L38" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>filter_workflow</code>(<strong><code>BIDS_dir</code></strong>, <strong><code>sub_list</code></strong>, <strong><code>ses_list</code></strong>, <strong><code>exclude_list</code></strong>)</p>
+</blockquote>
+
+</div>
+
 </div>
 
 </div>
@@ -113,33 +144,36 @@ Input str of path to BIDS dir otherwise</p>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
-<span class="c1">#if subjects were all grabbed</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span><span class="p">))</span>
-<span class="c1">#if sessions were all grabbed</span>
-<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_subs</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span> <span class="o">+</span> <span class="s1">&#39;/ses-*&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">all_sub_ses_combos</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">sub_list</span><span class="p">,</span> <span class="n">ses_list</span><span class="p">))</span>
+<span class="n">missing_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">all_sub_ses_combos</span><span class="p">:</span>
+    <span class="n">sub_ses</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;testing&#39;</span><span class="p">,</span> <span class="s1">&#39;BIDS_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;sub-&#39;</span><span class="o">+</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;ses-&#39;</span><span class="o">+</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">sub_ses</span><span class="p">):</span>
+        <span class="n">missing_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span>
+        
+<span class="n">filtered_sub_ses_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_sub_ses_combos</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">missing_list</span><span class="p">))</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_sub_ses_list</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/sub-*&#39;</span> <span class="o">+</span> <span class="s1">&#39;/ses-*&#39;</span><span class="p">))</span>
+
+<span class="n">sub_iter</span><span class="p">,</span> <span class="n">ses_iter</span> <span class="o">=</span> <span class="n">filter_workflow</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">sub_list</span><span class="p">,</span> <span class="n">ses_list</span><span class="p">,</span> <span class="n">exclude_list</span><span class="o">=</span><span class="p">[()])</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_iter</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ses_iter</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">tup</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">filtered_sub_ses_list</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">tup</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">sub_iter</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">==</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">ses_iter</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">==</span> <span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Creating layout of data directory, might take a while if there are a lot of subjects
-Creating layout of data directory, might take a while if there are a lot of subjects
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -164,7 +198,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_bfiles_tuple" class="doc_header"><code>get_bfiles_tuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L37" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_bfiles_tuple</code>(<strong><code>in_List</code></strong>)</p>
+<h4 id="get_bfiles_tuple" class="doc_header"><code>get_bfiles_tuple</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L52" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_bfiles_tuple</code>(<strong><code>in_List</code></strong>)</p>
 </blockquote>
 <p>Input list of paths to [bval, bvec] files in FSL format. (Deprecated)</p>
 
@@ -203,7 +237,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_sub_gradfiles" class="doc_header"><code>get_sub_gradfiles</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_sub_gradfiles</code>(<strong><code>sub_dwi</code></strong>, <strong><code>ext</code></strong>=<em><code>'nii.gz'</code></em>)</p>
+<h4 id="get_sub_gradfiles" class="doc_header"><code>get_sub_gradfiles</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_sub_gradfiles</code>(<strong><code>sub_dwi</code></strong>, <strong><code>ext</code></strong>=<em><code>'nii.gz'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -400,7 +434,7 @@ Creating layout of data directory, might take a while if there are a lot of subj
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="BIDS_metadata" class="doc_header"><code>BIDS_metadata</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>BIDS_metadata</code>(<strong><code>path</code></strong>, <strong><code>bids_dir</code></strong>)</p>
+<h4 id="BIDS_metadata" class="doc_header"><code>BIDS_metadata</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/core.py#L76" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>BIDS_metadata</code>(<strong><code>path</code></strong>, <strong><code>bids_dir</code></strong>)</p>
 </blockquote>
 
 </div>
