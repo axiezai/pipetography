@@ -5,7 +5,7 @@
 ![CI](https://github.com/axiezai/pipetography/workflows/CI/badge.svg)
 ![docker](https://img.shields.io/docker/v/axiezai/pipetography)
 
-The pre-processing workflow has been updated to reflect what's seen in the optimal [DESIGNER pipeline](http://www.sciencedirect.com/science/article/pii/S1053811918306827) and on [mrtrix3 cloud apps on brainlife.io](https://brainlife.io). 
+The pre-processing pipeline has been updated to reflect what's seen in the optimal [DESIGNER pipeline](http://www.sciencedirect.com/science/article/pii/S1053811918306827) and on [mrtrix3 cloud apps on brainlife.io](https://brainlife.io). 
 
 The post-processing pipeline, including co-registration of atlases and connectome generation is now included in the [connectomes](https://axiezai.github.io/pipetography/connectomes.html) module
 
@@ -25,17 +25,20 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `sudo singularity build {image_file_name}.sif singularity.def`
      
  - OR pull the built singularity image from cloud library:
-    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.7`
- 
- - To run interactively or as a job execution, you will need a few flags:
-     - `-e -c` flags for a clean environnment upon container start
-     - `-B` to bind your data & code directories.
-     - Example: `singularity shell -e -c -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}`
+    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.9`
 
 ### Docker:
 
  - Docker often encounters permission problems on HPC resources, using the docker container is only recommended if you have `sudo` permissions to the machine. 
- - `docker pull axiezai/pipetography:0.3.7`
+ - `docker pull axiezai/pipetography:0.3.9`
+ 
+### Usage:
+ - To run the singularity container interactively, you will need a few flags:
+     - `-e` flag for a clean environnment upon container start
+     - `-B` flag to bind your BIDS directory into the container.
+ - Example: 
+     - `singularity shell -e -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif}` will start an interactive shell.
+     - `singualrity exec -e -B <BIDS_DIR>:<SINGULARITY_BIDS_DIR> {Path to singularity .sif} python dwi_pipeline.py` will execute the input python code. See [pipeline](https://axiezai.github.io/pipetography/pipeline.html) for an example.
 
 ### Creating your own environment and install `pipetography` as a Python module:
 

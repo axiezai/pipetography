@@ -61,8 +61,8 @@ class PreProcNodes:
         ses_list,
         exclude_list=[()],
     ):
-        # create sub-graphs for subjects and sessions combos
-        all_sub_ses_combos = set(product(sub_list, ses_list))
+        # filtter & create sub-graphs for subjects and sessions combos
+        sub_iter, ses_iter = ppt.filter_workflow(bids_dir, sub_list, ses_list, exclude_list)
         # Create BIDS output folder list for datasink
         BIDSFolders = [
             (
@@ -72,9 +72,6 @@ class PreProcNodes:
             for session in ses_list
             for subject in sub_list
         ]
-        filtered_sub_ses_list = list(all_sub_ses_combos - set(exclude_list))
-        sub_iter = [tup[0] for tup in filtered_sub_ses_list]
-        ses_iter = [tup[1] for tup in filtered_sub_ses_list]
 
         self.subject_source = Node(
             IdentityInterface(fields=["subject_id", "session_id"]),

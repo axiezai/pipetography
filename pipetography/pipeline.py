@@ -24,7 +24,7 @@ class pipeline:
         - rpe_design (str): Reverse phase encoding design for your DWI acquisition. Also supports '-rpe_all', default is "-rpe_none"
         - regrid (bool): Whether  to resample DWI to  1mm MNI template, defaults to True.
         - mrtrix_nthreads (int): Number of threads for mrtrix3 algorithm. If zero, the number of available CPUs will be used. Default is 0.
-        - skip_tuples (tuple): A combination of [('subject #', 'session #')] tuples that you'd want the workflow to skip, example: [('01', '03')] will skip sub-01/ses-03.
+        - skip_tuples (list[tuple]): A combination of [('subject #', 'session #')] tuples to skip, example: [('01', '03')] will skip sub-01/ses-03. Used for missinng data, the pipeline will automatically remove inconsistent sessions from BIDS Layout.
     """
 
     def __init__(

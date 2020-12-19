@@ -47,7 +47,7 @@ nb_path: "01_pipeline.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="pipeline" class="doc_header"><code>class</code> <code>pipeline</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/pipeline.py#L19" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>pipeline</code>(<strong><code>BIDS_dir</code></strong>, <strong><code>ext</code></strong>=<em><code>'nii.gz'</code></em>, <strong><code>rpe_design</code></strong>=<em><code>'-rpe_none'</code></em>, <strong><code>regrid</code></strong>=<em><code>True</code></em>, <strong><code>mrtrix_nthreads</code></strong>=<em><code>0</code></em>, <strong><code>skip_tuples</code></strong>=<em><code>[()]</code></em>)</p>
+<h2 id="pipeline" class="doc_header"><code>class</code> <code>pipeline</code><a href="https://github.com/axiezai/pipetography/tree/master/pipetography/pipeline.py#L18" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>pipeline</code>(<strong><code>BIDS_dir</code></strong>, <strong><code>ext</code></strong>=<em><code>'nii.gz'</code></em>, <strong><code>rpe_design</code></strong>=<em><code>'-rpe_none'</code></em>, <strong><code>regrid</code></strong>=<em><code>True</code></em>, <strong><code>mrtrix_nthreads</code></strong>=<em><code>0</code></em>, <strong><code>skip_tuples</code></strong>=<em><code>[()]</code></em>)</p>
 </blockquote>
 <p>Create a <code>Nipype</code> workflow, collects the layout of a BIDS directory, and branches the workflow into sub-graphs that can be ran in parallel per subject-session combination
 Inputs:</p>
@@ -57,7 +57,7 @@ Inputs:</p>
 - rpe_design (str): Reverse phase encoding design for your DWI acquisition. Also supports '-rpe_all', default is "-rpe_none"
 - regrid (bool): Whether  to resample DWI to  1mm MNI template, defaults to True.
 - mrtrix_nthreads (int): Number of threads for mrtrix3 algorithm. If zero, the number of available CPUs will be used. Default is 0.
-- skip_tuples (tuple): A combination of [('subject #', 'session #')] tuples that you'd want the workflow to skip, example: [('01', '03')] will skip sub-01/ses-03.</code></pre>
+- skip_tuples (list[tuple]): A combination of [('subject #', 'session #')] tuples to skip, example: [('01', '03')] will skip sub-01/ses-03. Used for missinng data, the pipeline will automatically remove inconsistent sessions from BIDS Layout.</code></pre>
 
 </div>
 
@@ -283,8 +283,8 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
  &#39;sub_template&#39;: {&#39;anat&#39;: &#39;sub-{subject_id}/ses-{session_id}/anat/sub-{subject_id}_ses-{session_id}_T1w.nii.gz&#39;,
   &#39;dwi&#39;: &#39;sub-{subject_id}/ses-{session_id}/dwi/sub-{subject_id}_ses-{session_id}_dwi.nii.gz&#39;,
   &#39;b_files&#39;: &#39;sub-{subject_id}/ses-{session_id}/dwi/sub-{subject_id}_ses-{session_id}_dwi.bv*&#39;},
- &#39;PreProcNodes&#39;: &lt;pipetography.nodes.PreProcNodes at 0x7fce7451e3d0&gt;,
- &#39;ACPCNodes&#39;: &lt;pipetography.nodes.ACPCNodes at 0x7fce7451e640&gt;,
+ &#39;PreProcNodes&#39;: &lt;pipetography.nodes.PreProcNodes at 0x7f87303bcf40&gt;,
+ &#39;ACPCNodes&#39;: &lt;pipetography.nodes.ACPCNodes at 0x7f87303bcac0&gt;,
  &#39;workflow&#39;: None}</pre>
 </div>
 
@@ -350,7 +350,7 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>201216-20:49:47,553 nipype.workflow INFO:
+<pre>201217-23:04:18,18 nipype.workflow INFO:
 	 Generated workflow graph: /Users/xxie/sample_data/dwipreproc/BIDS_output/derivatives/pipetography/graph/preprocessing.png (graph2use=flat, simple_form=True).
 </pre>
 </div>
@@ -433,327 +433,396 @@ Matlab Compiler Runtime 2012 version in Freesurfer Path found. (MCRv80)
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Running workflow with 4 parallel processes
-201216-20:50:15,645 nipype.workflow INFO:
+201217-23:04:26,779 nipype.workflow INFO:
 	 Workflow pipetography settings: [&#39;check&#39;, &#39;execution&#39;, &#39;logging&#39;, &#39;monitoring&#39;]
-201216-20:50:15,691 nipype.workflow INFO:
+201217-23:04:26,825 nipype.workflow INFO:
 	 Running in parallel.
-201216-20:50:15,696 nipype.workflow INFO:
+201217-23:04:26,832 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201216-20:50:17,698 nipype.workflow INFO:
+201217-23:04:28,832 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.select_files
+201217-23:04:30,832 nipype.workflow INFO:
 	 [Job 0] Completed (pipetography.select_files).
-201216-20:50:17,700 nipype.workflow INFO:
+201217-23:04:30,834 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 3 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201216-20:50:18,503 nipype.workflow INFO:
-	 [Job 1] Cached (pipetography.sub_grad_files).
-201216-20:50:19,198 nipype.workflow INFO:
-	 [Job 9] Cached (pipetography.get_metadata).
-201216-20:50:19,270 nipype.workflow INFO:
-	 [Job 31] Cached (pipetography.reduce_FOV).
-201216-20:50:20,469 nipype.workflow INFO:
-	 [Job 2] Cached (pipetography.mrtrix_image).
-201216-20:50:20,562 nipype.workflow INFO:
-	 [Job 32] Cached (pipetography.FLIRT).
-201216-20:50:20,565 nipype.workflow INFO:
-	 [Job 33] Cached (pipetography.transform_inverse).
-201216-20:50:21,700 nipype.workflow INFO:
-	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201216-20:50:23,459 nipype.workflow INFO:
-	 [Job 3] Cached (pipetography.raw_dwi2mask).
-201216-20:50:23,464 nipype.workflow INFO:
-	 [Job 34] Cached (pipetography.concat_transform).
-201216-20:50:25,455 nipype.workflow INFO:
-	 [Job 4] Cached (pipetography.dwigradcheck).
-201216-20:50:25,459 nipype.workflow INFO:
-	 [Job 35] Cached (pipetography.aff2rigid).
-201216-20:50:27,442 nipype.workflow INFO:
-	 [Job 5] Cached (pipetography.mrconvert).
-201216-20:50:27,707 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+201217-23:04:32,833 nipype.workflow INFO:
+	 [Job 1] Completed (pipetography.sub_grad_files).
+201217-23:04:32,835 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 1 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
                      Currently running:
-                       * pipetography.apply_warp
-201216-20:50:29,571 nipype.workflow INFO:
-	 [Job 6] Cached (pipetography.denoise).
-201216-20:50:29,707 nipype.workflow INFO:
+                       * pipetography.reduce_FOV
+                       * pipetography.get_metadata
+201217-23:04:34,837 nipype.workflow INFO:
+	 [Job 9] Completed (pipetography.get_metadata).
+201217-23:04:34,840 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
+                     Currently running:
+                       * pipetography.mrtrix_image
+                       * pipetography.reduce_FOV
+201217-23:04:38,839 nipype.workflow INFO:
+	 [Job 31] Completed (pipetography.reduce_FOV).
+201217-23:04:38,842 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 2 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
-                       * pipetography.apply_warp
-201216-20:50:29,901 nipype.workflow INFO:
-	 [Job 7] Cached (pipetography.LowNoiseMap).
-201216-20:50:33,456 nipype.workflow INFO:
-	 [Job 8] Cached (pipetography.ringing_removal).
-201216-20:50:33,458 nipype.workflow INFO:
+                       * pipetography.mrtrix_image
+201217-23:04:40,839 nipype.workflow INFO:
+	 [Job 2] Completed (pipetography.mrtrix_image).
+201217-23:04:40,841 nipype.workflow INFO:
+	 [Job 33] Completed (pipetography.transform_inverse).
+201217-23:04:40,843 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
+                       * pipetography.FLIRT
+201217-23:04:42,843 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
+                     Currently running:
+                       * pipetography.raw_dwi2mask
+                       * pipetography.FLIRT
+201217-23:05:26,873 nipype.workflow INFO:
+	 [Job 3] Completed (pipetography.raw_dwi2mask).
+201217-23:05:26,875 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.FLIRT
+201217-23:05:28,875 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
+                     Currently running:
+                       * pipetography.dwigradcheck
+                       * pipetography.FLIRT
+201217-23:05:46,887 nipype.workflow INFO:
+	 [Job 32] Completed (pipetography.FLIRT).
+201217-23:05:46,890 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.dwigradcheck
+201217-23:05:48,887 nipype.workflow INFO:
+	 [Job 34] Completed (pipetography.concat_transform).
+201217-23:05:48,891 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.dwigradcheck
+201217-23:05:50,888 nipype.workflow INFO:
+	 [Job 35] Completed (pipetography.aff2rigid).
+201217-23:05:50,892 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.dwigradcheck
+201217-23:05:52,889 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
+                     Currently running:
                        * pipetography.apply_warp
-201216-20:50:35,459 nipype.workflow INFO:
+                       * pipetography.dwigradcheck
+201217-23:06:20,909 nipype.workflow INFO:
 	 [Job 36] Completed (pipetography.apply_warp).
-201216-20:50:35,461 nipype.workflow INFO:
+201217-23:06:20,913 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 2 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
-                       * pipetography.dwifslpreproc
-201216-20:50:35,576 nipype.workflow INFO:
-	 [Node] Outdated cache found for &#34;pipetography.fsl_bet&#34;.
-201216-20:50:35,624 nipype.workflow INFO:
-	 [Node] Outdated cache found for &#34;pipetography.mrtrix_5ttgen&#34;.
-201216-20:50:37,461 nipype.workflow INFO:
+                       * pipetography.dwigradcheck
+201217-23:06:22,910 nipype.workflow INFO:
 	 [MultiProc] Running 3 tasks, and 0 jobs ready. Free memory (GB): 28.20/28.80, Free processors: 1/4.
                      Currently running:
                        * pipetography.mrtrix_5ttgen
                        * pipetography.fsl_bet
-                       * pipetography.dwifslpreproc
-201216-20:50:49,471 nipype.workflow INFO:
+                       * pipetography.dwigradcheck
+201217-23:06:46,922 nipype.workflow INFO:
 	 [Job 37] Completed (pipetography.fsl_bet).
-201216-20:50:49,474 nipype.workflow INFO:
+201217-23:06:46,926 nipype.workflow INFO:
 	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
                      Currently running:
                        * pipetography.mrtrix_5ttgen
+                       * pipetography.dwigradcheck
+201217-23:07:20,943 nipype.workflow INFO:
+	 [Job 4] Completed (pipetography.dwigradcheck).
+201217-23:07:20,946 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.mrtrix_5ttgen
+201217-23:07:22,948 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
+                     Currently running:
+                       * pipetography.mrconvert
+                       * pipetography.mrtrix_5ttgen
+201217-23:07:26,948 nipype.workflow INFO:
+	 [Job 5] Completed (pipetography.mrconvert).
+201217-23:07:26,950 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.mrtrix_5ttgen
+201217-23:07:28,949 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
+                     Currently running:
+                       * pipetography.denoise
+                       * pipetography.mrtrix_5ttgen
+201217-23:11:25,92 nipype.workflow INFO:
+	 [Job 6] Completed (pipetography.denoise).
+201217-23:11:25,95 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 2 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.mrtrix_5ttgen
+201217-23:11:27,93 nipype.workflow INFO:
+	 [Job 7] Completed (pipetography.LowNoiseMap).
+201217-23:11:27,95 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
+                     Currently running:
+                       * pipetography.ringing_removal
+                       * pipetography.mrtrix_5ttgen
+201217-23:13:05,156 nipype.workflow INFO:
+	 [Job 8] Completed (pipetography.ringing_removal).
+201217-23:13:05,159 nipype.workflow INFO:
+	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
+                     Currently running:
+                       * pipetography.mrtrix_5ttgen
+201217-23:13:07,158 nipype.workflow INFO:
+	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
+                     Currently running:
                        * pipetography.dwifslpreproc
-201216-20:57:51,845 nipype.workflow INFO:
+                       * pipetography.mrtrix_5ttgen
+201217-23:18:11,412 nipype.workflow INFO:
 	 [Job 49] Completed (pipetography.mrtrix_5ttgen).
-201216-20:57:51,847 nipype.workflow INFO:
+201217-23:18:11,415 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 2 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.dwifslpreproc
-201216-20:57:53,850 nipype.workflow INFO:
+201217-23:18:13,413 nipype.workflow INFO:
 	 [Job 50] Completed (pipetography.5tt2gmwmi).
-201216-20:57:53,851 nipype.workflow INFO:
+201217-23:18:13,414 nipype.workflow INFO:
 	 [Job 52] Completed (pipetography.5tt2wm).
-201216-20:57:53,853 nipype.workflow INFO:
+201217-23:18:13,416 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.dwifslpreproc
-201216-20:57:55,850 nipype.workflow INFO:
+201217-23:18:15,416 nipype.workflow INFO:
 	 [Job 51] Completed (pipetography.binarize_gmwmi).
-201216-20:57:55,852 nipype.workflow INFO:
+201217-23:18:15,419 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.dwifslpreproc
-201217-01:58:38,333 nipype.workflow INFO:
+201218-04:28:45,779 nipype.workflow INFO:
 	 [Job 10] Completed (pipetography.dwifslpreproc).
-201217-01:58:38,336 nipype.workflow INFO:
+201218-04:28:45,781 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-01:58:40,336 nipype.workflow INFO:
+201218-04:28:47,779 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.alter_gradient
-201217-02:00:32,487 nipype.workflow INFO:
+201218-04:30:45,899 nipype.workflow INFO:
 	 [Job 11] Completed (pipetography.alter_gradient).
-201217-02:00:32,490 nipype.workflow INFO:
+201218-04:30:45,901 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:00:34,487 nipype.workflow INFO:
+201218-04:30:47,899 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.modify_gradient
-201217-02:00:36,488 nipype.workflow INFO:
+201218-04:30:49,904 nipype.workflow INFO:
 	 [Job 12] Completed (pipetography.modify_gradient).
-201217-02:00:36,491 nipype.workflow INFO:
+201218-04:30:49,906 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:00:38,488 nipype.workflow INFO:
+201218-04:30:51,908 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.update_image
-201217-02:00:44,499 nipype.workflow INFO:
+201218-04:30:57,921 nipype.workflow INFO:
 	 [Job 13] Completed (pipetography.update_image).
-201217-02:00:44,502 nipype.workflow INFO:
+201218-04:30:57,923 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:00:46,499 nipype.workflow INFO:
+201218-04:30:59,922 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.recreate_mask
-201217-02:01:24,566 nipype.workflow INFO:
+201218-04:31:37,972 nipype.workflow INFO:
 	 [Job 14] Completed (pipetography.recreate_mask).
-201217-02:01:24,569 nipype.workflow INFO:
+201218-04:31:37,974 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:01:26,570 nipype.workflow INFO:
+201218-04:31:39,973 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.dwibiascorrect
-201217-02:01:50,605 nipype.workflow INFO:
+201218-04:32:04,17 nipype.workflow INFO:
 	 [Job 15] Completed (pipetography.dwibiascorrect).
-201217-02:01:50,608 nipype.workflow INFO:
+201218-04:32:04,18 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:01:52,604 nipype.workflow INFO:
+201218-04:32:06,23 nipype.workflow INFO:
 	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
                      Currently running:
                        * pipetography.NewGradient
                        * pipetography.RicianNoise
-201217-02:01:54,605 nipype.workflow INFO:
+201218-04:32:08,23 nipype.workflow INFO:
 	 [Job 18] Completed (pipetography.NewGradient).
-201217-02:01:54,607 nipype.workflow INFO:
+201218-04:32:08,26 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.RicianNoise
-201217-02:01:58,615 nipype.workflow INFO:
+201218-04:32:12,30 nipype.workflow INFO:
 	 [Job 16] Completed (pipetography.RicianNoise).
-201217-02:01:58,618 nipype.workflow INFO:
+201218-04:32:12,32 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:02:00,617 nipype.workflow INFO:
+201218-04:32:14,30 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.NoiseComparison
-201217-02:02:08,621 nipype.workflow INFO:
+201218-04:32:22,40 nipype.workflow INFO:
 	 [Job 17] Completed (pipetography.NoiseComparison).
-201217-02:02:08,625 nipype.workflow INFO:
+201218-04:32:22,42 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:02:10,621 nipype.workflow INFO:
+201218-04:32:24,40 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.ConvertRician
-201217-02:02:14,623 nipype.workflow INFO:
+201218-04:32:28,47 nipype.workflow INFO:
 	 [Job 19] Completed (pipetography.ConvertRician).
-201217-02:02:14,624 nipype.workflow INFO:
+201218-04:32:28,48 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:02:16,632 nipype.workflow INFO:
+201218-04:32:30,51 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.dwi2mask
-201217-02:02:54,688 nipype.workflow INFO:
+201218-04:33:08,107 nipype.workflow INFO:
 	 [Job 20] Completed (pipetography.dwi2mask).
-201217-02:02:54,691 nipype.workflow INFO:
+201218-04:33:08,109 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:02:56,688 nipype.workflow INFO:
+201218-04:33:10,110 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.dwi2tensor
-201217-02:03:00,701 nipype.workflow INFO:
+201218-04:33:14,122 nipype.workflow INFO:
 	 [Job 21] Completed (pipetography.dwi2tensor).
-201217-02:03:00,705 nipype.workflow INFO:
+201218-04:33:14,124 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:03:02,702 nipype.workflow INFO:
+201218-04:33:16,124 nipype.workflow INFO:
 	 [Job 22] Completed (pipetography.tensor2metrics).
-201217-02:03:02,705 nipype.workflow INFO:
+201218-04:33:16,125 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:03:04,705 nipype.workflow INFO:
+201218-04:33:18,124 nipype.workflow INFO:
 	 [Job 23] Completed (pipetography.mrthreshold).
-201217-02:03:04,708 nipype.workflow INFO:
+201218-04:33:18,126 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:03:06,705 nipype.workflow INFO:
+201218-04:33:20,129 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.dwinormalise
-201217-02:03:14,721 nipype.workflow INFO:
+201218-04:33:28,134 nipype.workflow INFO:
 	 [Job 24] Completed (pipetography.dwinormalise).
-201217-02:03:14,724 nipype.workflow INFO:
+201218-04:33:28,136 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 2 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:03:16,720 nipype.workflow INFO:
+201218-04:33:30,139 nipype.workflow INFO:
 	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
                      Currently running:
                        * pipetography.sub_b0extract
                        * pipetography.sub_dwi2mask
-201217-02:03:18,721 nipype.workflow INFO:
+201218-04:33:34,139 nipype.workflow INFO:
 	 [Job 27] Completed (pipetography.sub_b0extract).
-201217-02:03:18,724 nipype.workflow INFO:
+201218-04:33:34,142 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.sub_dwi2mask
-201217-02:03:20,720 nipype.workflow INFO:
+201218-04:33:36,141 nipype.workflow INFO:
 	 [Job 28] Completed (pipetography.sub_mrmath_mean).
-201217-02:03:20,723 nipype.workflow INFO:
+201218-04:33:36,143 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.sub_dwi2mask
-201217-02:03:22,729 nipype.workflow INFO:
+201218-04:33:38,141 nipype.workflow INFO:
 	 [Job 29] Completed (pipetography.sub_dwi2nii).
-201217-02:03:22,731 nipype.workflow INFO:
+201218-04:33:38,143 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.sub_dwi2mask
-201217-02:03:54,787 nipype.workflow INFO:
+201218-04:34:08,198 nipype.workflow INFO:
 	 [Job 25] Completed (pipetography.sub_dwi2mask).
-201217-02:03:54,789 nipype.workflow INFO:
+201218-04:34:08,200 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:03:56,789 nipype.workflow INFO:
+201218-04:34:10,204 nipype.workflow INFO:
 	 [Job 26] Completed (pipetography.sub_mask2nii).
-201217-02:03:56,792 nipype.workflow INFO:
+201218-04:34:10,206 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:03:58,790 nipype.workflow INFO:
+201218-04:34:12,204 nipype.workflow INFO:
 	 [Job 30] Completed (pipetography.sub_ApplyMask).
-201217-02:03:58,793 nipype.workflow INFO:
+201218-04:34:12,207 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:04:00,793 nipype.workflow INFO:
+201218-04:34:14,207 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.fsl_epireg
-201217-02:06:49,74 nipype.workflow INFO:
+201218-04:37:04,435 nipype.workflow INFO:
 	 [Job 38] Completed (pipetography.fsl_epireg).
-201217-02:06:49,77 nipype.workflow INFO:
+201218-04:37:04,437 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:06:51,82 nipype.workflow INFO:
+201218-04:37:06,441 nipype.workflow INFO:
 	 [Job 39] Completed (pipetography.transformconvert).
-201217-02:06:51,85 nipype.workflow INFO:
+201218-04:37:06,443 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:06:53,86 nipype.workflow INFO:
+201218-04:37:08,445 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.mrtransform
-201217-02:06:59,91 nipype.workflow INFO:
+201218-04:37:14,460 nipype.workflow INFO:
 	 [Job 40] Completed (pipetography.mrtransform).
-201217-02:06:59,94 nipype.workflow INFO:
+201218-04:37:14,462 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:07:01,91 nipype.workflow INFO:
+201218-04:37:16,461 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.mrgrid
-201217-02:07:33,135 nipype.workflow INFO:
+201218-04:37:36,482 nipype.workflow INFO:
 	 [Job 41] Completed (pipetography.mrgrid).
-201217-02:07:33,138 nipype.workflow INFO:
+201218-04:37:36,483 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 3 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:07:35,135 nipype.workflow INFO:
+201218-04:37:38,482 nipype.workflow INFO:
 	 [MultiProc] Running 3 tasks, and 0 jobs ready. Free memory (GB): 28.20/28.80, Free processors: 1/4.
                      Currently running:
                        * pipetography.mni_b0extract
                        * pipetography.mni_dwi2mask
                        * pipetography.MNI_Outputs
-201217-02:07:39,143 nipype.workflow INFO:
+201218-04:37:42,485 nipype.workflow INFO:
 	 [Job 45] Completed (pipetography.mni_b0extract).
-201217-02:07:39,146 nipype.workflow INFO:
+201218-04:37:42,488 nipype.workflow INFO:
 	 [MultiProc] Running 2 tasks, and 1 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
                      Currently running:
                        * pipetography.mni_dwi2mask
                        * pipetography.MNI_Outputs
-201217-02:07:41,147 nipype.workflow INFO:
+201218-04:37:44,486 nipype.workflow INFO:
 	 [Job 46] Completed (pipetography.mni_mrmath_mean).
-201217-02:07:41,150 nipype.workflow INFO:
+201218-04:37:44,489 nipype.workflow INFO:
 	 [MultiProc] Running 2 tasks, and 1 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
                      Currently running:
                        * pipetography.mni_dwi2mask
                        * pipetography.MNI_Outputs
-201217-02:07:43,156 nipype.workflow INFO:
+201218-04:37:46,487 nipype.workflow INFO:
 	 [MultiProc] Running 3 tasks, and 0 jobs ready. Free memory (GB): 28.20/28.80, Free processors: 1/4.
                      Currently running:
                        * pipetography.mni_dwi2nii
                        * pipetography.mni_dwi2mask
                        * pipetography.MNI_Outputs
-201217-02:07:45,155 nipype.workflow INFO:
+201218-04:37:48,489 nipype.workflow INFO:
 	 [Job 47] Completed (pipetography.mni_dwi2nii).
-201217-02:07:45,158 nipype.workflow INFO:
+201218-04:37:48,491 nipype.workflow INFO:
 	 [MultiProc] Running 2 tasks, and 0 jobs ready. Free memory (GB): 28.40/28.80, Free processors: 2/4.
                      Currently running:
                        * pipetography.mni_dwi2mask
                        * pipetography.MNI_Outputs
-201217-02:08:35,241 nipype.workflow INFO:
-	 [Job 43] Completed (pipetography.mni_dwi2mask).
-201217-02:08:35,242 nipype.workflow INFO:
-	 [MultiProc] Running 1 tasks, and 1 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
-                     Currently running:
-                       * pipetography.MNI_Outputs
-201217-02:08:37,242 nipype.workflow INFO:
+201218-04:38:40,549 nipype.workflow INFO:
 	 [Job 42] Completed (pipetography.MNI_Outputs).
-201217-02:08:37,244 nipype.workflow INFO:
+201218-04:38:40,550 nipype.workflow INFO:
+	 [Job 43] Completed (pipetography.mni_dwi2mask).
+201218-04:38:40,552 nipype.workflow INFO:
+	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
+201218-04:38:42,555 nipype.workflow INFO:
 	 [Job 44] Completed (pipetography.mni_mask2nii).
-201217-02:08:37,247 nipype.workflow INFO:
+201218-04:38:42,557 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:08:39,251 nipype.workflow INFO:
+201218-04:38:44,561 nipype.workflow INFO:
 	 [Job 48] Completed (pipetography.mni_ApplyMask).
-201217-02:08:39,254 nipype.workflow INFO:
+201218-04:38:44,563 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 1 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
-201217-02:08:41,256 nipype.workflow INFO:
+201218-04:38:46,564 nipype.workflow INFO:
 	 [MultiProc] Running 1 tasks, and 0 jobs ready. Free memory (GB): 28.60/28.80, Free processors: 3/4.
                      Currently running:
                        * pipetography.datasink
-201217-02:08:49,273 nipype.workflow INFO:
+201218-04:38:54,571 nipype.workflow INFO:
 	 [Job 53] Completed (pipetography.datasink).
-201217-02:08:49,276 nipype.workflow INFO:
+201218-04:38:54,573 nipype.workflow INFO:
 	 [MultiProc] Running 0 tasks, and 0 jobs ready. Free memory (GB): 28.80/28.80, Free processors: 4/4.
 </pre>
 </div>

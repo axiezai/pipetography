@@ -3,6 +3,7 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"get_subs": "00_core.ipynb",
+         "filter_workflow": "00_core.ipynb",
          "get_bfiles_tuple": "00_core.ipynb",
          "get_sub_gradfiles": "00_core.ipynb",
          "BIDS_metadata": "00_core.ipynb",
@@ -78,8 +79,7 @@ index = {"get_subs": "00_core.ipynb",
          "PreProcNodes": "02_nodes.ipynb",
          "ACPCNodes": "02_nodes.ipynb",
          "PostProcNodes": "02_nodes.ipynb",
-         "connectome": "03_connectomes.ipynb",
-         "filter_workflow": "00_core.ipynb"}
+         "connectome": "03_connectomes.ipynb"}
 
 modules = ["core.py",
            "pipeline.py",

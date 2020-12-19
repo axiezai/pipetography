@@ -39,7 +39,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The pre-processing workflow has been updated to reflect what's seen in the optimal <a href="http://www.sciencedirect.com/science/article/pii/S1053811918306827">DESIGNER pipeline</a> and on <a href="https://brainlife.io">mrtrix3 cloud apps on brainlife.io</a>.</p>
+<p>The pre-processing pipeline has been updated to reflect what's seen in the optimal <a href="http://www.sciencedirect.com/science/article/pii/S1053811918306827">DESIGNER pipeline</a> and on <a href="https://brainlife.io">mrtrix3 cloud apps on brainlife.io</a>.</p>
 <p>The post-processing pipeline, including co-registration of atlases and connectome generation is now included in the <a href="https://axiezai.github.io/pipetography/connectomes.html">connectomes</a> module</p>
 
 </div>
@@ -70,20 +70,25 @@ nb_path: "index.ipynb"
 </li>
 <li><p>OR pull the built singularity image from cloud library:</p>
 <ul>
-<li><code>singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.7</code></li>
-</ul>
-</li>
-<li><p>To run interactively or as a job execution, you will need a few flags:</p>
-<ul>
-<li><code>-e -c</code> flags for a clean environnment upon container start</li>
-<li><code>-B</code> to bind your data &amp; code directories.</li>
-<li>Example: <code>singularity shell -e -c -B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code></li>
+<li><code>singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.9</code></li>
 </ul>
 </li>
 </ul>
 <h3 id="Docker:">Docker:<a class="anchor-link" href="#Docker:"> </a></h3><ul>
 <li>Docker often encounters permission problems on HPC resources, using the docker container is only recommended if you have <code>sudo</code> permissions to the machine. </li>
-<li><code>docker pull axiezai/pipetography:0.3.7</code></li>
+<li><code>docker pull axiezai/pipetography:0.3.9</code></li>
+</ul>
+<h3 id="Usage:">Usage:<a class="anchor-link" href="#Usage:"> </a></h3><ul>
+<li>To run the singularity container interactively, you will need a few flags:<ul>
+<li><code>-e</code> flag for a clean environnment upon container start</li>
+<li><code>-B</code> flag to bind your BIDS directory into the container.</li>
+</ul>
+</li>
+<li>Example: <ul>
+<li><code>singularity shell -e -B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif}</code> will start an interactive shell.</li>
+<li><code>singualrity exec -e -B &lt;BIDS_DIR&gt;:&lt;SINGULARITY_BIDS_DIR&gt; {Path to singularity .sif} python dwi_pipeline.py</code> will execute the input python code. See <a href="https://axiezai.github.io/pipetography/pipeline.html">pipeline</a> for an example.</li>
+</ul>
+</li>
 </ul>
 <h3 id="Creating-your-own-environment-and-install-pipetography-as-a-Python-module:">Creating your own environment and install <code>pipetography</code> as a Python module:<a class="anchor-link" href="#Creating-your-own-environment-and-install-pipetography-as-a-Python-module:"> </a></h3><p><code>pip install pipetography</code></p>
 <p>Since <code>pipetography</code> is a <code>Nipype</code> wrapper around <code>mrtrix3</code>, <code>ANTs</code>, and <code>FSL</code>, you have to follow their installation instructions and set them up appropriately on your machine as well:</p>
