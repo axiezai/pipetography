@@ -25,7 +25,7 @@ Since most usages will be on HPC resources, I <em>highly recommend</em> that you
      - `sudo singularity build {image_file_name}.sif singularity.def`
      
  - OR pull the built singularity image from cloud library:
-    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography:0.3.9`
+    - `singularity pull --arch amd64 library://axiezai/pipetography/pipetography-fsl6.0.3:latest`
 
 ### Docker:
 
