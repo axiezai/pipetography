@@ -56,12 +56,12 @@ RUN echo "Downloading ANTs ..." \
     && curl -fsSL --retry 5 https://dl.dropbox.com/s/1xfhydsf4t4qoxg/ants-Linux-centos6_x86_64-v2.3.1.tar.gz \
     | tar -xz -C /opt/ants-2.3.1 --strip-components 1
 
-ENV FSLDIR="/opt/fsl-6.0.1" \
-    PATH="/opt/fsl-6.0.1/bin:$PATH" \
+ENV FSLDIR="/opt/fsl-6.0.3" \
+    PATH="/opt/fsl-6.0.3/bin:$PATH" \
     FSLOUTPUTTYPE="NIFTI_GZ" \
     FSLMULTIFILEQUIT="TRUE" \
-    FSLTCLSH="/opt/fsl-6.0.1/bin/fsltclsh" \
-    FSLWISH="/opt/fsl-6.0.1/bin/fslwish" \
+    FSLTCLSH="/opt/fsl-6.0.3/bin/fsltclsh" \
+    FSLWISH="/opt/fsl-6.0.3/bin/fslwish" \
     FSLLOCKDIR="" \
     FSLMACHINELIST="" \
     FSLREMOTECALL="" \
@@ -89,19 +89,28 @@ RUN apt-get update -qq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && echo "Downloading FSL ..." \
-    && mkdir -p /opt/fsl-6.0.1 \
-    && curl -fsSL --retry 5 https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-6.0.1-centos6_64.tar.gz \
-    | tar -xz -C /opt/fsl-6.0.1 --strip-components 1 \
+    && mkdir -p /opt/fsl-6.0.3 \
+    && curl -fsSL --retry 5 https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-6.0.3-centos6_64.tar.gz \
+    | tar -xz -C /opt/fsl-6.0.3 --strip-components 1 \
     && sed -i '$iecho Some packages in this Docker container are non-free' $ND_ENTRYPOINT \
     && sed -i '$iecho If you are considering commercial use of this container, please consult the relevant license:' $ND_ENTRYPOINT \
     && sed -i '$iecho https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence' $ND_ENTRYPOINT \
     && sed -i '$isource $FSLDIR/etc/fslconf/fsl.sh' $ND_ENTRYPOINT \
     && echo "Installing FSL conda environment ..." \
-    && bash /opt/fsl-6.0.1/etc/fslconf/fslpython_install.sh -f /opt/fsl-6.0.1 \
-    && echo "Downgrading deprecation module per https://github.com/kaczmarj/neurodocker/issues/271#issuecomment-514523420" \
-    && /opt/fsl-6.0.1/fslpython/bin/conda install -n fslpython -c conda-forge -y deprecation==1.* \
-    && echo "Removing bundled with FSLeyes libz likely incompatible with the one from OS" \
-    && rm -f /opt/fsl-6.0.1/bin/FSLeyes/libz.so.1
+    && bash /opt/fsl-6.0.3/etc/fslconf/fslpython_install.sh -f /opt/fsl-6.0.3 \
+
+RUN apt-get update -qq \
+    && apt-get install -y -q --no-install-recommends \
+           dirmngr \
+           gnupg2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -fsSL --retry 5 http://neuro.debian.net/lists/stretch.us-nh.full \
+       > /etc/apt/sources.list.d/neurodebian.sources.list \
+    && curl -sSL https://dl.dropbox.com/s/zxs209o955q6vkg/neurodebian.gpg | apt-key add - \
+    && (apt-key adv --refresh-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9 || true) \
+    && apt-get -qq update
+
 
 ENV CONDA_DIR="/opt/miniconda-latest" \
     PATH="/opt/miniconda-latest/bin:$PATH"
@@ -116,17 +125,13 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
     && conda config --system --set auto_update_conda false \
     && conda config --system --set show_channel_urls true \
     && sync && conda clean -y --all && sync \
-    && conda create -y -q --name tracts \
-    && conda install -y -q --name tracts \
-           "python=3.7.3" \
-           "pip=20.0.2" \
-           "dipy" \
+    && conda install -y -q --name base \
+           "python" \
+           "pip" \
            "nipype" \
            "nibabel" \
-           "pytest" \
-           "matplotlib" \
     && sync && conda clean -y --all && sync \
-    && bash -c "source activate tracts \
+    && bash -c "source activate base \
     &&   pip install --no-cache-dir  \
              "pybids" \
              "fastcore" \
@@ -134,7 +139,6 @@ RUN export PATH="/opt/miniconda-latest/bin:$PATH" \
 	         "pipetography==0.3.9"" \
     && rm -rf ~/.cache/pip/* \
     && sync \
-    && sed -i '$isource activate tracts' $ND_ENTRYPOINT
 
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
@@ -146,6 +150,7 @@ RUN apt-get update -qq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN ldconfig
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \
@@ -169,21 +174,18 @@ RUN echo '{ \
     \n    [ \
     \n      "fsl", \
     \n      { \
-    \n        "version": "6.0.1" \
+    \n        "version": "6.0.3" \
     \n      } \
     \n    ], \
     \n    [ \
     \n      "miniconda", \
     \n      { \
-    \n        "create_env": "tracts", \
+    \n        "create_env": "base", \
     \n        "conda_install": [ \
-    \n          "python=3.7.3", \
-    \n          "pip=20.0.2", \
-    \n          "dipy", \
+    \n          "python", \
+    \n          "pip", \
     \n          "nipype", \
     \n          "nibabel", \
-    \n          "pytest", \
-    \n          "matplotlib" \
     \n        ], \
     \n        "pip_install": [ \
     \n          "pybids", \
@@ -191,7 +193,6 @@ RUN echo '{ \
     \n          "nilearn", \
     \n          "pipetography==0.3.9" \
     \n        ], \
-    \n        "activate": true \
     \n      } \
     \n    ], \
     \n    [ \
@@ -201,8 +202,13 @@ RUN echo '{ \
     \n        "ssh", \
     \n        "tar", \
     \n        "gzip", \
-    \n        "ca-certificates" \
+    \n        "ca-certificates", \
+    \n        "fsl-first-data" \
     \n      ] \
+    \n    ], \
+    \n    [ \
+    \n      "run", \
+    \n      "ldconfig" \
     \n    ] \
     \n  ] \
     \n}' > /neurodocker/neurodocker_specs.json
